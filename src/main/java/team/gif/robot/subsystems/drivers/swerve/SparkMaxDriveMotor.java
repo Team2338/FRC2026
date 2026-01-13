@@ -1,0 +1,66 @@
+package team.gif.robot.subsystems.drivers.swerve;
+
+import com.revrobotics.spark.SparkBase;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import team.gif.robot.subsystems.drivers.swerve.utilities.DriveMotor;
+import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
+
+public class SparkMaxDriveMotor implements DriveMotor {
+    private final SparkMax motor;
+    private final double positionConversion;
+    private final double velocityConversion;
+
+    public SparkMaxDriveMotor(int id, SwerveConstants constants) {
+        motor = new SparkMax(id, MotorType.kBrushless);
+        positionConversion = constants.DRIVE_ENCODER_ROT_2_METER;
+        velocityConversion = constants.DRIVE_ENCODER_RPM_2_METER_PER_SEC;
+    }
+
+    public void configure(boolean inverted) {
+        SparkMaxConfig config = new SparkMaxConfig();
+        config.idleMode(SparkBaseConfig.IdleMode.kBrake);
+        config.inverted(inverted);
+        config.voltageCompensation(12);
+        config.encoder.positionConversionFactor(positionConversion);
+        config.encoder.velocityConversionFactor(velocityConversion);
+
+        motor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters);
+    }
+
+    public double getTemp() {
+        return motor.getMotorTemperature();
+    }
+
+    public double getVelocity() {
+        return motor.getEncoder().getVelocity();
+    }
+
+    public double getPosition() {
+        return motor.getEncoder().getPosition();
+    }
+
+    public double getOutput() {
+        return motor.getAppliedOutput();
+    }
+
+    public void set(double percentOutput) {
+        motor.set(percentOutput);
+    }
+
+    public void setVoltage(double voltage) {
+        motor.setVoltage(voltage);
+    }
+
+    public double getVoltage() {
+        //Source: https://www.chiefdelphi.com/t/get-voltage-from-spark-max/344136/5
+        return motor.getBusVoltage() * motor.getAppliedOutput();
+    }
+
+    public void resetEncoder() {
+        motor.getEncoder().setPosition(0);
+    }
+
+}
