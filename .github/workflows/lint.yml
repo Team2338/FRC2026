@@ -1,9 +1,5 @@
 name: checkstyle
-on:
-  push:
-    branches: [ * ]
-  pull_request:
-      branches: ["main"]
+on: [push, pull_request]
 jobs:
   checkstyle:
     runs-on: ubuntu-latest
