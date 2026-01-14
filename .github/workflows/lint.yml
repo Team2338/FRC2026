@@ -3,6 +3,9 @@ on: [push, pull_request]
 permissions:
   contents: read
   pull-requests: write
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   checkstyle:
     runs-on: ubuntu-latest
