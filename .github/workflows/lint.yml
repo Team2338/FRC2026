@@ -8,4 +8,5 @@ jobs:
       - uses: dbelyaev/action-checkstyle@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          checkstyle_config: 'sun_checks.xml'
+          checkstyle_config: '.github/workflows/lint-config.xml'
+          fail_level: 'warning'
