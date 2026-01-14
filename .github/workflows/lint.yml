@@ -14,7 +14,7 @@ jobs:
       - uses: nikitasavinov/checkstyle-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: 'github-pr-check'
+          reporter: 'github-pr-review'
           filter_mode: 'nofilter'
           level: "error"
           fail_on_error: 'true'
