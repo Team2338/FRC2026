@@ -4,7 +4,7 @@
         "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
-    <property name="basedir" value="/src/main/java/team/gif" />
+<!--    <property name="basedir" value="/src/main/java/team/gif" />-->
     <module name="TreeWalker">
         <property name="fileExtensions" value="java" />
         <property name="tabWidth" value="4" />

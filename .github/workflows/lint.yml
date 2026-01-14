@@ -10,4 +10,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           checkstyle_config: '.github/workflows/lint-config.xml'
           reporter: "github-check"
-          workdir: "../.."
