@@ -8,5 +8,4 @@ jobs:
       - uses: dbelyaev/action-checkstyle@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          checkstyle_config: '.github/workflows/lint-config.xml'
           reporter: "github-pr-check"
