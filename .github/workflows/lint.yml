@@ -14,3 +14,4 @@ jobs:
           checkstyle_config: '.github/workflows/lint-config.xml'
           fail_level: 'info'
           reporter: 'github-pr-review'
+          level: "error"
