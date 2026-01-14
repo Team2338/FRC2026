@@ -12,5 +12,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           checkstyle_config: '.github/workflows/lint-config.xml'
-          fail_level: 'warning'
+          fail_level: 'info'
           reporter: 'github-pr-review'
