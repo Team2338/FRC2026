@@ -3,6 +3,7 @@ on: [push, pull_request]
 permissions:
   contents: read
   pull-requests: write
+  checks: write  # Add this for github-check reporter
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -14,7 +15,7 @@ jobs:
       - uses: nikitasavinov/checkstyle-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: 'github-pr-review'
+          reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
           filter_mode: 'nofilter'
           level: "error"
           fail_on_error: 'true'
