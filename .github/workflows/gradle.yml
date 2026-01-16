@@ -78,3 +78,4 @@ jobs:
           filter_mode: 'file'
           level: "error"
           fail_on_error: 'true'
+          checkstyle_config: '.github/workflows/lint-config.xml'
