@@ -9,6 +9,11 @@ name: Java CI with Gradle
 
 on: [push]
 
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write  # Add this for github-check reporter
+
 jobs:
   build:
 
@@ -61,3 +66,15 @@ jobs:
     # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: nikitasavinov/checkstyle-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
+          filter_mode: 'nofilter'
+          level: "error"
+          fail_on_error: 'true'

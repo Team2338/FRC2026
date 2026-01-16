@@ -1,21 +1,21 @@
-name: checkstyle
-on: [push, pull_request]
-permissions:
-  contents: read
-  pull-requests: write
-  checks: write  # Add this for github-check reporter
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-jobs:
-  checkstyle:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: nikitasavinov/checkstyle-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
-          filter_mode: 'nofilter'
-          level: "error"
-          fail_on_error: 'true'
+#name: checkstyle
+#on: [push, pull_request]
+#permissions:
+#  contents: read
+#  pull-requests: write
+#  checks: write  # Add this for github-check reporter
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.ref }}
+#  cancel-in-progress: true
+#jobs:
+#  checkstyle:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v6
+#      - uses: nikitasavinov/checkstyle-action@master
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          reporter: ${{ github.event_name == 'pull_request' && 'github-pr-review' || 'github-check' }}
+#          filter_mode: 'nofilter'
+#          level: "error"
+#          fail_on_error: 'true'
