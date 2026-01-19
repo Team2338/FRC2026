@@ -1,30 +1,27 @@
-package team.gif.robot.commands.neo;
+package team.gif.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class MoveReference extends Command {
+public class CIMMovePercent extends Command {
     double speed;
 
-    public MoveReference() {
+    public CIMMovePercent() {
         super();
-        addRequirements(Robot.neo);
+        addRequirements(Robot.cim);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        speed = SmartDashboard.getNumber("PID/Reference", 0);
-        Robot.neo.setReference(speed);
-        System.out.println("init");
-
+        speed = SmartDashboard.getNumber("PID/CIM Percent", 0);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        System.out.println(Robot.neo.spark.getClosedLoopController().getIAccum());
+       Robot.cim.percent(speed);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -36,6 +33,6 @@ public class MoveReference extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.neo.stop();
+        Robot.cim.stop();
     }
 }

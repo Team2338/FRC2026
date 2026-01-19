@@ -15,7 +15,7 @@ public class MoveVoltage extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        speed = SmartDashboard.getNumber("PID/voltage", 0);
+        speed = SmartDashboard.getNumber("PID/Voltage", 0);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

@@ -53,5 +53,6 @@ public abstract class RobotMap {
 
     public static final int PIGEON_ID = 9;
 
-    public static final int SPARK_ID = 0;
+    public static final int SPARK_ID = 60;
+    public static final int TALON_ID = 1;
 }

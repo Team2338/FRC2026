@@ -15,7 +15,7 @@ public class MovePercent extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        speed = SmartDashboard.getNumber("PID/percent", 0);
+        speed = SmartDashboard.getNumber("PID/Percent", 0);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

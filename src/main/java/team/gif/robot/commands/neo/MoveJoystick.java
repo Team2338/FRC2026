@@ -19,7 +19,8 @@ public class MoveJoystick extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-       Robot.neo.run(-Robot.oi.driver.getLeftY());
+        double speed = Math.abs(Robot.oi.driver.getLeftY()) < 0.05 ? 0 : -Robot.oi.driver.getLeftY();
+       Robot.neo.run(speed);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

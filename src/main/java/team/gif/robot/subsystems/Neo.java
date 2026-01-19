@@ -11,14 +11,30 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import edu.wpi.first.units.measure.MutAngle;
+import edu.wpi.first.units.measure.MutAngularVelocity;
+import edu.wpi.first.units.measure.MutDistance;
+import edu.wpi.first.units.measure.MutLinearVelocity;
+import edu.wpi.first.units.measure.MutVoltage;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.RobotMap;
+
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Radians;
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 public class Neo extends SubsystemBase {
     public SparkFlex spark;
     public SparkClosedLoopController pid;
-    public SparkFlexConfig config;
+    public SparkFlexConfig config = new SparkFlexConfig();
     public double p = 0;
     public double i = 0;
     public double d = 0;
@@ -27,6 +43,9 @@ public class Neo extends SubsystemBase {
         spark = new SparkFlex(RobotMap.SPARK_ID, SparkLowLevel.MotorType.kBrushless);
         pid = spark.getClosedLoopController();
         config.closedLoop.pid(p, d, d);
+        config.inverted(true);
+
+
 
         setConfig(config);
     }
@@ -40,11 +59,14 @@ public class Neo extends SubsystemBase {
     }
 
     public void setReference(double reference) {
+        System.out.println(reference);
         pid.setSetpoint(reference, SparkBase.ControlType.kVelocity);
+        System.out.println("set ref");
     }
 
     private void setConfig(SparkFlexConfig newConfig){
         spark.configureAsync(newConfig, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        System.out.println("update2");
     }
 
     public void setP(double newp) {
@@ -73,7 +95,9 @@ public class Neo extends SubsystemBase {
             i = netI;
             d = netD;
             config.closedLoop.pid(netP, netI, netD);
+            config.closedLoop.iMaxAccum(10000000);
             setConfig(config);
+            System.out.println("update");
         }
     }
 
@@ -88,4 +112,41 @@ public class Neo extends SubsystemBase {
     public double getCurrent() {
         return spark.getOutputCurrent();
     }
+
+    public double getVoltage() {
+        return spark.getAppliedOutput() * spark.getBusVoltage();
+    }
+
+    private void sysIDVoltage(Voltage volt) {
+        spark.setVoltage(volt.baseUnitMagnitude());
+    }
+
+    private void sysIDLog(SysIdRoutineLog log) {
+        MutVoltage voltMut = Volts.mutable(0);
+        MutAngle posMut = Rotations.mutable(0);
+        MutAngularVelocity vMut= RotationsPerSecond.mutable(0);
+
+        log.motor("Shooter")
+                .voltage(voltMut.mut_replace(getVoltage(), Volts))
+                .angularVelocity(vMut.mut_replace(getSpeed(), RotationsPerSecond))
+                .angularPosition(posMut.mut_replace(spark.getEncoder().getPosition(), Rotations));
+    }
+
+
+    public SysIdRoutine getSysID() {
+        return new SysIdRoutine(
+                new SysIdRoutine.Config(),
+                new SysIdRoutine.Mechanism(this::sysIDVoltage, this::sysIDLog, this)
+        );
+    }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return getSysID().quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return getSysID().dynamic(direction);
+    }
+
+
 }

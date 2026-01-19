@@ -24,6 +24,8 @@ public class UI {
         SmartDashboard.putString("PID/Percent BTN", "Driver A");
         SmartDashboard.putString("PID/Voltage BTN", "Driver B");
         SmartDashboard.putString("PID/Reference BTN", "Driver X");
+        SmartDashboard.putNumber("PID/CIM Percent", 0);
+        SmartDashboard.putString("PID/CIM Percent BTN", "Driver L Bump");
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
     }
 
@@ -37,11 +39,7 @@ public class UI {
         //Example
         //SmartDashboard.putNumber("Climber Position", Robot.elevator.getPosition())
 
-//        SmartDashboard.putNumber("PID/Neo Speed", Robot.neo.getSpeed());
-//        SmartDashboard.putNumber("PID/Neo Current", Robot.neo.getCurrent());
-
-        SmartDashboard.putNumber("PID/Neo Speed", 0);
-        SmartDashboard.putNumber("PID/Neo Current", 0);
-
+        SmartDashboard.putNumber("PID/Neo Speed", Robot.neo.getSpeed());
+        SmartDashboard.putNumber("PID/Neo Current", Robot.neo.getCurrent());
     }
 }

@@ -3,6 +3,8 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import team.gif.robot.commands.CIMMovePercent;
 import team.gif.robot.commands.neo.MovePercent;
 import team.gif.robot.commands.neo.MoveReference;
 import team.gif.robot.commands.neo.MoveVoltage;
@@ -96,6 +98,13 @@ public class OI {
         dA.whileTrue(new MovePercent());
         dB.whileTrue(new MoveVoltage());
         dX.whileTrue(new MoveReference());
+
+        dLBump.whileTrue(new CIMMovePercent());
+
+        aLBump.whileTrue(Robot.neo.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        aLTrigger.whileTrue(Robot.neo.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        aRBump.whileTrue(Robot.neo.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        aRTrigger.whileTrue(Robot.neo.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
 
     }
 }
