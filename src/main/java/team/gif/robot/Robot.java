@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
+import team.gif.robot.commands.neo.MoveJoystick;
+import team.gif.robot.subsystems.Neo;
 import team.gif.robot.subsystems.drivers.Pigeon2_0;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConfiguration;
 import team.gif.robot.subsystems.drivers.swerve.SwerveDrivetrain;
@@ -34,6 +36,8 @@ public class Robot extends TimedRobot {
 
     public static UI ui;
 
+    public static Neo neo;
+
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
 
@@ -55,6 +59,9 @@ public class Robot extends TimedRobot {
         swerveDrive.setDefaultCommand(new DriveSwerve());
         swerveDrive.enableDebugMode();
 //        swerveDrive.addLimelight("limelight-front");
+
+        neo = new Neo();
+        neo.setDefaultCommand(new MoveJoystick());
 
         //These should be at or near the bottom
         oi = new OI();
