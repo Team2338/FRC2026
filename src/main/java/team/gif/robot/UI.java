@@ -41,5 +41,6 @@ public class UI {
 
         SmartDashboard.putNumber("PID/Neo Speed", Robot.neo.getSpeed());
         SmartDashboard.putNumber("PID/Neo Current", Robot.neo.getCurrent());
+        SmartDashboard.putNumber("PID/Neo Output", Robot.neo.spark.getAppliedOutput());
     }
 }
