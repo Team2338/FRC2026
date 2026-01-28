@@ -20,6 +20,43 @@ public final class Constants {
     public static final double DEBOUNCE_DEFAULT = 0.020;
 
     //These constants should be referenced via Robot.swerveDrive.getConstants();
+    public static final class Mk5Constants extends SwerveConstants {
+        @Override
+        protected void setConfiguration() {
+            MODULE_GEAR_RATIO = 6.03;
+            TURNING_MOTOR_GEAR_RATIO = 1;
+            COEFFICIENT_OF_FRICTION = 1; //TODO: Measure
+            WHEEL_DIAMETER_INCHES = 4.0;
+
+            FRONT_LEFT_OFFSET = 0; //TODO: Find
+            FRONT_RIGHT_OFFSET = 0; //TODO: Find
+            REAR_LEFT_OFFSET = 0; //TODO: Find
+            REAR_RIGHT_OFFSET = 0; //TODO: Find
+
+            TRACK_LENGTH_INCHES = 22.5;
+            TRACK_WIDTH_INCHES = 22;
+
+            MASS_KG = 16; //TODO: Measure
+            MOI_KGM2 = 0; //TODO: Measure
+
+            TURN_P = 0.55; //TODO: Tune
+            TURN_FF = 0.01; //TODO: Tune
+
+            FL_DRIVE_FF = new SimpleMotorFeedforward(0.16095, 2.3837, 0.077757); //TODO: Tune
+            FR_DRIVE_FF = new SimpleMotorFeedforward(0.1645, 2.3928, 0.074191); //TODO: Tune
+            RL_DRIVE_FF = new SimpleMotorFeedforward(0.10265, 2.3955, 0.22997); //TODO: Tune
+            RR_DRIVE_FF = new SimpleMotorFeedforward(0.13952, 2.4217, 0.137); //TODO: Tune
+
+            AUTO_P_FORWARD = 2.5; //TODO: Tune
+            AUTO_P_ROTATION = 2.5; //TODO: Tune
+
+            PATHPLANNER_MOTOR_TYPE = DCMotor.getKrakenX60(1);
+            PATHPLANNER_CURRENT_LIMIT = 50;
+
+        }
+    }
+
+    //These constants should be referenced via Robot.swerveDrive.getConstants();
     public static final class Mk4Constants extends SwerveConstants {
         @Override
         protected void setConfiguration() {
