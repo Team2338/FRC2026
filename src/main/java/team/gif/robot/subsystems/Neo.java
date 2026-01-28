@@ -33,6 +33,7 @@ import static edu.wpi.first.units.Units.Volts;
 
 public class Neo extends SubsystemBase {
     public SparkFlex spark;
+    public SparkFlex spark2;
     public SparkClosedLoopController pid;
     public SparkFlexConfig config = new SparkFlexConfig();
     public double p = 0;
@@ -41,9 +42,12 @@ public class Neo extends SubsystemBase {
 
     public Neo() {
         spark = new SparkFlex(RobotMap.SPARK_ID, SparkLowLevel.MotorType.kBrushless);
+        spark2 = new SparkFlex(RobotMap.SPARK_2_ID, SparkLowLevel.MotorType.kBrushless);
         pid = spark.getClosedLoopController();
         config.closedLoop.pid(p, d, d);
         config.inverted(true);
+
+        spark2.configure(new SparkFlexConfig().follow(RobotMap.SPARK_ID, true), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
 
 
