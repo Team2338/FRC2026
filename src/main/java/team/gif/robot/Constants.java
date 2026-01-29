@@ -25,13 +25,16 @@ public final class Constants {
         protected void setConfiguration() {
             MODULE_GEAR_RATIO = 6.03;
             TURNING_MOTOR_GEAR_RATIO = 1;
-            COEFFICIENT_OF_FRICTION = 1; //TODO: Measure
+            COEFFICIENT_OF_FRICTION = 1; //TODO: find
             WHEEL_DIAMETER_INCHES = 4.0;
 
-            FRONT_LEFT_OFFSET = 0; //TODO: Find
-            FRONT_RIGHT_OFFSET = 0; //TODO: Find
-            REAR_LEFT_OFFSET = 0; //TODO: Find
-            REAR_RIGHT_OFFSET = 0; //TODO: Find
+            FRONT_LEFT_OFFSET = -163.388671875;
+            FRONT_RIGHT_OFFSET = -15.64453125;
+            REAR_LEFT_OFFSET = 18.193359375;
+            REAR_RIGHT_OFFSET = -140.537109375;
+
+            FR_DRIVE_INVERTED = false;
+            RR_DRIVE_INVERTED = false;
 
             TRACK_LENGTH_INCHES = 22.5;
             TRACK_WIDTH_INCHES = 22;
@@ -52,6 +55,8 @@ public final class Constants {
 
             PATHPLANNER_MOTOR_TYPE = DCMotor.getKrakenX60(1);
             PATHPLANNER_CURRENT_LIMIT = 50;
+
+
 
         }
     }

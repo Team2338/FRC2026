@@ -1,6 +1,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class OI {
@@ -89,7 +90,7 @@ public class OI {
          *   aX.onTrue(new PrintCommand("aX"));
          */
 
-
+        dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
 
     }
 }

@@ -31,7 +31,7 @@ public class DriveSwerve extends Command {
             double strafe = -Robot.oi.driver.getLeftX(); // need to invert because -X is left, +X is right
             strafe = (Math.abs(strafe) > Constants.Joystick.DEADBAND) ? strafe : 0.0;
 
-            double rot = -Robot.oi.driver.getRightX(); // need to invert because left is negative, right is positive
+            double rot = Robot.oi.driver.getRightX(); // (Currently not inverted) need to invert because left is negative, right is positive
             rot = (Math.abs(rot) > Constants.Joystick.DEADBAND) ? rot : 0.0;
 
             forwardSign = forward/Math.abs(forward);
@@ -66,7 +66,7 @@ public class DriveSwerve extends Command {
              rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
 
             // the robot starts facing the driver station so for this year negating y and x
-            Robot.swerveDrive.drive(forward, strafe, rot);
+            Robot.swerveDrive.drive(forward*.15, strafe*.15, rot*.15); //temp
     }
 
     @Override
