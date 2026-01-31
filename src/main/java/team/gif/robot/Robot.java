@@ -4,9 +4,17 @@
 
 package team.gif.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.drivers.Pigeon2_0;
 import team.gif.robot.subsystems.drivers.swerve.SwerveDrive;
@@ -62,6 +70,9 @@ public class Robot extends TimedRobot {
         oi = new OI();
         ui = new UI();
 
+        FollowPathCommand.warmupCommand().schedule();
+
+
     }
 
     /**
@@ -92,7 +103,17 @@ public class Robot extends TimedRobot {
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
-    public void autonomousInit() {}
+    public void autonomousInit() {
+
+        Command command1 = ui.fancyAutoChooser.getSelected();
+        Command command2 = ui.fancyAutoChooser1.getSelected();
+        Command command3 = ui.fancyAutoChooser2.getSelected();
+        Command command4 = ui.fancyAutoChooser3.getSelected();
+        Command command5 = ui.fancyAutoChooser4.getSelected();
+
+        autonomousCommand = new SequentialCommandGroup(command1, command2, command3 , command4, command5);
+        CommandScheduler.getInstance().schedule(autonomousCommand);
+    }
 
     /** This function is called periodically during autonomous. */
     @Override
@@ -130,4 +151,19 @@ public class Robot extends TimedRobot {
     /** This function is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    static public Command generateAuto(String pathName) {
+
+        try {
+            PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+            //TODO: update constraints
+            PathConstraints constraints = new PathConstraints(3,4, Units.degreesToRadians(540), Units.degreesToRadians(720));
+            return AutoBuilder.pathfindThenFollowPath(path, constraints);
+        } catch (Exception e) {
+            DriverStation.reportError("Failed to generate Auto Path: " + e.getMessage(), e.getStackTrace());
+            return Commands.none();
+
+        }
+
+    }
 }
