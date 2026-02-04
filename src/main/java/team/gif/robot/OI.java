@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
@@ -101,5 +102,9 @@ public class OI {
         dY.whileTrue(new ShooterPercent());
         dLBump.whileTrue(new IndexerPercent());
 
+        aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        aRBump.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+        aRTrigger.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
     }
 }

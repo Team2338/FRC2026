@@ -9,9 +9,20 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import edu.wpi.first.units.measure.MutAngle;
+import edu.wpi.first.units.measure.MutAngularVelocity;
+import edu.wpi.first.units.measure.MutVoltage;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.RobotMap;
+
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 public class Shooter extends SubsystemBase {
 
@@ -30,6 +41,9 @@ public class Shooter extends SubsystemBase {
        config.Slot0.kP = 0;
        config.Slot0.kI = 0;
        config.Slot0.kD = 0;
+       config.Slot0.kS = 0.12278;
+       config.Slot0.kV = 0.11522;
+       config.Slot0.kA = 0.0078728;
 
        shooter1.getConfigurator().apply(config);
 
@@ -52,10 +66,14 @@ public class Shooter extends SubsystemBase {
         double currI = config.Slot0.kI;
         double currD = config.Slot0.kD;
 
+
         if(netP != currP || netI != currI || netD != currD) {
             config.Slot0.kP = netP;
             config.Slot0.kI = netI;
             config.Slot0.kD = netD;
+            config.Slot0.kS = 0.12278;
+            config.Slot0.kV = 0.11522;
+            config.Slot0.kA = 0.0078728;
             setConfig(config);
             velocityVoltage = new VelocityVoltage(0).withSlot(0);
         }
@@ -88,6 +106,10 @@ public class Shooter extends SubsystemBase {
         return shooter1.getBridgeOutput().getValueAsDouble();
     }
 
+    public double getVoltage() {
+        return shooter1.getMotorVoltage().getValueAsDouble();
+    }
+
     public void stopMotor() {
         shooter1.stopMotor();
     }
@@ -96,4 +118,35 @@ public class Shooter extends SubsystemBase {
         shooter1.getConfigurator().apply(config);
     }
 
+
+    private void sysIDVoltage(Voltage volt) {
+        runShooterVoltage(volt.baseUnitMagnitude());
+    }
+
+    private void sysIDLog(SysIdRoutineLog log) {
+        MutVoltage voltMut = Volts.mutable(0);
+        MutAngle posMut = Rotations.mutable(0);
+        MutAngularVelocity vMut= RotationsPerSecond.mutable(0);
+
+        log.motor("Shooter")
+                .voltage(voltMut.mut_replace(getVoltage(), Volts))
+                .angularVelocity(vMut.mut_replace(shooter1.getVelocity().getValueAsDouble(), RotationsPerSecond))
+                .angularPosition(posMut.mut_replace(shooter1.getPosition().getValueAsDouble(), Rotations));
+    }
+
+
+    public SysIdRoutine getSysID() {
+        return new SysIdRoutine(
+                new SysIdRoutine.Config(),
+                new SysIdRoutine.Mechanism(this::sysIDVoltage, this::sysIDLog, this)
+        );
+    }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return getSysID().quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return getSysID().dynamic(direction);
+    }
 }

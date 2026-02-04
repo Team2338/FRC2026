@@ -40,6 +40,7 @@ public class UI {
         SmartDashboard.putNumber("PID/Shooter Speed", Robot.shooter.getSpeed());
         SmartDashboard.putNumber("PID/Shooter Current", Robot.shooter.getCurrent());
         SmartDashboard.putNumber("PID/Shooter Output", Robot.shooter.getOutput());
+        SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getSpeed());
 
     }
 }

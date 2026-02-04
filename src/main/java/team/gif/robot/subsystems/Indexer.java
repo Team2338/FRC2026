@@ -10,6 +10,7 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel;
+import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -27,6 +28,7 @@ public class Indexer extends SubsystemBase {
        indexer = new TalonFX(RobotMap.Shooter.INDEXER);
        indexer2 = new SparkFlex(RobotMap.Shooter.INDEXER_2, SparkLowLevel.MotorType.kBrushless);
        sparkConfig.inverted(false);
+       sparkConfig.idleMode(SparkBaseConfig.IdleMode.kCoast);
        indexer2.configure(sparkConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
        indexer.getConfigurator().apply(config);
     }
