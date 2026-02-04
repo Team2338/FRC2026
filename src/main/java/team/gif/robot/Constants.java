@@ -28,12 +28,14 @@ public final class Constants {
             COEFFICIENT_OF_FRICTION = 1; //TODO: find
             WHEEL_DIAMETER_INCHES = 4.0;
 
-            FRONT_LEFT_OFFSET = -163.388671875;
-            FRONT_RIGHT_OFFSET = -15.64453125;
-            REAR_LEFT_OFFSET = 18.193359375;
-            REAR_RIGHT_OFFSET = -140.537109375;
+            FRONT_LEFT_OFFSET = 108.017578125;
+            FRONT_RIGHT_OFFSET = -73.212890625;
+            REAR_LEFT_OFFSET = 129.111328125;
+            REAR_RIGHT_OFFSET = -105.029296875;
 
+            FL_DRIVE_INVERTED = false;
             FR_DRIVE_INVERTED = false;
+            RL_DRIVE_INVERTED = false;
             RR_DRIVE_INVERTED = false;
 
             TRACK_LENGTH_INCHES = 22.5;
