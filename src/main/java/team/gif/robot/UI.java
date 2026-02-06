@@ -14,17 +14,18 @@ public class UI {
      *  and save file as "YYYY elastic-layout.json"
      */
     public UI() {
-        SmartDashboard.putNumber("PID/P", 0);
+        SmartDashboard.putNumber("PID/P", 0.3);
         SmartDashboard.putNumber("PID/I", 0);
         SmartDashboard.putNumber("PID/D", 0);
         SmartDashboard.putNumber("PID/Percent", 0);
         SmartDashboard.putNumber("PID/Voltage", 0);
-        SmartDashboard.putNumber("PID/Reference", 0);
+        SmartDashboard.putNumber("PID/Reference", 3500);
         SmartDashboard.putString("PID/Default Command", "Driver Left joystick - percent control");
         SmartDashboard.putString("PID/Percent BTN", "Driver Y");
         SmartDashboard.putString("PID/Voltage BTN", "Driver X");
         SmartDashboard.putString("PID/Reference BTN", "Driver A");
-        SmartDashboard.putNumber("Indexer/Percent", 0);
+        SmartDashboard.putNumber("Indexer/Stage 1", 0.5);
+        SmartDashboard.putNumber("Indexer/Stage 2", 0.8);
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
     }
 
@@ -37,9 +38,13 @@ public class UI {
     public void update() {
         //Example
         //SmartDashboard.putNumber("Climber Position", Robot.elevator.getPosition())
-        SmartDashboard.putNumber("PID/Shooter Speed", Robot.shooter.getSpeed());
+        SmartDashboard.putNumber("PID/Shooter 1 Speed", Robot.shooter.getSpeed());
+        SmartDashboard.putNumber("PID/Shooter 2 Speed", Robot.shooter.getSpeed2());
+        SmartDashboard.putNumber("PID/Shooter 3 Speed", Robot.shooter.getSpeed3());
         SmartDashboard.putNumber("PID/Shooter Current", Robot.shooter.getCurrent());
         SmartDashboard.putNumber("PID/Shooter Output", Robot.shooter.getOutput());
+        SmartDashboard.putNumber("PID/Shooter Output 2", Robot.shooter.getOutput2());
+        SmartDashboard.putNumber("PID/Shooter Output 3", Robot.shooter.getOutput3());
         SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getSpeed());
 
     }

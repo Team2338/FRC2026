@@ -28,7 +28,7 @@ public class Shooter extends SubsystemBase {
 
     public TalonFX shooter1;
     public TalonFX shooter2;
-//    public TalonFX shooter3;
+    public TalonFX shooter3;
     public TalonFXConfiguration config = new TalonFXConfiguration();
     public VelocityVoltage velocityVoltage;
 
@@ -36,7 +36,7 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
        shooter1 = new TalonFX(RobotMap.Shooter.SHOOTER_1);
        shooter2 = new TalonFX(RobotMap.Shooter.SHOOTER_2);
-//       shooter3 = new TalonFX(RobotMap.Shooter.SHOOTER_3);
+       shooter3 = new TalonFX(RobotMap.Shooter.SHOOTER_3);
 
        config.Slot0.kP = 0;
        config.Slot0.kI = 0;
@@ -46,10 +46,12 @@ public class Shooter extends SubsystemBase {
        config.Slot0.kA = 0.0078728;
 
        shooter1.getConfigurator().apply(config);
+       shooter2.getConfigurator().apply(config);
+       shooter3.getConfigurator().apply(config);
 
        Follower follower = new Follower(shooter1.getDeviceID(), MotorAlignmentValue.Opposed);
 
-       shooter2.setControl(follower);
+//       shooter2.setControl(follower);
 //       shooter3.setControl(follower);
 
        velocityVoltage = new VelocityVoltage(0).withSlot(0);
@@ -92,10 +94,21 @@ public class Shooter extends SubsystemBase {
     public void runShooter(double rpm) {
 
         shooter1.setControl(velocityVoltage.withVelocity(rpm/60));
+        shooter2.setControl(velocityVoltage.withVelocity(rpm/60));
+        shooter3.setControl(velocityVoltage.withVelocity(rpm/60));
+
     }
 
     public double getSpeed() {
         return shooter1.getVelocity().getValueAsDouble() * 60;
+    }
+
+    public double getSpeed3() {
+        return shooter3.getVelocity().getValueAsDouble() * 60;
+    }
+
+    public double getSpeed2() {
+        return shooter2.getVelocity().getValueAsDouble() * 60;
     }
 
     public double getCurrent() {
@@ -103,7 +116,15 @@ public class Shooter extends SubsystemBase {
     }
 
     public double getOutput() {
-        return shooter1.getBridgeOutput().getValueAsDouble();
+        return shooter1.getMotorVoltage().getValueAsDouble() / 12;
+    }
+
+    public double getOutput2() {
+        return shooter2.getMotorVoltage().getValueAsDouble() / 12;
+    }
+
+    public double getOutput3() {
+        return shooter3.getMotorVoltage().getValueAsDouble() / 12;
     }
 
     public double getVoltage() {
@@ -112,12 +133,14 @@ public class Shooter extends SubsystemBase {
 
     public void stopMotor() {
         shooter1.stopMotor();
+        shooter2.stopMotor();
+        shooter3.stopMotor();
     }
 
     public void setConfig(TalonFXConfiguration config) {
         shooter1.getConfigurator().apply(config);
+        shooter3.getConfigurator().apply(config);
     }
-
 
     private void sysIDVoltage(Voltage volt) {
         runShooterVoltage(volt.baseUnitMagnitude());

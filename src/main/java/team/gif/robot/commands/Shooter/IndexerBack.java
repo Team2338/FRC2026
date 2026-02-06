@@ -4,33 +4,36 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class IndexerPercent extends Command {
-    double stage1 = 0;
-    double stage2 = 0;
+public class IndexerBack extends Command {
+    double speed = 0;
+    double seconds;
+    double timer;
 
-    public IndexerPercent() {
+    public IndexerBack(double seconds) {
         super();
         addRequirements(Robot.indexer);
+        this.seconds = seconds;
         //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        stage1 = SmartDashboard.getNumber("Indexer/Stage 1", 0);
-        stage2 = SmartDashboard.getNumber("Indexer/Stage 2", 0);
+        speed = SmartDashboard.getNumber("Indexer/Percent", 0);
+        timer = 0;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.indexer.runPercent(stage1, stage2);
+        Robot.indexer.runPercent(-0.25, 0);
+        timer++;
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return false;
+        return timer > 0.25 * 50;
     }
 
     // Called when the command ends or is interrupted.

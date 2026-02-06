@@ -55,9 +55,9 @@ public class Indexer extends SubsystemBase {
 
  */
 
-    public void runPercent(double percent) {
-        indexer.set(percent);
-        indexer2.set(percent);
+    public void runPercent(double stage1, double stage2) {
+        indexer.set(stage2);
+        indexer2.set(stage1);
     }
 
     public void runVoltage(double voltage) {

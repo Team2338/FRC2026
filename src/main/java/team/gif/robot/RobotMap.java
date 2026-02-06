@@ -82,8 +82,8 @@ public abstract class RobotMap {
     public static final class Shooter {
         public static final int SHOOTER_1 = 30;
         public static final int SHOOTER_2 = 31;
-        public static final int SHOOTER_3 = 0;
-        public static final int INDEXER = 32;
+        public static final int SHOOTER_3 = 32;
+        public static final int INDEXER = 33;
         public static final int INDEXER_2 = 60;
     }
 

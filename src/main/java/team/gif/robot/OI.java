@@ -2,9 +2,12 @@ package team.gif.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
@@ -95,12 +98,11 @@ public class OI {
          * Simple Test:
          *   aX.onTrue(new PrintCommand("aX"));
          */
-
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
         dA.whileTrue(new ShooterRPM());
         dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
-        dLBump.whileTrue(new IndexerPercent());
+        dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent()));
 
         aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
         aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
