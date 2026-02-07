@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import team.gif.robot.commands.CollectorRPM;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
@@ -103,6 +104,7 @@ public class OI {
         dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent()));
+        dRBump.whileTrue(new CollectorRPM());
 
         aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
         aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));

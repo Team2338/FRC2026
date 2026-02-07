@@ -27,6 +27,10 @@ public class UI {
         SmartDashboard.putNumber("Indexer/Stage 1", 0.5);
         SmartDashboard.putNumber("Indexer/Stage 2", 0.8);
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+        SmartDashboard.putNumber("Collector/PID/P", 0);
+        SmartDashboard.putNumber("Collector/PID/I", 0);
+        SmartDashboard.putNumber("Collector/PID/D", 0);
+        SmartDashboard.putNumber("Collector/PID/Setpoint", 0);
     }
 
     /**
@@ -46,6 +50,8 @@ public class UI {
         SmartDashboard.putNumber("PID/Shooter Output 2", Robot.shooter.getOutput2());
         SmartDashboard.putNumber("PID/Shooter Output 3", Robot.shooter.getOutput3());
         SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getSpeed());
+        SmartDashboard.putNumber("Collector/PID/Collector 1 Speed", Robot.collector.getSpeed());
+        SmartDashboard.putNumber("Collector/PID/Collector 2 Speed", Robot.collector.getSpeed2());
 
     }
 }
