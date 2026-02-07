@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class CollectorRPM extends Command {
+public class CollectorVoltage extends Command {
 
-    double rpm = 0;
+    double voltage = 0;
 
-    public CollectorRPM() {
+    public CollectorVoltage() {
         super();
         addRequirements(Robot.collector);
     }
@@ -16,8 +16,8 @@ public class CollectorRPM extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = SmartDashboard.getNumber("Collector/PID/Collect Reference", 0);
-        Robot.collector.runCollector(rpm);
+        voltage = SmartDashboard.getNumber("Collector/PID/Collect Voltage", 0);
+        Robot.collector.runCollectorVoltage(voltage);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

@@ -14,18 +14,17 @@ import team.gif.robot.RobotMap;
 public class Collector extends SubsystemBase {
 
     private final TalonFX collectorMotor;
+    private final TalonFX pivotMotor;
     public TalonFXConfiguration config = new TalonFXConfiguration();
     public VelocityVoltage velocityVoltage;
 
     public Collector() {
-        collectorMotor = new TalonFX(RobotMap.Collector.COLLECTOR_1);
+        collectorMotor = new TalonFX(RobotMap.Collector.COLLECT_MOTOR);
+        pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
 
         config.Slot0.kP = 0.35;
         config.Slot0.kI = 0;
         config.Slot0.kD = 0;
-        config.Slot0.kS = 0;
-        config.Slot0.kV = 0;
-        config.Slot0.kA = 0;
 
         setConfig(config);
 
@@ -36,9 +35,9 @@ public class Collector extends SubsystemBase {
     @Override
     public void periodic() {
 
-        double netP = SmartDashboard.getNumber("Collector/PID/P", 0);
-        double netI = SmartDashboard.getNumber("Collector/PID/I", 0);
-        double netD = SmartDashboard.getNumber("Collector/PID/D", 0);
+        double netP = SmartDashboard.getNumber("Collector/PID/Collect P", 0);
+        double netI = SmartDashboard.getNumber("Collector/PID/Collect I", 0);
+        double netD = SmartDashboard.getNumber("Collector/PID/Collect D", 0);
 
         double currP = config.Slot0.kP;
         double currI = config.Slot0.kI;
@@ -49,21 +48,45 @@ public class Collector extends SubsystemBase {
             config.Slot0.kP = netP;
             config.Slot0.kI = netI;
             config.Slot0.kD = netD;
-            config.Slot0.kS = 0;
-            config.Slot0.kV = 0;
-            config.Slot0.kA = 0;
             setConfig(config);
         }
 
     }
 
+    public void runCollectorPercent(double percent){
+        collectorMotor.set(percent);
+    }
+
+    public void runCollectorVoltage(double volts){
+        collectorMotor.setVoltage(volts);
+    }
 
     public void runCollector(double rpm) {
         collectorMotor.setControl(velocityVoltage.withVelocity(-rpm/60));
     }
 
-    public double getSpeed() {
+    public void runPivotPercent(double percent) {
+        pivotMotor.set(percent);
+    }
+
+    public void runPivotVoltage(double volts){
+        pivotMotor.setVoltage(volts);
+    }
+
+    public double getCollectOutput() {
+        return collectorMotor.getMotorVoltage().getValueAsDouble() / 12;
+    }
+
+    public double getCollectSpeed() {
         return Math.abs(collectorMotor.getVelocity().getValueAsDouble() * 60);
+    }
+
+    public double getPivotOutput() {
+        return pivotMotor.getMotorVoltage().getValueAsDouble() / 12;
+    }
+
+    public double getPivotSpeed() {
+        return pivotMotor.getVelocity().getValueAsDouble() * 60;
     }
 
     public void stopMotor() {
@@ -73,7 +96,5 @@ public class Collector extends SubsystemBase {
     public void setConfig(TalonFXConfiguration config) {
         collectorMotor.getConfigurator().apply(config);
     }
-
-
 
 }

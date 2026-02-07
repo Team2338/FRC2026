@@ -7,6 +7,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Collector;
 import team.gif.robot.subsystems.Indexer;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
         indexer = new Indexer();
 
         collector = new Collector();
+        collector.setDefaultCommand(new CollectorPivot());
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
 //        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
