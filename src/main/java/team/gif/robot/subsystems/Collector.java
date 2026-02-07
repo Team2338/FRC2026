@@ -13,14 +13,12 @@ import team.gif.robot.RobotMap;
 
 public class Collector extends SubsystemBase {
 
-    private final TalonFX collectorMotor1;
-    private final TalonFX collectorMotor2;
+    private final TalonFX collectorMotor;
     public TalonFXConfiguration config = new TalonFXConfiguration();
     public VelocityVoltage velocityVoltage;
 
     public Collector() {
-        collectorMotor1 = new TalonFX(RobotMap.Collector.COLLECTOR_1);
-        collectorMotor2 = new TalonFX(RobotMap.Collector.COLLECTOR_2);
+        collectorMotor = new TalonFX(RobotMap.Collector.COLLECTOR_1);
 
         config.Slot0.kP = 0.35;
         config.Slot0.kI = 0;
@@ -61,26 +59,19 @@ public class Collector extends SubsystemBase {
 
 
     public void runCollector(double rpm) {
-        collectorMotor1.setControl(velocityVoltage.withVelocity(-rpm/60));
-        collectorMotor2.setControl(velocityVoltage.withVelocity(-rpm/60));
+        collectorMotor.setControl(velocityVoltage.withVelocity(-rpm/60));
     }
 
     public double getSpeed() {
-        return Math.abs(collectorMotor1.getVelocity().getValueAsDouble() * 60);
-    }
-
-    public double getSpeed2() {
-        return Math.abs(collectorMotor2.getVelocity().getValueAsDouble() * 60);
+        return Math.abs(collectorMotor.getVelocity().getValueAsDouble() * 60);
     }
 
     public void stopMotor() {
-        collectorMotor1.stopMotor();
-        collectorMotor2.stopMotor();
+        collectorMotor.stopMotor();
     }
 
     public void setConfig(TalonFXConfiguration config) {
-        collectorMotor1.getConfigurator().apply(config);
-        collectorMotor2.getConfigurator().apply(config);
+        collectorMotor.getConfigurator().apply(config);
     }
 
 

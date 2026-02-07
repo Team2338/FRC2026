@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import team.gif.robot.commands.CollectorRPM;
+import team.gif.robot.commands.Collector.CollectorRPM;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;

@@ -1,4 +1,4 @@
-package team.gif.robot.commands;
+package team.gif.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,7 +16,7 @@ public class CollectorRPM extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = SmartDashboard.getNumber("Collector/PID/Setpoint", 0);
+        rpm = SmartDashboard.getNumber("Collector/PID/Reference", 0);
         Robot.collector.runCollector(rpm);
     }
 

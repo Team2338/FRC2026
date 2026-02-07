@@ -88,8 +88,7 @@ public abstract class RobotMap {
     }
 
     public static final class Collector {
-        public static final int COLLECTOR_1 = 0;
-        public static final int COLLECTOR_2 = 0;
+        public static final int COLLECTOR_1 = 20;
     }
 
     public static final int PIGEON_ID = 9;
