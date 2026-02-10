@@ -3,6 +3,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -103,6 +104,7 @@ public class OI {
         dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent()));
+        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
         aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
         aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
