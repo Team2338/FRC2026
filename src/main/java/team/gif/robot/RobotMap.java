@@ -89,7 +89,7 @@ public abstract class RobotMap {
 
     public static final class Collector {
         public static final int COLLECT_MOTOR = 20;
-        public static final int PIVOT_MOTOR = 21;
+        public static final int PIVOT_MOTOR = 43;
     }
 
     public static final int PIGEON_ID = 9;

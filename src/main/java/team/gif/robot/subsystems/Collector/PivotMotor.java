@@ -9,10 +9,13 @@ public class PivotMotor extends SubsystemBase {
     private final TalonFX pivotMotor;
     //public TalonFXConfiguration config = new TalonFXConfiguration(); - shouldn't need this because no PID atm
 
-    public PivotMotor(){pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);}
+    public PivotMotor(){
+        pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
+    }
 
     public void runPivotPercent(double percent) {
         pivotMotor.set(percent);
+        System.out.println(percent);
     }
 
     public void runPivotVoltage(double volts){
