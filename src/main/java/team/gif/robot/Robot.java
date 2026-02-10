@@ -7,6 +7,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Collector.CollectMotor;
@@ -64,7 +65,6 @@ public class Robot extends TimedRobot {
         indexer = new Indexer();
 
         collectMotor = new CollectMotor();
-        collectMotor.setDefaultCommand(new CollectorPivot());
         pivotMotor = new PivotMotor();
         pivotMotor.setDefaultCommand(new CollectorPivot());
 
