@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
-import team.gif.robot.subsystems.Collector;
+import team.gif.robot.subsystems.Collector.CollectMotor;
+import team.gif.robot.subsystems.Collector.PivotMotor;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Shooter;
 import team.gif.robot.subsystems.drivers.Pigeon2_0;
 import team.gif.robot.subsystems.drivers.swerve.SwerveDrive;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConfiguration;
-import team.gif.robot.subsystems.drivers.swerve.SwerveDrivetrain;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXDriveMotor;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXTurnMotor;
 import team.gif.robot.subsystems.drivers.swerve.CANCoderEncoder;
@@ -42,7 +42,8 @@ public class Robot extends TimedRobot {
     public static Shooter shooter;
     public static Indexer indexer;
 
-    public static Collector collector;
+    public static CollectMotor collectMotor;
+    public static PivotMotor pivotMotor;
 
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
@@ -62,8 +63,10 @@ public class Robot extends TimedRobot {
         shooter = new Shooter();
         indexer = new Indexer();
 
-        collector = new Collector();
-        collector.setDefaultCommand(new CollectorPivot());
+        collectMotor = new CollectMotor();
+        collectMotor.setDefaultCommand(new CollectorPivot());
+        pivotMotor = new PivotMotor();
+        pivotMotor.setDefaultCommand(new CollectorPivot());
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
 //        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);

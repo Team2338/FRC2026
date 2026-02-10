@@ -10,7 +10,7 @@ public class CollectorPivot extends Command {
 
     public CollectorPivot() {
         super();
-//        addRequirements(Robot.collector);
+        addRequirements(Robot.pivotMotor);
     }
 
     // Called when the command is initially scheduled.
@@ -22,7 +22,7 @@ public class CollectorPivot extends Command {
     public void execute() {
         percent = Robot.oi.aux.getRightY();
         percent *= Constants.Collector.COLLECTOR_PERCENT_MULTIPLIER;
-        Robot.collector.runPivotPercent(Robot.oi.aux.getRightY());
+        Robot.pivotMotor.runPivotPercent(percent);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -33,5 +33,5 @@ public class CollectorPivot extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {Robot.pivotMotor.stopMotor();}
 }
