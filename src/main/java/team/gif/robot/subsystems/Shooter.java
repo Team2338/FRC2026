@@ -60,9 +60,9 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
 
-        double netP = SmartDashboard.getNumber("PID/P", 0);
-        double netI = SmartDashboard.getNumber("PID/I", 0);
-        double netD = SmartDashboard.getNumber("PID/D", 0);
+        double netP = SmartDashboard.getNumber("COLLECTOR/PID/P", 0);
+        double netI = SmartDashboard.getNumber("COLLECTOR/PID/I", 0);
+        double netD = SmartDashboard.getNumber("COLLECTOR/PID/D", 0);
 
         double currP = config.Slot0.kP;
         double currI = config.Slot0.kI;

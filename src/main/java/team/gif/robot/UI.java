@@ -27,6 +27,17 @@ public class UI {
         SmartDashboard.putNumber("Indexer/Stage 1", 0.5);
         SmartDashboard.putNumber("Indexer/Stage 2", 0.8);
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
+        SmartDashboard.putNumber("Collector/PID/Collect P", 0);
+        SmartDashboard.putNumber("Collector/PID/Collect I", 0);
+        SmartDashboard.putNumber("Collector/PID/Collect D", 0);
+//        SmartDashboard.putNumber("Collector/PID/Pivot P", 0);
+//        SmartDashboard.putNumber("Collector/PID/Pivot I", 0);
+//        SmartDashboard.putNumber("Collector/PID/Pivot D", 0);
+        SmartDashboard.putNumber("Collector/PID/Collect Percent", 0);
+        SmartDashboard.putNumber("Collector/PID/Collect Voltage", 0);
+        SmartDashboard.putNumber("Collector/PID/Collect Reference", 0);
+        SmartDashboard.putNumber("Collector/PID/Pivot Percent", 0);
+        SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
     }
 
     /**
@@ -46,6 +57,10 @@ public class UI {
         SmartDashboard.putNumber("PID/Shooter Output 2", Robot.shooter.getOutput2());
         SmartDashboard.putNumber("PID/Shooter Output 3", Robot.shooter.getOutput3());
         SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getSpeed());
+        SmartDashboard.putNumber("Collector/PID/Collector Output", Robot.collectMotor.getCollectOutput());
+        SmartDashboard.putNumber("Collector/PID/Collector Speed", Robot.collectMotor.getCollectSpeed());
+        SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());
+        SmartDashboard.putNumber("Collector/PID/Pivot Speed", Robot.pivotMotor.getPivotSpeed());
 
     }
 }
