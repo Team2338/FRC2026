@@ -79,6 +79,8 @@ public class Robot extends TimedRobot {
         //These should be at or near the bottom
         oi = new OI();
         ui = new UI();
+        pigeon.addToShuffleboard("Heading");
+
 
     }
 

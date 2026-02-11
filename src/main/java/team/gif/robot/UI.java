@@ -62,5 +62,6 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());
         SmartDashboard.putNumber("Collector/PID/Pivot Speed", Robot.pivotMotor.getPivotSpeed());
 
+
     }
 }

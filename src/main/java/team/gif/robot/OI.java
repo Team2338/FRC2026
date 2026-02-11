@@ -16,6 +16,8 @@ import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.Shooter.ShooterVoltage;
+import team.gif.robot.commands.drivetrain.Reset0;
+import team.gif.robot.commands.drivetrain.Reset180;
 
 public class OI {
     /*
@@ -102,6 +104,8 @@ public class OI {
          * Simple Test:
          *   aX.onTrue(new PrintCommand("aX"));
          */
+        dStart.and(dDPadUp).onTrue(new Reset0());
+        dStart.and(dDPadDown).onTrue(new Reset180());
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
         dA.whileTrue(new ShooterRPM());
         dX.whileTrue(new ShooterVoltage());
