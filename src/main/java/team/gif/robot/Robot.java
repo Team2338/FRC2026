@@ -162,7 +162,7 @@ public class Robot extends TimedRobot {
     }
 
     public static void enableRobotModeManual() {
-        //robotMode = RobotMode.STANDARD_OP.MANUAL;
+        //robotMode = RobotMode.MANUAL;
     }
 
     static public void enableRobotModeStandardOp() {
