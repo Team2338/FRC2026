@@ -7,6 +7,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.lib.RobotMode;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
 
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
+    private static RobotMode robotMode;
 
 
     /**
@@ -80,7 +82,7 @@ public class Robot extends TimedRobot {
         oi = new OI();
         ui = new UI();
         pigeon.addToShuffleboard("Heading");
-
+        robotMode = RobotMode.STANDARD_OP;
 
     }
 
@@ -150,4 +152,20 @@ public class Robot extends TimedRobot {
     /** This function is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    public static RobotMode getRobotMode() {
+        return robotMode;
+    }
+
+    public static boolean isRobotInStandardOpMode() {
+        return robotMode == RobotMode.STANDARD_OP;
+    }
+
+    public static void enableRobotModeManual() {
+        //robotMode = RobotMode.STANDARD_OP.MANUAL;
+    }
+
+    static public void enableRobotModeStandardOp() {
+        robotMode = RobotMode.STANDARD_OP;
+    }
 }

@@ -17,6 +17,7 @@ import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.Shooter.ShooterVoltage;
+import team.gif.robot.commands.ToggleManualMode;
 import team.gif.robot.commands.drivetrain.Reset0;
 import team.gif.robot.commands.drivetrain.Reset180;
 
@@ -110,6 +111,7 @@ public class OI {
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
+        dStart.and(dBack).toggleOnTrue(new ToggleManualMode());
         //dA.whileTrue(new ShooterRPM()); - pick one later
         //dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
@@ -121,6 +123,7 @@ public class OI {
         aStart.and(aDPadDown).onTrue(new Reset180());
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         //aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        aStart.and(aBack).toggleOnTrue(new ToggleManualMode());
         //aA.whileTrue(new CollectorRPM()); - pick one later
         //aX.whileTrue(new CollectorVoltage());
         aRTrigger.whileTrue(new CollectorPercent());
