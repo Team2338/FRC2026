@@ -29,5 +29,4 @@ public class PivotMotor extends SubsystemBase {
     public double getPivotSpeed() {
         return pivotMotor.getVelocity().getValueAsDouble() * 60;
     }
-    
 }

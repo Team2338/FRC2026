@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorRPM;
 import team.gif.robot.commands.Collector.CollectorVoltage;
+import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
@@ -107,15 +108,19 @@ public class OI {
         dStart.and(dDPadUp).onTrue(new Reset0());
         dStart.and(dDPadDown).onTrue(new Reset180());
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
-        dA.whileTrue(new ShooterRPM());
-        dX.whileTrue(new ShooterVoltage());
+        //dA.whileTrue(new ShooterRPM()); - pick one later
+        //dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent()));
         dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
-        aA.whileTrue(new CollectorRPM());
-        aX.whileTrue(new CollectorVoltage());
-        aY.whileTrue(new CollectorPercent());
+
+        aStart.and(aDPadUp).onTrue(new Reset0());
+        aStart.and(aDPadDown).onTrue(new Reset180());
+        //aA.whileTrue(new CollectorRPM()); - pick one later
+        //aX.whileTrue(new CollectorVoltage());
+        aRTrigger.whileTrue(new CollectorPercent());
+        aRBump.whileTrue(new ReverseCollectorPercent());
 
         aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
         aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
