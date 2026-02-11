@@ -7,7 +7,6 @@ import team.gif.robot.RobotMap;
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
-    //public TalonFXConfiguration config = new TalonFXConfiguration(); - shouldn't need this because no PID atm
 
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
@@ -29,4 +28,11 @@ public class PivotMotor extends SubsystemBase {
     public double getPivotSpeed() {
         return pivotMotor.getVelocity().getValueAsDouble() * 60;
     }
+
+    public double getPosition(){return pivotMotor.getPosition().getValueAsDouble();}
+
+    public void zeroEncoder(){pivotMotor.setPosition(0);}
+
+    //Change position value later after testing
+    //public void deployedEncoder(){pivotMotor.setPosition(0);}
 }
