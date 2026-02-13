@@ -107,6 +107,8 @@ public class OI {
          */
         dStart.and(dDPadUp).onTrue(new Reset0());
         dStart.and(dDPadDown).onTrue(new Reset180());
+        dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
+        //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
         //dA.whileTrue(new ShooterRPM()); - pick one later
         //dX.whileTrue(new ShooterVoltage());
@@ -117,6 +119,8 @@ public class OI {
 
         aStart.and(aDPadUp).onTrue(new Reset0());
         aStart.and(aDPadDown).onTrue(new Reset180());
+        aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
+        //aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         //aA.whileTrue(new CollectorRPM()); - pick one later
         //aX.whileTrue(new CollectorVoltage());
         aRTrigger.whileTrue(new CollectorPercent());
