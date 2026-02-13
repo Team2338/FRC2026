@@ -1,8 +1,8 @@
 package team.gif.lib;
 
 public enum RobotMode {
-    STANDARD_OP(0);
-    //MANUAL(1);
+    STANDARD_OP(0),
+    MANUAL(1);
 
     private double value;
 
