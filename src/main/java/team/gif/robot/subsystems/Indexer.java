@@ -6,12 +6,15 @@ package team.gif.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
@@ -19,18 +22,22 @@ import team.gif.robot.RobotMap;
 public class Indexer extends SubsystemBase {
 
     public TalonFX indexer;
-    public SparkFlex indexer2;
+    public TalonFX indexer2;
     public TalonFXConfiguration config = new TalonFXConfiguration();
-    public SparkFlexConfig sparkConfig = new SparkFlexConfig();
+    public TalonFXConfiguration config2 = new TalonFXConfiguration();
+//    public SparkFlexConfig sparkConfig = new SparkFlexConfig();
 
     /** Creates a new ExampleSubsystem. */
     public Indexer() {
        indexer = new TalonFX(RobotMap.Shooter.INDEXER);
-       indexer2 = new SparkFlex(RobotMap.Shooter.INDEXER_2, SparkLowLevel.MotorType.kBrushless);
-       sparkConfig.inverted(false);
-       sparkConfig.idleMode(SparkBaseConfig.IdleMode.kCoast);
-       indexer2.configure(sparkConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+       indexer2 = new TalonFX(RobotMap.Shooter.INDEXER_2);
+
+       config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+       config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+       config2.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
        indexer.getConfigurator().apply(config);
+       indexer2.getConfigurator().apply(config2);
     }
 /*
     @Override

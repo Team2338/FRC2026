@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
@@ -30,6 +31,8 @@ public class Shooter extends SubsystemBase {
     public TalonFX shooter2;
     public TalonFX shooter3;
     public TalonFXConfiguration config = new TalonFXConfiguration();
+    public TalonFXConfiguration config2 = new TalonFXConfiguration();
+    public TalonFXConfiguration config3 = new TalonFXConfiguration();
     public VelocityVoltage velocityVoltage;
 
     /** Creates a new ExampleSubsystem. */
@@ -45,18 +48,21 @@ public class Shooter extends SubsystemBase {
        config.Slot0.kV = 0.11522;
        config.Slot0.kA = 0.0078728;
 
+       config2 = config.clone();
+       config3 = config.clone();
+
+       config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+       config2.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+       config3.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
        shooter1.getConfigurator().apply(config);
-       shooter2.getConfigurator().apply(config);
-       shooter3.getConfigurator().apply(config);
-
-       Follower follower = new Follower(shooter1.getDeviceID(), MotorAlignmentValue.Opposed);
-
-//       shooter2.setControl(follower);
-//       shooter3.setControl(follower);
+       shooter2.getConfigurator().apply(config2);
+       shooter3.getConfigurator().apply(config3);
 
        velocityVoltage = new VelocityVoltage(0).withSlot(0);
     }
 
+    /*
     @Override
     public void periodic() {
 
@@ -81,6 +87,7 @@ public class Shooter extends SubsystemBase {
         }
 
     }
+    */
 
     public void runShooterPercent(double percent) {
         shooter1.set(percent);

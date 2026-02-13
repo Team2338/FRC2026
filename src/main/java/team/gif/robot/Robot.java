@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
         indexer = new Indexer();
 
         collector = new Collector();
-        collector.setDefaultCommand(new CollectorPivot());
+//        collector.setDefaultCommand(new CollectorPivot());
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
 //        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
