@@ -17,6 +17,7 @@ import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.IndexerReverseManualMode;
+import team.gif.robot.commands.Shooter.ReverseShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.Shooter.ShooterVoltage;
@@ -118,8 +119,9 @@ public class OI {
         //dA.whileTrue(new ShooterRPM()); - pick one later
         //dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
-        dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //dLBump is for boost, change later
-        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0)))); //Change to d-pad up
+        dA.whileTrue(new ConditionalCommand(new ReverseShooterPercent(), new PrintCommand(""), Robot::isRobotInManualMode));
+        dDPadUp.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //dLBump is for boost, change later
+//        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0)))); //Change to d-pad up
         dDPadDown.whileTrue(new ConditionalCommand(new IndexerReverseManualMode(), new PrintCommand(""), Robot::isRobotInManualMode));
 
 
