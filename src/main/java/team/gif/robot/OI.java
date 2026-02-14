@@ -110,29 +110,21 @@ public class OI {
         dStart.and(dDPadDown).onTrue(new Reset180());
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
-//        dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
-        dA.whileTrue(new ShooterRPM());
-        //dX.whileTrue(new ShooterVoltage());
-//        dY.whileTrue(new ShooterPercent());
-        dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //Change to up
+        dY.whileTrue(new ShooterRPM());
+        dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //might change to up later
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
-
-//        aA.whileTrue(new CollectorRPM());
-//        aX.whileTrue(new CollectorVoltage());
-        aY.whileTrue(new CollectorPercent().alongWith(new AgitatorPercent()));
 
         aStart.and(aDPadUp).onTrue(new Reset0());
         aStart.and(aDPadDown).onTrue(new Reset180());
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         //aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
-        //aA.whileTrue(new CollectorRPM()); - pick one later
-        //aX.whileTrue(new CollectorVoltage());
-        aRTrigger.whileTrue(new CollectorPercent());
+        //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
+        aRTrigger.whileTrue(new CollectorPercent().alongWith(new AgitatorPercent()));
         aRBump.whileTrue(new ReverseCollectorPercent());
 
-        aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
-        aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-        aRBump.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-        aRTrigger.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+//        aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
+//        aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+//        aRBump.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+//        aRTrigger.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
     }
 }
