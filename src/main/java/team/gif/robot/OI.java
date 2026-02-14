@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorRPM;
 import team.gif.robot.commands.Collector.CollectorVoltage;
@@ -102,7 +103,7 @@ public class OI {
          *   aX.onTrue(new PrintCommand("aX"));
          */
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
-        dA.whileTrue(new ShooterRPM());
+        dA.whileTrue(new ShooterRPM().alongWith(new AgitatorPercent()));
         dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent()));

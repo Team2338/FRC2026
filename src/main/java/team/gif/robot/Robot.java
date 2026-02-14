@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
+import team.gif.robot.subsystems.Agitator;
 import team.gif.robot.subsystems.Collector;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Shooter;
@@ -44,6 +45,8 @@ public class Robot extends TimedRobot {
 
     public static Collector collector;
 
+    public static Agitator agitator;
+
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
 
@@ -64,6 +67,8 @@ public class Robot extends TimedRobot {
 
         collector = new Collector();
 //        collector.setDefaultCommand(new CollectorPivot());
+
+        agitator = new Agitator();
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
 //        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
