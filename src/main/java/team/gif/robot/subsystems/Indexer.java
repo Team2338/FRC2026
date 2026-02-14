@@ -20,6 +20,7 @@ public class Indexer extends SubsystemBase {
 
     public TalonFX indexer;
     public SparkFlex indexer2;
+    private boolean indexManualMode =false;
     public TalonFXConfiguration config = new TalonFXConfiguration();
     public SparkFlexConfig sparkConfig = new SparkFlexConfig();
 
@@ -67,6 +68,10 @@ public class Indexer extends SubsystemBase {
 
 //    public void run(double rpm) {}
 
+    public void setIndexerManualMode(boolean manual){
+        this.indexManualMode = manual;
+    }
+
     public double getSpeed() {
         return indexer.getVelocity().getValueAsDouble();
     }
@@ -83,6 +88,8 @@ public class Indexer extends SubsystemBase {
         indexer.stopMotor();
         indexer2.stopMotor();
     }
+
+
 
     public void setConfig(TalonFXConfiguration config) {
         indexer.getConfigurator().apply(config);
