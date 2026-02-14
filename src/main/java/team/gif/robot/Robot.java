@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
+import team.gif.robot.subsystems.Agitator;
 import team.gif.robot.subsystems.Collector.CollectMotor;
 import team.gif.robot.subsystems.Collector.PivotMotor;
 import team.gif.robot.subsystems.Indexer;

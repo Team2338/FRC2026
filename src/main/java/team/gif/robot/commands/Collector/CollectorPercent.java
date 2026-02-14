@@ -17,7 +17,7 @@ public class CollectorPercent extends Command {
     @Override
     public void initialize() {
         percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
-        Robot.collectMotor.runCollectorPercent(percent);
+        Robot.collectMotor.runCollectorPercent(-percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
