@@ -103,14 +103,14 @@ public class OI {
          *   aX.onTrue(new PrintCommand("aX"));
          */
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
-        dA.whileTrue(new ShooterRPM().alongWith(new AgitatorPercent()));
+        dA.whileTrue(new ShooterRPM());
         dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent()));
 
         aA.whileTrue(new CollectorRPM());
         aX.whileTrue(new CollectorVoltage());
-        aY.whileTrue(new CollectorPercent());
+        aY.whileTrue(new CollectorPercent().alongWith(new AgitatorPercent()));
 
         aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
         aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
