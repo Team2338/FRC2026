@@ -161,6 +161,10 @@ public class Robot extends TimedRobot {
         return robotMode == RobotMode.STANDARD_OP;
     }
 
+    public static boolean isRobotInManualMode() {
+        return robotMode == RobotMode.MANUAL;
+    }
+
     public static void enableRobotModeManual() {
         robotMode = RobotMode.MANUAL;
     }
