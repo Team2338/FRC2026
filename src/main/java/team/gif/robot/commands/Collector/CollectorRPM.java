@@ -10,14 +10,14 @@ public class CollectorRPM extends Command {
 
     public CollectorRPM() {
         super();
-        addRequirements(Robot.collector);
+        addRequirements(Robot.collectMotor);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         rpm = SmartDashboard.getNumber("Collector/PID/Collect Reference", 0);
-        Robot.collector.runCollector(rpm);
+        Robot.collectMotor.runCollector(rpm);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -33,6 +33,6 @@ public class CollectorRPM extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collector.stopMotor();
+        Robot.collectMotor.stopMotor();
     }
 }

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package team.gif.robot.subsystems;
+package team.gif.robot.subsystems.Collector;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
@@ -12,19 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
 
-public class Collector extends SubsystemBase {
+public class CollectMotor extends SubsystemBase {
 
     private final TalonFX collectorMotor;
-    private final TalonFX pivotMotor;
     public TalonFXConfiguration config = new TalonFXConfiguration();
     public VelocityVoltage velocityVoltage;
 
-    public Collector() {
+    public CollectMotor() {
         collectorMotor = new TalonFX(RobotMap.Collector.COLLECT_MOTOR);
-        pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
-
-        config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
         config.Slot0.kP = 0.35;
         config.Slot0.kI = 0;
         config.Slot0.kD = 0;
@@ -68,14 +63,6 @@ public class Collector extends SubsystemBase {
         collectorMotor.setControl(velocityVoltage.withVelocity(-rpm/60));
     }
 
-    public void runPivotPercent(double percent) {
-        pivotMotor.set(percent);
-    }
-
-    public void runPivotVoltage(double volts){
-        pivotMotor.setVoltage(volts);
-    }
-
     public double getCollectOutput() {
         return collectorMotor.getMotorVoltage().getValueAsDouble() / 12;
     }
@@ -84,17 +71,7 @@ public class Collector extends SubsystemBase {
         return Math.abs(collectorMotor.getVelocity().getValueAsDouble() * 60);
     }
 
-    public double getPivotOutput() {
-        return pivotMotor.getMotorVoltage().getValueAsDouble() / 12;
-    }
-
-    public double getPivotSpeed() {
-        return pivotMotor.getVelocity().getValueAsDouble() * 60;
-    }
-
-    public void stopMotor() {
-        collectorMotor.stopMotor();
-    }
+    public void stopMotor() {collectorMotor.stopMotor();}
 
     public void setConfig(TalonFXConfiguration config) {
         collectorMotor.getConfigurator().apply(config);

@@ -1,29 +1,26 @@
-package team.gif.robot.commands.Collector;
+package team.gif.robot.commands.Agitator;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class CollectorPivot extends Command {
+public class AgitatorPercent extends Command {
 
-    double percent;
-
-    public CollectorPivot() {
+    public AgitatorPercent() {
         super();
-        addRequirements(Robot.pivotMotor);
+        addRequirements(Robot.agitator);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        double percent = SmartDashboard.getNumber("Agitator/Percent", 0);
+        Robot.agitator.setPercent(percent);
+    }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {
-        percent = Robot.oi.aux.getLeftY();
-        percent *= Constants.Collector.COLLECTOR_PERCENT_MULTIPLIER;
-        Robot.pivotMotor.runPivotPercent(percent);
-    }
+    public void execute() {}
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
@@ -33,5 +30,7 @@ public class CollectorPivot extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Robot.agitator.stopMotor();
+    }
 }

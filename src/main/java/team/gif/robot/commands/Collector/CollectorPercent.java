@@ -10,14 +10,14 @@ public class CollectorPercent extends Command {
 
     public CollectorPercent() {
         super();
-        addRequirements(Robot.collector);
+        addRequirements(Robot.collectMotor);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
-        Robot.collector.runCollectorPercent(percent);
+        Robot.collectMotor.runCollectorPercent(-percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -33,6 +33,6 @@ public class CollectorPercent extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collector.stopMotor();
+        Robot.collectMotor.stopMotor();
     }
 }

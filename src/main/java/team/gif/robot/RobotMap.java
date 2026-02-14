@@ -92,5 +92,9 @@ public abstract class RobotMap {
         public static final int PIVOT_MOTOR = 41;
     }
 
+    public static final class Agitator {
+        public static final int AGITATOR_MOTOR = 35;
+    }
+
     public static final int PIGEON_ID = 9;
 }

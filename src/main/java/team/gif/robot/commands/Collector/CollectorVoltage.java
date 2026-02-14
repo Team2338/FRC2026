@@ -10,14 +10,14 @@ public class CollectorVoltage extends Command {
 
     public CollectorVoltage() {
         super();
-        addRequirements(Robot.collector);
+        addRequirements(Robot.collectMotor);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
         voltage = SmartDashboard.getNumber("Collector/PID/Collect Voltage", 0);
-        Robot.collector.runCollectorVoltage(voltage);
+        Robot.collectMotor.runCollectorVoltage(voltage);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -33,6 +33,6 @@ public class CollectorVoltage extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collector.stopMotor();
+        Robot.collectMotor.stopMotor();
     }
 }
