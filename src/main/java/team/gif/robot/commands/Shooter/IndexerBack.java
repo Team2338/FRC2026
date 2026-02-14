@@ -16,6 +16,13 @@ public class IndexerBack extends Command {
         //addRequirements(Robot.climber); // uncomment
     }
 
+    public IndexerBack() {
+        super();
+        addRequirements(Robot.indexer);
+        this.seconds = 999;
+        //addRequirements(Robot.climber); // uncomment
+    }
+
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {

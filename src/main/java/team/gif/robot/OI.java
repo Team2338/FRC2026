@@ -3,6 +3,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -11,11 +12,14 @@ import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorRPM;
 import team.gif.robot.commands.Collector.CollectorVoltage;
+import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.Shooter.ShooterVoltage;
+import team.gif.robot.commands.drivetrain.Reset0;
+import team.gif.robot.commands.drivetrain.Reset180;
 
 public class OI {
     /*
@@ -102,15 +106,29 @@ public class OI {
          * Simple Test:
          *   aX.onTrue(new PrintCommand("aX"));
          */
+        dStart.and(dDPadUp).onTrue(new Reset0());
+        dStart.and(dDPadDown).onTrue(new Reset180());
+        dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
+        //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dB.onTrue(new InstantCommand(() -> Robot.swerveDrive.resetDriveEncoders())); //temp
-        dA.whileTrue(new ShooterRPM());
-        dX.whileTrue(new ShooterVoltage());
+        //dA.whileTrue(new ShooterRPM()); - pick one later
+        //dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent()));
+        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
         aA.whileTrue(new CollectorRPM());
         aX.whileTrue(new CollectorVoltage());
         aY.whileTrue(new CollectorPercent().alongWith(new AgitatorPercent()));
+
+        aStart.and(aDPadUp).onTrue(new Reset0());
+        aStart.and(aDPadDown).onTrue(new Reset180());
+        aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
+        //aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        //aA.whileTrue(new CollectorRPM()); - pick one later
+        //aX.whileTrue(new CollectorVoltage());
+        aRTrigger.whileTrue(new CollectorPercent());
+        aRBump.whileTrue(new ReverseCollectorPercent());
 
         aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
         aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));

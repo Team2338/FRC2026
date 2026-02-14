@@ -4,20 +4,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class CollectorRPM extends Command {
+public class ReverseCollectorPercent extends Command {
 
-    double rpm = 0;
+    double percent = 0;
 
-    public CollectorRPM() {
+    public ReverseCollectorPercent() {
         super();
-        addRequirements(Robot.collectMotor);
+        addRequirements(Robot.collectMotor); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = SmartDashboard.getNumber("Collector/PID/Collect Reference", 0);
-        Robot.collectMotor.runCollector(rpm);
+        percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
+        Robot.collectMotor.runCollectorPercent(-percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -32,7 +32,5 @@ public class CollectorRPM extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {
-        Robot.collectMotor.stopMotor();
-    }
+    public void end(boolean interrupted) {Robot.collectMotor.stopMotor();}
 }
