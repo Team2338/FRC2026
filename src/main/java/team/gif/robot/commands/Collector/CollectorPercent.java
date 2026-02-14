@@ -13,10 +13,18 @@ public class CollectorPercent extends Command {
         addRequirements(Robot.collectMotor);
     }
 
+    public CollectorPercent(double perc) {
+        super();
+        addRequirements(Robot.collectMotor);
+        percent = perc;
+    }
+
+
+
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
+//        percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
         Robot.collectMotor.runCollectorPercent(-percent);
     }
 

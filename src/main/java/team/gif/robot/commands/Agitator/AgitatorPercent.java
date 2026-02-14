@@ -14,7 +14,7 @@ public class AgitatorPercent extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        double percent = SmartDashboard.getNumber("Agitator/Percent", 0);
+        double percent = SmartDashboard.getNumber("Agitator/Agitator Percent", 0);
         Robot.agitator.setPercent(percent);
     }
 

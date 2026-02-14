@@ -38,7 +38,7 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Collect Reference", 0);
         SmartDashboard.putNumber("Collector/PID/Pivot Percent", 0);
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
-        SmartDashboard.putNumber("Agitator/Percent", 0);
+        SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
     }
 
     /**
