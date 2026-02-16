@@ -16,6 +16,7 @@ import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.Collector.CollectorRPM;
 import team.gif.robot.commands.Collector.CollectorVoltage;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
+import team.gif.robot.commands.DriveModes.EnableBoost;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
@@ -111,6 +112,7 @@ public class OI {
          */
         dStart.and(dDPadUp).onTrue(new Reset0());
         dStart.and(dDPadDown).onTrue(new Reset180());
+        dRBump.whileTrue(new EnableBoost());
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
