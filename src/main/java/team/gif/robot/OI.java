@@ -5,11 +5,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
+import team.gif.robot.commands.Collector.CollectorAutoPivot;
 import team.gif.robot.commands.Collector.CollectorPercent;
+import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.Collector.CollectorRPM;
 import team.gif.robot.commands.Collector.CollectorVoltage;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
@@ -112,6 +115,7 @@ public class OI {
         //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //might change to up later
+        dLBump.onTrue(new WaitCommand(1.0).andThen(new CollectorAutoPivot().withTimeout(1.5)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
         aStart.and(aDPadUp).onTrue(new Reset0());

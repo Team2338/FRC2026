@@ -26,8 +26,9 @@ public class IndexerBack extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        speed = SmartDashboard.getNumber("Indexer/Percent", 0);
+        //speed = SmartDashboard.getNumber("Indexer/Percent", 0);
         timer = 0;
+        speed = 0.5;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
