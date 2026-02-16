@@ -39,7 +39,6 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Percent", 0);
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
         SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
-        SmartDashboard.putBoolean("Any Motor Hot", Robot.diagnostics.anyMotorTempHot());
     }
 
     /**
@@ -64,7 +63,8 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());
         SmartDashboard.putNumber("Collector/PID/Pivot Speed", Robot.pivotMotor.getPivotSpeed());
         SmartDashboard.putNumber("Collector Pivot Position", Robot.pivotMotor.getPosition());
-
-
+        SmartDashboard.putBoolean("Diagnostics/Any Motor Hot", Robot.diagnostics.anyMotorTempHot());
+        SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
+        SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
     }
 }
