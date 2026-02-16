@@ -2,8 +2,11 @@ package team.gif.robot.subsystems.Collector;
 
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
+
+import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
 
 public class PivotMotor extends SubsystemBase {
 
@@ -16,7 +19,6 @@ public class PivotMotor extends SubsystemBase {
 
     public void runPivotPercent(double percent) {
         pivotMotor.set(percent);
-        System.out.println(percent);
     }
 
     public void runPivotVoltage(double volts){
@@ -37,6 +39,8 @@ public class PivotMotor extends SubsystemBase {
 
     private void setConfig(){
         config = new TalonFXSConfiguration();
+
+        config.MotorOutput.Inverted = Clockwise_Positive;
 
         config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
