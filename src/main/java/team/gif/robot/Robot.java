@@ -14,6 +14,7 @@ import team.gif.robot.subsystems.Agitator;
 import team.gif.robot.subsystems.Collector.CollectMotor;
 import team.gif.robot.subsystems.Collector.PivotMotor;
 import team.gif.robot.subsystems.Indexer;
+import team.gif.robot.subsystems.PreIndexer;
 import team.gif.robot.subsystems.Shooter;
 import team.gif.robot.subsystems.drivers.Pigeon2_0;
 import team.gif.robot.subsystems.drivers.swerve.SwerveDrive;
@@ -43,11 +44,13 @@ public class Robot extends TimedRobot {
 
     public static Shooter shooter;
     public static Indexer indexer;
+    public static PreIndexer preIndexer;
+    public static Agitator agitator;
+
 
     public static CollectMotor collectMotor;
     public static PivotMotor pivotMotor;
 
-    public static Agitator agitator;
 
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
@@ -66,12 +69,12 @@ public class Robot extends TimedRobot {
 
         shooter = new Shooter();
         indexer = new Indexer();
+        preIndexer = new PreIndexer();
+        agitator = new Agitator();
 
         collectMotor = new CollectMotor();
         pivotMotor = new PivotMotor();
         pivotMotor.setDefaultCommand(new CollectorPivot());
-
-        agitator = new Agitator();
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
 //        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
