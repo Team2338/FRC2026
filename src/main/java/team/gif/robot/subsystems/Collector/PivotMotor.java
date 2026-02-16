@@ -1,5 +1,6 @@
 package team.gif.robot.subsystems.Collector;
 
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.RobotMap;
@@ -7,6 +8,7 @@ import team.gif.robot.RobotMap;
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
+    private TalonFXSConfiguration config;
 
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
@@ -32,6 +34,15 @@ public class PivotMotor extends SubsystemBase {
     public double getPosition(){return pivotMotor.getPosition().getValueAsDouble();}
 
     public void zeroEncoder(){pivotMotor.setPosition(0);}
+
+    private void setConfig(){
+        config = new TalonFXSConfiguration();
+
+        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
+        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+//        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+    }
 
     //Change position value later after testing
     //public void deployedEncoder(){pivotMotor.setPosition(0);}
