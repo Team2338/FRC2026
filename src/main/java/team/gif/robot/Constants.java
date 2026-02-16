@@ -5,7 +5,9 @@
 package team.gif.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
 
 /**
@@ -18,6 +20,11 @@ import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
  */
 public final class Constants {
     public static final double DEBOUNCE_DEFAULT = 0.020;
+
+    public static final class Field {
+        public static final Translation2d HUB_RED = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
+        public static final Translation2d HUB_BLUE = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+    }
 
     //These constants should be referenced via Robot.swerveDrive.getConstants();
     public static final class Mk5Constants extends SwerveConstants {
