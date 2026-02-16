@@ -135,5 +135,13 @@ public final class Constants {
         public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.20;
     }
 
+    public static final class MotorTemps {
+        public static final double COLLECTOR_SAFE_MOTOR_TEMP = 70.0;
+        public static final double PIVOT_SAFE_MOTOR_TEMP = 70.0;
+        public static final double AGITATOR_SAFE_MOTOR_TEMP = 70.0;
+        public static final double INDEX_SAFE_MOTOR_TEMP = 70.0;
+        public static final double SHOOTER_SAFE_MOTOR_TEMP = 70.0;
+    }
+
 
 }

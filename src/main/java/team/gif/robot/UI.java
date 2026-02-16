@@ -39,6 +39,7 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Percent", 0);
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
         SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
+        SmartDashboard.putBoolean("Any Motor Hot", Robot.diagnostics.anyMotorTempHot());
     }
 
     /**

@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
     public static SwerveDrive swerveDrive;
 
     public static UI ui;
+    public static Diagnostics diagnostics;
 
     public static Shooter shooter;
     public static Indexer indexer;
@@ -83,6 +84,7 @@ public class Robot extends TimedRobot {
 
         //These should be at or near the bottom
         oi = new OI();
+        diagnostics = new Diagnostics();
         ui = new UI();
         pigeon.addToShuffleboard("Heading");
 

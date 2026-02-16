@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 import static edu.wpi.first.units.Units.Rotations;
@@ -142,6 +143,18 @@ public class Shooter extends SubsystemBase {
         shooter1.stopMotor();
         shooter2.stopMotor();
         shooter3.stopMotor();
+    }
+
+    public boolean isLeftOverTemp() {
+        return shooter1.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_SAFE_MOTOR_TEMP;
+    }
+
+    public boolean isMiddleOverTemp() {
+        return shooter2.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_SAFE_MOTOR_TEMP;
+    }
+
+    public boolean isRightOverTemp() {
+        return shooter3.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_SAFE_MOTOR_TEMP;
     }
 
     public void setConfig(TalonFXConfiguration config) {
