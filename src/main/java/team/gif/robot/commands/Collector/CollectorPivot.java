@@ -21,6 +21,7 @@ public class CollectorPivot extends Command {
     @Override
     public void execute() {
         percent = Robot.oi.aux.getLeftY();
+        percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0;
         percent *= Constants.Collector.COLLECTOR_PERCENT_MULTIPLIER;
         Robot.pivotMotor.runPivotPercent(percent);
     }

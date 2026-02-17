@@ -20,7 +20,7 @@ public class CollectorAutoPivot extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.pivotMotor.runPivotPercent(-0.2);
+        Robot.pivotMotor.runPivotPercent(-0.8);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

@@ -132,7 +132,7 @@ public final class Constants {
     }
 
     public static final class Collector {
-        public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.20;
+        public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.70;
     }
 
 
