@@ -133,8 +133,7 @@ public final class Constants {
 
     public static final class Collector {
         public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.20;
-        public static final double PIVOT_DEPLOYED_ENCODER_POS = 8.00;
+        public static final double PIVOT_DEPLOYED_ENCODER_POS = 33.3;
+        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
     }
-
-
 }

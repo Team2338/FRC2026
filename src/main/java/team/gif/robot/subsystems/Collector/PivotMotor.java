@@ -1,5 +1,6 @@
 package team.gif.robot.subsystems.Collector;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -8,14 +9,17 @@ import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
+import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
 
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
-    private TalonFXSConfiguration config;
+    private TalonFXConfiguration config;
 
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
+
+        setConfig();
     }
 
     public void runPivotPercent(double percent) {
@@ -40,14 +44,15 @@ public class PivotMotor extends SubsystemBase {
     public void deployedEncoder(){pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);}
 
     private void setConfig(){
-        config = new TalonFXSConfiguration();
+        config = new TalonFXConfiguration();
 
-        config.MotorOutput.Inverted = Clockwise_Positive;
+        config.MotorOutput.Inverted = CounterClockwise_Positive;
 
         config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Collector.PIVOT_SOFT_LIMIT_UP_ENCODER_POS;
+        pivotMotor.getConfigurator().apply(config);
     }
 
     //Change position value later after testing

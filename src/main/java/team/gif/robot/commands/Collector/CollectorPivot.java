@@ -20,7 +20,7 @@ public class CollectorPivot extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        percent = Robot.oi.aux.getLeftY();
+        percent = -Robot.oi.aux.getLeftY();
         percent *= Constants.Collector.COLLECTOR_PERCENT_MULTIPLIER;
         Robot.pivotMotor.runPivotPercent(percent);
     }
