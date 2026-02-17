@@ -124,7 +124,7 @@ public class OI {
         aStart.and(aDPadUp).onTrue(new Reset0());
         aStart.and(aDPadDown).onTrue(new Reset180());
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
-        //aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
         aRTrigger.whileTrue(new CollectorPercent(0.7).alongWith(new AgitatorPercent()));
         aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent()));
