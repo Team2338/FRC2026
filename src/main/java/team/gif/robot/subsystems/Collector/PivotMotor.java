@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
@@ -47,6 +48,7 @@ public class PivotMotor extends SubsystemBase {
         config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
