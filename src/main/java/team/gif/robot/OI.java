@@ -112,7 +112,7 @@ public class OI {
         dStart.and(dDPadUp).onTrue(new Reset0());
         dStart.and(dDPadDown).onTrue(new Reset180());
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
-        //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
         dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //might change to up later
         dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));

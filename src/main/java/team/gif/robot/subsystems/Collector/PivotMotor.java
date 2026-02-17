@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
@@ -36,6 +37,7 @@ public class PivotMotor extends SubsystemBase {
     public double getPosition(){return pivotMotor.getPosition().getValueAsDouble();}
 
     public void zeroEncoder(){pivotMotor.setPosition(0);}
+    public void deployedEncoder(){pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);}
 
     private void setConfig(){
         config = new TalonFXSConfiguration();
@@ -45,7 +47,7 @@ public class PivotMotor extends SubsystemBase {
         config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-//        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
     }
 
     //Change position value later after testing
