@@ -19,6 +19,7 @@ import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.DriveModes.EnableBoost;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
+import team.gif.robot.commands.Shooter.PreIndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.Shooter.ShooterVoltage;
@@ -114,16 +115,16 @@ public class OI {
         dStart.and(dDPadDown).onTrue(new Reset180());
         dRBump.whileTrue(new EnableBoost());
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
-        //dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
-        dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //might change to up later
+        dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent().alongWith(new PreIndexerPercent()))); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
         aStart.and(aDPadUp).onTrue(new Reset0());
         aStart.and(aDPadDown).onTrue(new Reset180());
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
-        //aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
         aRTrigger.whileTrue(new CollectorPercent(0.7).alongWith(new AgitatorPercent()));
         aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent()));
