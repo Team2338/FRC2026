@@ -9,7 +9,6 @@ import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
 public class CollectAutoSequence extends SequentialCommandGroup {
     public CollectAutoSequence() {
         addCommands(
-                new CollectorAutoPivotDown(),
                 new ParallelRaceGroup(
                         new AgitatorAuto(),
                         new CollectorAutoPercent()

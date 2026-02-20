@@ -11,6 +11,8 @@ import team.gif.robot.commands.Agitator.AgitatorAuto;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoCollectRPM;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
+import team.gif.robot.commands.SequentialAutoCommands.CollectAutoSequence;
+import team.gif.robot.commands.SequentialAutoCommands.ShootAutoSequence;
 import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoBack;
 import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoPercent;
 import team.gif.robot.commands.Shooter.ShooterAutos.PreIndexerAutoPercent;
@@ -31,6 +33,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("Collector Collect", new CollectorAutoCollectRPM());
         NamedCommands.registerCommand("Indexer Run", new IndexerAutoBack(0.25).andThen(new PreIndexerAutoPercent().alongWith(new IndexerAutoPercent())));
         NamedCommands.registerCommand("Shoot", new ShooterAutoRPM());
+        NamedCommands.registerCommand("Collect Sequence", new CollectAutoSequence());
+        NamedCommands.registerCommand("Shoot Sequence", new ShootAutoSequence());
         // Configure the trigger bindings
         configureBindings();
     }
