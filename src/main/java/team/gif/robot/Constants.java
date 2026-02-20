@@ -135,5 +135,9 @@ public final class Constants {
         public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.20;
     }
 
+    public static final class Shooter {
+        public static final double REVERSE_SHOOTER_RPM = -600;
+    }
+
 
 }

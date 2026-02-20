@@ -3,24 +3,17 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.commands.Collector.CollectorPercent;
-import team.gif.robot.commands.Collector.CollectorRPM;
-import team.gif.robot.commands.Collector.CollectorVoltage;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.IndexerReverseManualMode;
-import team.gif.robot.commands.Shooter.ReverseShooterPercent;
+import team.gif.robot.commands.Shooter.ReverseShooterRPM;
 import team.gif.robot.commands.Shooter.ShooterPercent;
-import team.gif.robot.commands.Shooter.ShooterRPM;
-import team.gif.robot.commands.Shooter.ShooterVoltage;
 import team.gif.robot.commands.ToggleManualMode;
 import team.gif.robot.commands.drivetrain.Reset0;
 import team.gif.robot.commands.drivetrain.Reset180;
@@ -119,7 +112,7 @@ public class OI {
         //dA.whileTrue(new ShooterRPM()); - pick one later
         //dX.whileTrue(new ShooterVoltage());
         dY.whileTrue(new ShooterPercent());
-        dA.whileTrue(new ConditionalCommand(new ReverseShooterPercent(), new PrintCommand(""), Robot::isRobotInManualMode));
+        dA.whileTrue(new ConditionalCommand(new ReverseShooterRPM(), new PrintCommand(""), Robot::isRobotInManualMode));
         dDPadUp.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //dLBump is for boost, change later
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0)))); //Change to d-pad up
         dDPadDown.whileTrue(new ConditionalCommand(new IndexerReverseManualMode(), new PrintCommand(""), Robot::isRobotInManualMode));
