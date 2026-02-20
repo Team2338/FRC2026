@@ -135,5 +135,10 @@ public final class Constants {
         public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.70;
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 33.3;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
+        public static final double COLLECTOR_CYCLE = 0; //Change value
+    }
+
+    public static final class Shooter {
+        public static final double SHOOTER_CYCLE = 0; //Change value
     }
 }

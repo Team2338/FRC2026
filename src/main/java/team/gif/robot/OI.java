@@ -2,27 +2,16 @@ package team.gif.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.RepeatCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
-import team.gif.robot.commands.Collector.CollectorAutoPivot;
 import team.gif.robot.commands.Collector.CollectorPercent;
-import team.gif.robot.commands.Collector.CollectorPivot;
-import team.gif.robot.commands.Collector.CollectorRPM;
-import team.gif.robot.commands.Collector.CollectorVoltage;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.DriveModes.EnableBoost;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.PreIndexerPercent;
-import team.gif.robot.commands.Shooter.ShooterPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
-import team.gif.robot.commands.Shooter.ShooterVoltage;
 import team.gif.robot.commands.drivetrain.Reset0;
 import team.gif.robot.commands.drivetrain.Reset180;
 

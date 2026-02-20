@@ -4,8 +4,17 @@
 
 package team.gif.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import team.gif.robot.commands.Agitator.AgitatorAuto;
+import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoCollectRPM;
+import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
+import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
+import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoBack;
+import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoPercent;
+import team.gif.robot.commands.Shooter.ShooterAutos.PreIndexerAutoPercent;
+import team.gif.robot.commands.Shooter.ShooterAutos.ShooterAutoRPM;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,6 +26,11 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        NamedCommands.registerCommand("Agitator Auto", new CollectorAutoPercent(0.5).alongWith(new AgitatorAuto()));
+        NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
+        NamedCommands.registerCommand("Collector Collect", new CollectorAutoCollectRPM());
+        NamedCommands.registerCommand("Indexer Run", new IndexerAutoBack(0.25).andThen(new PreIndexerAutoPercent().alongWith(new IndexerAutoPercent())));
+        NamedCommands.registerCommand("Shoot", new ShooterAutoRPM());
         // Configure the trigger bindings
         configureBindings();
     }
