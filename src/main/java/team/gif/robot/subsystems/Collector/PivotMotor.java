@@ -57,6 +57,10 @@ public class PivotMotor extends SubsystemBase {
         pivotMotor.getConfigurator().apply(config);
     }
 
+    public boolean isOverTemp() {
+        return pivotMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.PIVOT_SAFE_MOTOR_TEMP;
+    }
+
     //Change position value later after testing
     //public void deployedEncoder(){pivotMotor.setPosition(0);}
 }
