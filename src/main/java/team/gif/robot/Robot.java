@@ -7,6 +7,8 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
@@ -49,6 +51,11 @@ public class Robot extends TimedRobot {
 
     public static Agitator agitator;
 
+    public static PhotonCamera leftCamera;
+    public static PhotonCamera rightCamera;
+    public static PhotonCamera sideCamera;
+    public static PhotonPoseEstimator photonEstimator;
+
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
 
@@ -79,6 +86,9 @@ public class Robot extends TimedRobot {
         swerveDrive = new SwerveDrive(swerveConfig);
         swerveDrive.setDefaultCommand(new DriveSwerve());
         swerveDrive.enableDebugMode();
+        swerveDrive.addPhotonCamera("photonvision-left", Constants.Vision.LEFT_CAMERA_POSITION);
+        swerveDrive.addPhotonCamera("photonvision-right", Constants.Vision.RIGHT_CAMERA_POSITION);
+        swerveDrive.addPhotonCamera("photonvision-side", Constants.Vision.SIDE_CAMERA_POSITION);
 //        swerveDrive.addLimelight("limelight-front");
 
         //These should be at or near the bottom

@@ -5,6 +5,8 @@
 package team.gif.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -24,6 +26,12 @@ public final class Constants {
     public static final class Field {
         public static final Translation2d HUB_RED = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
         public static final Translation2d HUB_BLUE = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+    }
+
+    public static final class Vision {
+        public static final Transform3d LEFT_CAMERA_POSITION = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+        public static final Transform3d RIGHT_CAMERA_POSITION = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+        public static final Transform3d SIDE_CAMERA_POSITION = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
     }
 
     //These constants should be referenced via Robot.swerveDrive.getConstants();
