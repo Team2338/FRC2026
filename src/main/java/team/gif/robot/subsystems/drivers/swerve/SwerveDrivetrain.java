@@ -58,7 +58,6 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Radians;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.Volts;
-import static team.gif.robot.Robot.photonEstimator;
 
 
 public class SwerveDrivetrain extends SubsystemBase {
@@ -91,11 +90,11 @@ public class SwerveDrivetrain extends SubsystemBase {
     public SwerveDrivePoseEstimator poseEstimator;
     private drivePace drivePace;
 
-    public boolean visionEnabled = true;
-    public String[] limelightNames = new String[] {};
-    public PhotonCamera[] photonCameras = new PhotonCamera[] {};
-    public PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[] {};
-    public static AprilTagFieldLayout tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+    private boolean visionEnabled = true;
+    private String[] limelightNames = new String[] {};
+    private PhotonCamera[] photonCameras = new PhotonCamera[] {};
+    private PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[] {};
+    private static AprilTagFieldLayout tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
     private Matrix<N3, N1> photonCurrStdDevs;
     
     public boolean debugMode = false;
@@ -128,7 +127,13 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         resetDriveEncoders();
 
-        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, Robot.pigeon.getRotation2d(), getPosition(), new Pose2d(0, 0, new Rotation2d(0)));
+        Rotation2d rotation = Robot.pigeon.getRotation2d();
+
+        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            rotation = rotation.rotateBy(new Rotation2d(Math.PI));
+        }
+
+        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getPosition(), new Pose2d(0, 0, new Rotation2d(0)));
 
         drivePace = team.gif.lib.drivePace.COAST_FR;
 
@@ -146,35 +151,50 @@ public class SwerveDrivetrain extends SubsystemBase {
             getPosition()
         );
 
-        if (Robot.pigeon.getYawRate() < 720) {
+//        if(visionEnabled) {
+//            for(PhotonPoseEstimator estimator : photonPoseEstimators) {
+//                double heading = Robot.pigeon.get360Heading();
+//                if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+//                    heading = heading - 180;
+//                }
+//                estimator.addHeadingData(Timer.getTimestamp(), new Rotation2d(heading));
+//            }
+//        }
+
+        if (Robot.pigeon.getYawRate() < 720 && visionEnabled) {
+
             for (String limelightName : limelightNames) {
                 LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
-                if(visionEnabled && estimate != null && estimate.tagCount > 0) {
+                if (visionEnabled && estimate != null && estimate.tagCount > 0) {
                     poseEstimator.addVisionMeasurement(
                             estimate.pose,
                             estimate.timestampSeconds,
-                            VecBuilder.fill(.7,.7,9999999));
+                            VecBuilder.fill(.7, .7, 9999999));
+
                 }
-
-                for (PhotonCamera camera : photonCameras) {
-                    Optional<EstimatedRobotPose> visionEst;
-                    for (var result : camera.getAllUnreadResults()) {
-                        visionEst = photonEstimator.estimateCoprocMultiTagPose(result);
-                        if (visionEst.isEmpty()) {
-                            visionEst = photonEstimator.estimateLowestAmbiguityPose(result);
-                        }
-
-                        updateEstimationStdDevs(visionEst, result.getTargets());
-
-                        visionEst.ifPresent(
-                                est -> {
-                                    // Change our trust in the measurement based on the tags we can see
-                                    var estStdDevs = getEstimationStdDevs();
-
-                                    poseEstimator.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
-                                });
+            }
+            for (var i = 0; i < photonCameras.length; i++) {
+                PhotonCamera camera = photonCameras[i];
+                PhotonPoseEstimator estimator = photonPoseEstimators[i];
+                Optional<EstimatedRobotPose> visionEst;
+                for (var result : camera.getAllUnreadResults()) {
+                    visionEst = estimator.estimateCoprocMultiTagPose(result);
+                    if (visionEst.isEmpty() || true) {
+                        visionEst = estimator.estimateLowestAmbiguityPose(result);
                     }
+
+                    updateEstimationStdDevs(visionEst, result.getTargets(), estimator);
+
+                    visionEst.ifPresent(
+                            est -> {
+                                System.out.println("updating pose est");
+                                // Change our trust in the measurement based on the tags we can see
+                                var estStdDevs = getEstimationStdDevs();
+
+                                poseEstimator.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+                            });
                 }
+
             }
         }
 
@@ -225,7 +245,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         newArray[newArray.length - 1] = new PhotonCamera(newPhotonCamName);
         photonCameras = newArray;
 
-        PhotonPoseEstimator[] newEstArray = new PhotonPoseEstimator[photonPoseEstimators.length];
+        PhotonPoseEstimator[] newEstArray = new PhotonPoseEstimator[photonPoseEstimators.length + 1];
         System.arraycopy(photonPoseEstimators, 0, newEstArray, 0, photonPoseEstimators.length);
         newEstArray[newEstArray.length - 1] = new PhotonPoseEstimator(tagLayout, cameraLocation);
         photonPoseEstimators = newEstArray;
@@ -247,7 +267,7 @@ public class SwerveDrivetrain extends SubsystemBase {
      * @param targets All targets in this camera frame
      */
     private void updateEstimationStdDevs(
-            Optional<EstimatedRobotPose> estimatedPose, List<PhotonTrackedTarget> targets) {
+            Optional<EstimatedRobotPose> estimatedPose, List<PhotonTrackedTarget> targets, PhotonPoseEstimator estimator) {
         if (estimatedPose.isEmpty()) {
             // No pose input. Default to single-tag std devs
             photonCurrStdDevs = VecBuilder.fill(0.7, 0.7, 9999999);
@@ -260,7 +280,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
             // Precalculation - see how many tags we found, and calculate an average-distance metric
             for (var tgt : targets) {
-                var tagPose = photonEstimator.getFieldTags().getTagPose(tgt.getFiducialId());
+                var tagPose = estimator.getFieldTags().getTagPose(tgt.getFiducialId());
                 if (tagPose.isEmpty()) continue;
                 numTags++;
                 avgDist +=

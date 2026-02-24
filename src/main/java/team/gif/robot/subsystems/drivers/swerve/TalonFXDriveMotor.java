@@ -39,11 +39,11 @@ public class TalonFXDriveMotor implements DriveMotor {
 
 
     public double getVelocity() {
-        return motor.getVelocity().getValueAsDouble() * positionConversion;
+        return motor.getVelocity().getValueAsDouble() * velocityConversion;
     }
 
     public double getPosition() {
-        return motor.getPosition().getValueAsDouble() * velocityConversion;
+        return motor.getPosition().getValueAsDouble() * positionConversion;
     }
 
 

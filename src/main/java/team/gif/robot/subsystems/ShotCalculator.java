@@ -27,6 +27,7 @@ public class ShotCalculator {
         if (DriverStation.getAlliance().isPresent()) {
             Translation2d hub = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.HUB_BLUE : Constants.Field.HUB_RED;
             Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
+            System.out.println(robot.getDistance(hub));
             return robot.getDistance(hub);
         } else {
             return -1;
@@ -34,6 +35,7 @@ public class ShotCalculator {
     }
 
     public static double getShotRPM() {
+        System.out.println(distanceMap.get(distanceToHub()));
         return distanceMap.get(distanceToHub());
     }
 

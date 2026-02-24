@@ -51,11 +51,6 @@ public class Robot extends TimedRobot {
 
     public static Agitator agitator;
 
-    public static PhotonCamera leftCamera;
-    public static PhotonCamera rightCamera;
-    public static PhotonCamera sideCamera;
-    public static PhotonPoseEstimator photonEstimator;
-
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
 
@@ -81,15 +76,12 @@ public class Robot extends TimedRobot {
         agitator = new Agitator();
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
-//        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
-//        swerveConfig = new SwerveConfiguration(new RobotMap.Mk3Map(), new Constants.Mk3Constants(), SparkMaxDriveMotor::new, TalonSRXTurnMotorEncoder::new, null);
         swerveDrive = new SwerveDrive(swerveConfig);
         swerveDrive.setDefaultCommand(new DriveSwerve());
         swerveDrive.enableDebugMode();
-        swerveDrive.addPhotonCamera("photonvision-left", Constants.Vision.LEFT_CAMERA_POSITION);
-        swerveDrive.addPhotonCamera("photonvision-right", Constants.Vision.RIGHT_CAMERA_POSITION);
-        swerveDrive.addPhotonCamera("photonvision-side", Constants.Vision.SIDE_CAMERA_POSITION);
-//        swerveDrive.addLimelight("limelight-front");
+//        swerveDrive.addPhotonCamera("left-cam", Constants.Vision.LEFT_CAMERA_POSITION);
+        swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
+//        swerveDrive.addPhotonCamera("photonvision-side", Constants.Vision.SIDE_CAMERA_POSITION);
 
         //These should be at or near the bottom
         oi = new OI();
