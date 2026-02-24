@@ -1,21 +1,20 @@
-package team.gif.robot.commands.Agitator;
+package team.gif.robot.commands.DriveModes;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.lib.drivePace;
 import team.gif.robot.Robot;
 
-public class AgitatorPercent extends Command {
+public class EnableBoost extends Command {
 
-    public AgitatorPercent() {
+    public EnableBoost() {
         super();
-        addRequirements(Robot.agitator);
+        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        double percent = -0.3; //SmartDashboard.getNumber("Agitator/Agitator Percent", 0);
-        Robot.agitator.setPercent(percent);
+        Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -31,6 +30,6 @@ public class AgitatorPercent extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.agitator.stopMotor();
+        Robot.swerveDrive.setDrivePace(drivePace.COAST_FR);
     }
 }
