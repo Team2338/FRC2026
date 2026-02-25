@@ -17,6 +17,7 @@ import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 public class Indexer extends SubsystemBase {
@@ -89,6 +90,14 @@ public class Indexer extends SubsystemBase {
     public void stopMotor() {
         indexer.stopMotor();
         indexer2.stopMotor();
+    }
+
+    public boolean isIndexOneOverTemp() {
+        return indexer.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.INDEX_SAFE_MOTOR_TEMP;
+    }
+
+    public boolean isIndexTwoOverTemp() {
+        return indexer2.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.INDEX_SAFE_MOTOR_TEMP;
     }
 
     public void setConfig(TalonFXConfiguration config) {

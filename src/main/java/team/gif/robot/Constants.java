@@ -133,7 +133,7 @@ public final class Constants {
 
     public static final class Collector {
         public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.70;
-        public static final double PIVOT_DEPLOYED_ENCODER_POS = 33.3;
+        public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
         public static final double COLLECTOR_AUTO_SECONDS = 1; //Change value
         public static final double AUTO_COLLECTOR_TOLERANCE = 0.5; //Change value
@@ -151,4 +151,14 @@ public final class Constants {
         public static final double INDEXER_BACK_SPEED_PERCENT = -0.25;
         public static final double INDEXER_BACK_AUTO_SECONDS = 0.25;
     }
+
+    public static final class MotorTemps {
+        public static final double COLLECTOR_SAFE_MOTOR_TEMP = 70.0;
+        public static final double PIVOT_SAFE_MOTOR_TEMP = 70.0;
+        public static final double AGITATOR_SAFE_MOTOR_TEMP = 70.0;
+        public static final double INDEX_SAFE_MOTOR_TEMP = 70.0;
+        public static final double SHOOTER_SAFE_MOTOR_TEMP = 70.0;
+    }
+
+
 }

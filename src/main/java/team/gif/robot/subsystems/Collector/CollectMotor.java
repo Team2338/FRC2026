@@ -10,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 public class CollectMotor extends SubsystemBase {
@@ -72,6 +73,10 @@ public class CollectMotor extends SubsystemBase {
     }
 
     public void stopMotor() {collectorMotor.stopMotor();}
+
+    public boolean isOverTemp() {
+        return collectorMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.COLLECTOR_SAFE_MOTOR_TEMP;
+    }
 
     public void setConfig(TalonFXConfiguration config) {
         collectorMotor.getConfigurator().apply(config);

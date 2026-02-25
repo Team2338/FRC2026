@@ -8,16 +8,18 @@ public class ReverseCollectorPercent extends Command {
 
     double percent = 0;
 
-    public ReverseCollectorPercent() {
+
+    public ReverseCollectorPercent(double perc) {
         super();
-        addRequirements(Robot.collectMotor); // uncomment
+        addRequirements(Robot.collectMotor);// uncomment
+        percent = perc;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
-        Robot.collectMotor.runCollectorPercent(-percent);
+        //percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
+        Robot.collectMotor.runCollectorPercent(percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
