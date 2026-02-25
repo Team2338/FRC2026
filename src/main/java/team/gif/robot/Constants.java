@@ -24,8 +24,8 @@ public final class Constants {
     public static final double DEBOUNCE_DEFAULT = 0.020;
 
     public static final class Field {
-        public static final Translation2d HUB_RED = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
-        public static final Translation2d HUB_BLUE = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+        public static final Translation2d HUB_BLUE = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
+        public static final Translation2d HUB_RED = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
     }
 
     public static final class Vision {

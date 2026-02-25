@@ -11,15 +11,15 @@ public class ShotCalculator {
     private final static InterpolatingDoubleTreeMap distanceMap = new InterpolatingDoubleTreeMap();
 
     static {
-        distanceMap.put(Units.feetToMeters(11.42), 3500.);
-        distanceMap.put(Units.feetToMeters(13.42), 3650.);
-        distanceMap.put(Units.feetToMeters(15), 3750.);
-        distanceMap.put(Units.feetToMeters(8.42), 3100.);
-        distanceMap.put(Units.feetToMeters(7.42), 3050.);
-        distanceMap.put(Units.feetToMeters(6.42), 3000.);
-        distanceMap.put(Units.feetToMeters(5.42), 2750.);
-        distanceMap.put(Units.feetToMeters(4.42), 2650.);
-        distanceMap.put(Units.feetToMeters(3.42), 2550.);
+        distanceMap.put(Units.feetToMeters(11.42 + 0.75), 3500.);
+        distanceMap.put(Units.feetToMeters(13.42 + 0.75), 3650.);
+        distanceMap.put(Units.feetToMeters(15 + 0.75), 3750.);
+        distanceMap.put(Units.feetToMeters(8.42 + 0.75), 3100.);
+        distanceMap.put(Units.feetToMeters(7.42 + 0.75), 3050.);
+        distanceMap.put(Units.feetToMeters(6.42 + 0.75), 3000.);
+        distanceMap.put(Units.feetToMeters(5.42 + 0.75), 2750.);
+        distanceMap.put(Units.feetToMeters(4.42 + 0.75), 2650.);
+        distanceMap.put(Units.feetToMeters(3.42 + 0.75), 2550.);
 
     }
 

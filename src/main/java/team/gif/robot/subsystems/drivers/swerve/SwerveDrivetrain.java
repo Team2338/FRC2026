@@ -146,8 +146,17 @@ public class SwerveDrivetrain extends SubsystemBase {
      */
     @Override
     public void periodic() {
+
+        Rotation2d rotation = Robot.pigeon.getRotation2d();
+
+        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            rotation = rotation.rotateBy(new Rotation2d(Math.PI));
+        }
+
+        System.out.println(rotation.getDegrees());
+
         poseEstimator.update(
-            Robot.pigeon.getRotation2d(),
+            rotation,
             getPosition()
         );
 
@@ -179,7 +188,7 @@ public class SwerveDrivetrain extends SubsystemBase {
                 Optional<EstimatedRobotPose> visionEst;
                 for (var result : camera.getAllUnreadResults()) {
                     visionEst = estimator.estimateCoprocMultiTagPose(result);
-                    if (visionEst.isEmpty() || true) {
+                    if (visionEst.isEmpty()) {
                         visionEst = estimator.estimateLowestAmbiguityPose(result);
                     }
 

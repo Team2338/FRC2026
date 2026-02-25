@@ -118,6 +118,8 @@ public class OI {
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
         dX.whileTrue(new ShooterAuto());
+        dLBump.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent().alongWith(new PreIndexerPercent()))); //might change to up later
+
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
         aStart.and(aDPadUp).onTrue(new Reset0());
