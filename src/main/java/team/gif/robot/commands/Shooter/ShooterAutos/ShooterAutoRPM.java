@@ -1,6 +1,5 @@
 package team.gif.robot.commands.Shooter.ShooterAutos;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -32,7 +31,7 @@ public class ShooterAutoRPM extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= Constants.Shooter.SHOOTER_CYCLE;
+        return counter >= (Constants.Shooter.SHOOTER_AUTO_SECONDS * 50);
     }
 
     // Called when the command ends or is interrupted.

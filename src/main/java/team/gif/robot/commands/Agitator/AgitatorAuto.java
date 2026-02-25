@@ -30,7 +30,7 @@ public class AgitatorAuto extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= Constants.Collector.AGITATOR_CYCLE;
+        return counter >= (Constants.Collector.AGITATOR_AUTO_SECONDS * 50);
     }
 
     // Called when the command ends or is interrupted.

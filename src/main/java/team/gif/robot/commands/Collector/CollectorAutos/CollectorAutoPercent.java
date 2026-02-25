@@ -33,7 +33,7 @@ public class CollectorAutoPercent extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= Constants.Collector.COLLECTOR_CYCLE;
+        return counter >= (Constants.Collector.COLLECTOR_AUTO_SECONDS*50);
     }
 
     // Called when the command ends or is interrupted.
