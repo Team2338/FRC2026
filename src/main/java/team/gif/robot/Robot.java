@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -36,7 +37,6 @@ public class Robot extends TimedRobot {
 
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
-
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -109,7 +109,19 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        double matchTime = DriverStation.getMatchTime();
+
+        //A match is 160 seconds long, sets the controllers to rumble throughout different intervals of the match.
+        oi.setRumble(
+                (134.0 >= matchTime && matchTime >= 133.0) || (131.0 >= matchTime && matchTime >= 130.0) ||
+                (111.0 >= matchTime && matchTime >= 110.0) || (106.5 >= matchTime && matchTime >= 106.0) || (105.5 >= matchTime && matchTime >= 105.0) ||
+                (86.0 >= matchTime && matchTime >= 85.0) || (81.5 >= matchTime && matchTime >= 81.0) || (80.5 >= matchTime && matchTime >= 80.0) ||
+                (61.0 >= matchTime && matchTime >= 60.0) || (56.5 >= matchTime && matchTime >= 56.0) || (55.5 >= matchTime && matchTime >= 55.0) ||
+                (36.0 >= matchTime && matchTime >= 35.0) || (31.5 >= matchTime && matchTime >= 31.0) || (30.5 >= matchTime && matchTime >= 30.0) ||
+                (30.0 >= matchTime && matchTime >= 27.0)
+                );
+    }
 
     @Override
     public void testInit() {
