@@ -19,8 +19,8 @@ public class IndexerAutoPercent extends Command {
     @Override
     public void initialize() {
         Robot.indexer.runPercent(stage1, stage2);
-        stage1 = 2000; //Change value
-        stage2 = 2000; //Change value
+        stage1 = 0.5; //Change value
+        stage2 = 0.5; //Change value
         counter = 0;
     }
 

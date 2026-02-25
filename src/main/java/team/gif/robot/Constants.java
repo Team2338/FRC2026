@@ -136,7 +136,7 @@ public final class Constants {
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 33.3;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
         public static final double COLLECTOR_CYCLE = 0; //Change value
-        public static final double AUTO_COLLECTOR_TOLERANCE = 0; //Change value
+        public static final double AUTO_COLLECTOR_TOLERANCE = 0.5; //Change value
         public static final double COLLECTOR_SLOW_PERCENT = 0.5;
         public static final double COLLECTOR_FAST_PERCENT = 0.7;
         public static final double AGITATOR_CYCLE = 0; //Change
@@ -149,6 +149,6 @@ public final class Constants {
     public static final class Indexer {
         public static final double INDEXER_BACK_SECONDS = 0.25;
         public static final double INDEXER_BACK_SPEED_PERCENT = -0.25;
-        public static final double INDEXER_BACK_CYCLE = 0.25 * 50;
+        public static final double INDEXER_BACK_CYCLE = 12.5;
     }
 }

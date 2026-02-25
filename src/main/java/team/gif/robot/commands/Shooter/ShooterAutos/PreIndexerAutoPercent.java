@@ -18,7 +18,7 @@ public class PreIndexerAutoPercent extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        percent = 2000; //Change value
+        percent = 0.5; //Change value
         Robot.preIndexer.runPercent(percent);
         counter = 0;
     }

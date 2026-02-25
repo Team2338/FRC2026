@@ -16,9 +16,7 @@ public class AgitatorAuto extends Command {
     @Override
     public void initialize() {
         counter = 0;
-
-        double percent = -0.3;
-        Robot.agitator.setPercent(percent);
+        Robot.agitator.setPercent(-0.3);
 
     }
 
