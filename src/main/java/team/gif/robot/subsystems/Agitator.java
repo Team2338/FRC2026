@@ -7,6 +7,7 @@ package team.gif.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 public class Agitator extends SubsystemBase {
@@ -23,6 +24,10 @@ public class Agitator extends SubsystemBase {
 
     public void stopMotor(){
         agitatorMotor.stopMotor();
+    }
+
+    public boolean isOverTemp() {
+        return agitatorMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.AGITATOR_SAFE_MOTOR_TEMP;
     }
 
 

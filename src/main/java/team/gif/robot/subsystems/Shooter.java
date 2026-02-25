@@ -147,6 +147,18 @@ public class Shooter extends SubsystemBase {
         shooter3.stopMotor();
     }
 
+    public boolean isLeftOverTemp() {
+        return shooter1.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_SAFE_MOTOR_TEMP;
+    }
+
+    public boolean isMiddleOverTemp() {
+        return shooter2.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_SAFE_MOTOR_TEMP;
+    }
+
+    public boolean isRightOverTemp() {
+        return shooter3.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_SAFE_MOTOR_TEMP;
+    }
+
     public void setConfig(TalonFXConfiguration config) {
         shooter1.getConfigurator().apply(config);
         shooter3.getConfigurator().apply(config);
