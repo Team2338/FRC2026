@@ -2,15 +2,16 @@ package team.gif.robot.commands.Shooter.ShooterAutos;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class ShooterAutoRPM extends Command {
     double rpm = 0;
+    private int counter;
 
     public ShooterAutoRPM() {
         super();
         addRequirements(Robot.shooter);
-        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
@@ -18,18 +19,20 @@ public class ShooterAutoRPM extends Command {
     public void initialize() {
         rpm = 2500; //Change to a new value
         Robot.shooter.runShooter(rpm);
+        counter = 0;
 
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
+        counter++;
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return false;
+        return counter >= Constants.Shooter.SHOOTER_CYCLE;
     }
 
     // Called when the command ends or is interrupted.

@@ -6,18 +6,13 @@ import team.gif.robot.Robot;
 
 public class CollectorAutoPercent extends Command {
 
-    double percent = 0;
+    private final double percent;
     private int counter;
 
-    public CollectorAutoPercent() {
+    public CollectorAutoPercent(double percent) {
         super();
         addRequirements(Robot.collectMotor);
-    }
-
-    public CollectorAutoPercent(double perc) {
-        super();
-        addRequirements(Robot.collectMotor);
-        this.percent = perc;
+        this.percent = percent;
     }
 
 
@@ -26,7 +21,6 @@ public class CollectorAutoPercent extends Command {
     @Override
     public void initialize() {
         counter = 0;
-//        percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
         Robot.collectMotor.runCollectorPercent(-percent);
     }
 
@@ -39,7 +33,7 @@ public class CollectorAutoPercent extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter > Constants.Collector.COLLECTOR_CYCLE;
+        return counter >= Constants.Collector.COLLECTOR_CYCLE;
     }
 
     // Called when the command ends or is interrupted.

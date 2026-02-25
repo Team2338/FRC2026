@@ -13,12 +13,12 @@ public class IndexerAutoPercent extends Command {
     public IndexerAutoPercent() {
         super();
         addRequirements(Robot.indexer);
-        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.indexer.runPercent(stage1, stage2);
         stage1 = 2000; //Change value
         stage2 = 2000; //Change value
         counter = 0;
@@ -27,14 +27,14 @@ public class IndexerAutoPercent extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.indexer.runPercent(stage1, stage2);
+
         counter++;
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter > Constants.Shooter.SHOOTER_CYCLE;
+        return counter >= Constants.Shooter.SHOOTER_CYCLE;
     }
 
     // Called when the command ends or is interrupted.
