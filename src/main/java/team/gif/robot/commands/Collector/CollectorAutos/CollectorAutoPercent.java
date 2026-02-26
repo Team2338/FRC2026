@@ -6,22 +6,24 @@ import team.gif.robot.Robot;
 
 public class CollectorAutoPercent extends Command {
 
-    private final double percent;
     private int counter;
+    private final double percent;
+    private final boolean intake;
 
-    public CollectorAutoPercent(double percent) {
+    public CollectorAutoPercent(double percent, boolean intake) {
         super();
         addRequirements(Robot.collectMotor);
         this.percent = percent;
+        this.intake = intake;
     }
-
-
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        int sign = 0;
+        sign = intake ? -1 : 1;
+        Robot.collectMotor.runCollectorPercent(percent * sign);
         counter = 0;
-        Robot.collectMotor.runCollectorPercent(-percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

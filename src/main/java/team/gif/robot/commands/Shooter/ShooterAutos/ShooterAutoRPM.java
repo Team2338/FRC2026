@@ -5,7 +5,6 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class ShooterAutoRPM extends Command {
-    double rpm = 0;
     private int counter;
 
     public ShooterAutoRPM() {
@@ -16,10 +15,8 @@ public class ShooterAutoRPM extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = 2500; //Change to a new value
-        Robot.shooter.runShooter(rpm);
+        Robot.shooter.runShooter(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM);
         counter = 0;
-
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

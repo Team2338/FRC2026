@@ -1,9 +1,11 @@
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class UI {
+    public SendableChooser<Double> delayChooser = new SendableChooser<>();
     /**
      *  Widgets (e.g. gyro, text, True/False flags),
      *  buttons (e.g. SmartDashboard.putData("Reset", new ResetHeading()); ),
@@ -40,6 +42,29 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
         SmartDashboard.putNumber("Auto Collector/PID/Collect Reference", 0);
         SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
+
+        delayChooser.setDefaultOption("0", 0.0);
+        delayChooser.addOption("1", 1.0);
+        delayChooser.addOption("2", 2.0);
+        delayChooser.addOption("3", 3.0);
+        delayChooser.addOption("4", 4.0);
+        delayChooser.addOption("5", 5.0);
+        delayChooser.addOption("6", 6.0);
+        delayChooser.addOption("7", 7.0);
+        delayChooser.addOption("8", 8.0);
+        delayChooser.addOption("9", 9.0);
+        delayChooser.addOption("10", 10.0);
+        delayChooser.addOption("11", 11.0);
+        delayChooser.addOption("12", 12.0);
+        delayChooser.addOption("13", 13.0);
+        delayChooser.addOption("14", 14.0);
+        delayChooser.addOption("15", 15.0);
+        delayChooser.addOption("16", 16.0);
+        delayChooser.addOption("17", 17.0);
+        delayChooser.addOption("18", 18.0);
+        delayChooser.addOption("19", 19.0);
+        delayChooser.addOption("20", 20.0);
+        SmartDashboard.putData("Delay Chooser", delayChooser);
     }
 
     /**

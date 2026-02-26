@@ -5,13 +5,19 @@
 package team.gif.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import com.pathplanner.lib.auto.AutoBuilder;
 import team.gif.robot.commands.Agitator.AgitatorAuto;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoCollectRPM;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
+import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
 import team.gif.robot.commands.SequentialAutoCommands.CollectAutoSequence;
+import team.gif.robot.commands.SequentialAutoCommands.InitialAutonShoot;
 import team.gif.robot.commands.SequentialAutoCommands.ShootAutoSequence;
 import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoBack;
 import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoPercent;
@@ -26,17 +32,26 @@ import team.gif.robot.commands.Shooter.ShooterAutos.ShooterAutoRPM;
  */
 public class RobotContainer {
 
+    private  SendableChooser<Command> autoChooser = new SendableChooser<>();
+
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        NamedCommands.registerCommand("Agitator Auto", new CollectorAutoPercent(0.5).alongWith(new AgitatorAuto()));
-        NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
-        NamedCommands.registerCommand("Collector Collect", new CollectorAutoCollectRPM());
-        NamedCommands.registerCommand("Indexer Run", new IndexerAutoBack(0.25).andThen(new PreIndexerAutoPercent().alongWith(new IndexerAutoPercent())));
-        NamedCommands.registerCommand("Shoot", new ShooterAutoRPM());
-        NamedCommands.registerCommand("Collect Sequence", new CollectAutoSequence());
-        NamedCommands.registerCommand("Shoot Sequence", new ShootAutoSequence());
+//        NamedCommands.registerCommand("Agitator Auto", new CollectorAutoPercent(0.5).alongWith(new AgitatorAuto()));
+//        NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
+//        NamedCommands.registerCommand("Collector Collect", new CollectorAutoCollectRPM());
+//        NamedCommands.registerCommand("Indexer Run", new IndexerAutoBack(0.25).andThen(new PreIndexerAutoPercent().alongWith(new IndexerAutoPercent())));
+//        NamedCommands.registerCommand("Shoot", new ShooterAutoRPM());
+//        NamedCommands.registerCommand("Collect Sequence", new CollectAutoSequence());
+//        NamedCommands.registerCommand("Shoot Sequence", new ShootAutoSequence());
+        NamedCommands.registerCommand("CC-autonshoot", new InitialAutonShoot());
+        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot());
+
         // Configure the trigger bindings
         configureBindings();
+
+        autoChooser = AutoBuilder.buildAutoChooser();
+
+        SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     /**
@@ -49,5 +64,9 @@ public class RobotContainer {
      * joysticks}.
      */
     private void configureBindings() {
+    }
+
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
     }
 }

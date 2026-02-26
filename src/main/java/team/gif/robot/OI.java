@@ -106,7 +106,7 @@ public class OI {
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
-        dLBump.whileTrue(new IndexerBack(Constants.Indexer.INDEXER_BACK_SECONDS).andThen(new IndexerPercent().alongWith(new PreIndexerPercent()))); //might change to up later
+        dLBump.whileTrue(new IndexerBack(Constants.Indexer.INDEXER_BACK_TELEOP_SECONDS).andThen(new IndexerPercent().alongWith(new PreIndexerPercent()))); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
@@ -115,8 +115,8 @@ public class OI {
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
-        aRTrigger.whileTrue(new CollectorPercent(0.85).alongWith(new AgitatorPercent()));
-        aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent()));
+        aRTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_FAST_PERCENT).alongWith(new AgitatorPercent()));
+        aLTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_SLOW_PERCENT).alongWith(new AgitatorPercent()));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
 
 //        aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));

@@ -28,7 +28,7 @@ public class CollectorAutoPivotDown extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return Robot.pivotMotor.atSetPoint(Constants.Collector.AUTO_COLLECTOR_TOLERANCE);
+        return Robot.pivotMotor.atSetPoint(Constants.Collector.AUTO_COLLECTOR_PIVOT_TOLERANCE);
     }
 
     // Called when the command ends or is interrupted.

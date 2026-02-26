@@ -1,15 +1,12 @@
 package team.gif.robot.subsystems.Collector;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
-import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
 import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
 
 public class PivotMotor extends SubsystemBase {
@@ -47,7 +44,7 @@ public class PivotMotor extends SubsystemBase {
     public void deployedEncoder(){
         pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);}
     public boolean atSetPoint(double desiredSetpoint){
-        return Math.abs(getPosition() - desiredSetpoint) <= Constants.Collector.AUTO_COLLECTOR_TOLERANCE;}
+        return Math.abs(getPosition() - desiredSetpoint) <= Constants.Collector.AUTO_COLLECTOR_PIVOT_TOLERANCE;}
 
     private void setConfig(){
         config = new TalonFXConfiguration();

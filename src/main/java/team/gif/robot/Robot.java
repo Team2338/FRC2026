@@ -5,6 +5,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
@@ -55,7 +56,10 @@ public class Robot extends TimedRobot {
     public static CollectMotor collectMotor;
     public static PivotMotor pivotMotor;
 
+    private double delay;
+    private final Timer delayTimer = new Timer();
 
+    private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
 
@@ -65,10 +69,6 @@ public class Robot extends TimedRobot {
      * initialization code.
      */
     public Robot() {
-        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-        // autonomous chooser on the dashboard.
-        robotContainer = new RobotContainer();
-
         pigeon = new Pigeon2_0(RobotMap.PIGEON_ID);
 
         shooter = new Shooter();
@@ -89,6 +89,9 @@ public class Robot extends TimedRobot {
 //        swerveDrive.addLimelight("limelight-front");
 
         //These should be at or near the bottom
+        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // autonomous chooser on the dashboard.
+        robotContainer = new RobotContainer();
         oi = new OI();
         diagnostics = new Diagnostics();
         ui = new UI();
@@ -110,7 +113,7 @@ public class Robot extends TimedRobot {
         // commands, running already-scheduled commands, removing finished or interrupted commands,
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
-        CommandScheduler.getInstance().run();
+        commandScheduler.run();
 
         ui.update();
 
@@ -126,12 +129,26 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-        CommandScheduler.getInstance().schedule(new CollectorAutoPivotDown());
+//        CommandScheduler.getInstance().schedule(new CollectorAutoPivotDown());
+        autonomousCommand = robotContainer.getAutonomousCommand();
+        delay = ui.delayChooser.getSelected();
+        if(delay == 0.0 && autonomousCommand != null) {
+            commandScheduler.schedule(autonomousCommand);
+        }
+        else if(delay !=0.0 && autonomousCommand != null) {
+            delayTimer.reset();
+            delayTimer.start();
+        }
     }
 
     /** This function is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        if(delay > delayTimer.get()) {
+            commandScheduler.schedule(autonomousCommand);
+        }
+        delayTimer.stop();
+    }
 
     @Override
     public void teleopInit() {
@@ -151,7 +168,7 @@ public class Robot extends TimedRobot {
     @Override
     public void testInit() {
         // Cancels all running commands at the start of test mode.
-        CommandScheduler.getInstance().cancelAll();
+        commandScheduler.cancelAll();
     }
 
     /** This function is called periodically during test mode. */

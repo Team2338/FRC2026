@@ -17,7 +17,7 @@ public class IndexerAutoBack extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.indexer.runPercent(Constants.Indexer.INDEXER_BACK_SPEED_PERCENT, 0);
+        Robot.indexer.runPercent(Constants.Indexer.INDEXER_BACK_PERCENT, 0);
         timer = 0;
     }
 

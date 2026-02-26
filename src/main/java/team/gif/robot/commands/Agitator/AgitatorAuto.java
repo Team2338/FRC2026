@@ -15,9 +15,8 @@ public class AgitatorAuto extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        Robot.agitator.setPercent(Constants.Collector.AGITATOR_AUTO_PERCENT);
         counter = 0;
-        Robot.agitator.setPercent(-0.3);
-
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

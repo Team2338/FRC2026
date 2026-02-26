@@ -157,6 +157,10 @@ public class Shooter extends SubsystemBase {
         return shooter3.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_SAFE_MOTOR_TEMP;
     }
 
+    public boolean isRPMSufficient(double targetRPM) {
+        return getSpeed() > targetRPM && getSpeed2() > targetRPM && getSpeed3() > targetRPM;
+    }
+
     public void setConfig(TalonFXConfiguration config) {
         shooter1.getConfigurator().apply(config);
         shooter3.getConfigurator().apply(config);
