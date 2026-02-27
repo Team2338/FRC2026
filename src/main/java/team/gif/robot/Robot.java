@@ -138,7 +138,8 @@ public class Robot extends TimedRobot {
         autonomousCommand = robotContainer.getAutonomousCommand();
         delay = ui.delayChooser.getSelected();
         if(delay == 0.0 && autonomousCommand != null) {
-            commandScheduler.schedule(new AutonShoot());
+//            commandScheduler.schedule(new AutonShoot());
+            commandScheduler.schedule(autonomousCommand);
         }
         else if(delay !=0.0 && autonomousCommand != null) {
             delayTimer.reset();

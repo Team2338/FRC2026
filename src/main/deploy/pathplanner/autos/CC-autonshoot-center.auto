@@ -9,11 +9,17 @@
           "data": {
             "name": "CC-autonshoot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Example Path"
+          }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }
