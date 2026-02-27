@@ -63,6 +63,10 @@ public class PivotMotor extends SubsystemBase {
         return pivotMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.PIVOT_SAFE_MOTOR_TEMP;
     }
 
+    public void stopMotor() {
+        pivotMotor.stopMotor();
+    }
+
     //Change position value later after testing
     //public void deployedEncoder(){pivotMotor.setPosition(0);}
 }

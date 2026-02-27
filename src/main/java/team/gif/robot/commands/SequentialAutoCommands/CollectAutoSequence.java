@@ -13,7 +13,7 @@ public class CollectAutoSequence extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new AgitatorAuto(),
-                        new CollectorAutoPercent(Constants.Collector.COLLECTOR_FAST_PERCENT, true)
+                        new CollectorAutoPercent(Constants.Collector.COLLECTOR_FAST_PERCENT)
                 )
         );
     }

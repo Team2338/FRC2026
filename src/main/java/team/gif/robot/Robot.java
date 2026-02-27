@@ -13,6 +13,7 @@ import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
+import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
 import team.gif.robot.commands.SequentialAutoCommands.InitialAutonShoot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
@@ -136,7 +137,7 @@ public class Robot extends TimedRobot {
         autonomousCommand = robotContainer.getAutonomousCommand();
         delay = ui.delayChooser.getSelected();
         if(delay == 0.0 && autonomousCommand != null) {
-            commandScheduler.schedule(new InitialAutonShoot());
+            commandScheduler.schedule(new AutonShoot());
         }
         else if(delay !=0.0 && autonomousCommand != null) {
             delayTimer.reset();

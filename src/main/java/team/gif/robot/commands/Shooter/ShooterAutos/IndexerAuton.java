@@ -7,17 +7,18 @@ import team.gif.robot.Robot;
 public class IndexerAuton extends Command {
 
     private int counter;
-    private boolean alreadyRan;
+    private boolean runBack;
 
-    public IndexerAuton() {
+    public IndexerAuton(boolean runBack) {
         super();
         addRequirements(Robot.indexer, Robot.preIndexer);
+        this.runBack = runBack;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        alreadyRan = false;
+        runBack = false;
         counter = 0;
     }
 
@@ -26,16 +27,20 @@ public class IndexerAuton extends Command {
     public void execute() {
         counter++;
 //        if(Robot.shooter.isRPMSufficient(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM) && !alreadyRan) {
-
-            //Run the indexer back for a certain amount of time
-            if(counter < (Constants.Indexer.INDEXER_BACK_TELEOP_SECONDS * 50)) {
+        if(runBack && counter < (Constants.Indexer.INDEXER_BACK_AUTO_SECONDS * 50)){
+            Robot.indexer.runPercent(-0.25, 0);
+        }
+        else {
+//            Run the stage 2 indexer for a certain amount of time
+            if (counter < (Constants.Indexer.INDEXER_BACK_TELEOP_SECONDS * 50)) {
                 Robot.indexer.runPercent(0, Constants.Indexer.INDEXER_STAGE_2_PERCENT);
             } else {
+                //Run the entire indexer and agitator
                 Robot.indexer.runPercent(Constants.Indexer.INDEXER_STAGE_1_PERCENT, Constants.Indexer.INDEXER_STAGE_2_PERCENT);
                 Robot.preIndexer.runPercent(Constants.Indexer.INDEXER_STAGE_1_PERCENT);
                 Robot.agitator.setPercent(Constants.Collector.AGITATOR_AUTO_PERCENT);
             }
-
+        }
 //        }
         //If the shooter RPM dips below the required RPM, then when it reaches the threshold do not run the indexer back
 //        else if(Robot.shooter.isRPMSufficient(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM) && alreadyRan) {
