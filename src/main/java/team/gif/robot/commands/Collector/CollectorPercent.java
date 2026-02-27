@@ -13,6 +13,11 @@ public class CollectorPercent extends Command {
         addRequirements(Robot.collectMotor);
     }
 
+    /**
+     * Brings the collector in and out
+     *
+     * @param perc negative value brings the collector in, positive is out
+     */
     public CollectorPercent(double perc) {
         super();
         addRequirements(Robot.collectMotor);

@@ -57,5 +57,6 @@ public class IndexerAuton extends Command {
     public void end(boolean interrupted) {
         Robot.indexer.stopMotor();
         Robot.preIndexer.stopMotor();
+        Robot.agitator.stopMotor();
     }
 }
