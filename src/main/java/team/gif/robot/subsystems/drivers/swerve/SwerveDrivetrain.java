@@ -96,6 +96,9 @@ public class SwerveDrivetrain extends SubsystemBase {
     private PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[] {};
     private static AprilTagFieldLayout tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
     private Matrix<N3, N1> photonCurrStdDevs;
+    private Rotation2d oneEighty = Rotation2d.fromDegrees(180);
+
+    private boolean isRedAlliance = false;
     
     public boolean debugMode = false;
 
@@ -107,6 +110,8 @@ public class SwerveDrivetrain extends SubsystemBase {
             .getStructArrayTopic("ActualSwerveState", SwerveModuleState.struct).publish();
     private static final StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault()
             .getStructTopic("EstimatedPose", Pose2d.struct).publish();
+    private static final StructPublisher<Pose2d> estPublisher = NetworkTableInstance.getDefault()
+            .getStructTopic("EstimatedVisionPose", Pose2d.struct).publish();
     private static final StructPublisher<ChassisSpeeds> chassisSpeedsStructPublisher = NetworkTableInstance.getDefault()
             .getStructTopic("ChassisSpeeds", ChassisSpeeds.struct).publish();
 
@@ -129,11 +134,11 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         Rotation2d rotation = Robot.pigeon.getRotation2d();
 
-        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            rotation = rotation.rotateBy(new Rotation2d(Math.PI));
+        if(checkRedAlliance()) {
+            rotation = rotation.rotateBy(oneEighty);
         }
 
-        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getPosition(), new Pose2d(0, 0, new Rotation2d(0)));
+        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getPosition(), new Pose2d(0, 0, rotation));
 
         drivePace = team.gif.lib.drivePace.COAST_FR;
 
@@ -147,28 +152,18 @@ public class SwerveDrivetrain extends SubsystemBase {
     @Override
     public void periodic() {
 
+        isRedAlliance = checkRedAlliance();
+
         Rotation2d rotation = Robot.pigeon.getRotation2d();
 
-        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-            rotation = rotation.rotateBy(new Rotation2d(Math.PI));
+        if(isRedAlliance) {
+            rotation = rotation.rotateBy(oneEighty);
         }
-
-        System.out.println(rotation.getDegrees());
 
         poseEstimator.update(
             rotation,
             getPosition()
         );
-
-//        if(visionEnabled) {
-//            for(PhotonPoseEstimator estimator : photonPoseEstimators) {
-//                double heading = Robot.pigeon.get360Heading();
-//                if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-//                    heading = heading - 180;
-//                }
-//                estimator.addHeadingData(Timer.getTimestamp(), new Rotation2d(heading));
-//            }
-//        }
 
         if (Robot.pigeon.getYawRate() < 720 && visionEnabled) {
 
@@ -196,11 +191,16 @@ public class SwerveDrivetrain extends SubsystemBase {
 
                     visionEst.ifPresent(
                             est -> {
-                                System.out.println("updating pose est");
                                 // Change our trust in the measurement based on the tags we can see
                                 var estStdDevs = getEstimationStdDevs();
 
-                                poseEstimator.addVisionMeasurement(est.estimatedPose.toPose2d(), est.timestampSeconds, estStdDevs);
+                                if (debugMode) {
+                                    estPublisher.set(est.estimatedPose.toPose2d());
+                                }
+
+                                Rotation2d estRotation = isRedAlliance ? est.estimatedPose.getRotation().toRotation2d().rotateBy(oneEighty) : est.estimatedPose.getRotation().toRotation2d();
+                                var newPose = new Pose2d(est.estimatedPose.getX(), est.estimatedPose.getY(), estRotation);
+                                poseEstimator.addVisionMeasurement(newPose, est.timestampSeconds, estStdDevs);
                             });
                 }
 
@@ -511,6 +511,19 @@ public class SwerveDrivetrain extends SubsystemBase {
 
     public SwerveConstants getConstants() {
         return constants;
+    }
+
+    private boolean checkRedAlliance() {
+        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            return true;
+        } else if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
+            return false;
+        } else {
+            return true;
+            //This state should never happen unless we are not connected.
+            //It is set to red because that is what we are set up for in the shop.
+        }
+
     }
 
     private void configModules() {
