@@ -5,9 +5,11 @@
 package team.gif.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -23,6 +25,11 @@ import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoBack;
 import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoPercent;
 import team.gif.robot.commands.Shooter.ShooterAutos.PreIndexerAutoPercent;
 import team.gif.robot.commands.Shooter.ShooterAutos.ShooterAutoRPM;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -49,9 +56,36 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
-        autoChooser = AutoBuilder.buildAutoChooser();
+
+        autoChooser = build2338AutoChooser((stream) -> stream);
+        SmartDashboard.putData("Auto Chooser", autoChooser);
 
         SmartDashboard.putData("Auto Chooser", autoChooser);
+    }
+
+    public static SendableChooser<Command> build2338AutoChooser(Function<Stream<PathPlannerAuto>, Stream<PathPlannerAuto>> optionsModifier) {
+
+        if(!AutoBuilder.isConfigured()) { throw new RuntimeException("AutoBuilder was not configured before attempting to build an auto chooser."); }
+
+        SendableChooser<Command> autoChooser = new SendableChooser<>();
+
+        ArrayList<String> names = new ArrayList<>();
+        names.add("CC-autonshoot-center");
+        names.add("OC-autonshoot-center");
+
+        ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
+
+        for(String n : names) {
+            PathPlannerAuto auto = new PathPlannerAuto(n);
+            autoChoices.add(auto);
+        }
+
+        autoChooser.setDefaultOption("** None **", Commands.none());
+
+        optionsModifier.apply(autoChoices.stream()).forEach(auto -> autoChooser.addOption(auto.getName(), auto));
+
+        return autoChooser;
+
     }
 
     /**

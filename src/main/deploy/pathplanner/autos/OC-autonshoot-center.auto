@@ -14,6 +14,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Sequential",
+  "folder": null,
   "choreoAuto": false
 }
