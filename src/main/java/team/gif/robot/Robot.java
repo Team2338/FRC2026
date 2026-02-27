@@ -13,6 +13,7 @@ import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
+import team.gif.robot.commands.SequentialAutoCommands.InitialAutonShoot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
 import team.gif.robot.subsystems.Collector.CollectMotor;
@@ -78,20 +79,22 @@ public class Robot extends TimedRobot {
 
         collectMotor = new CollectMotor();
         pivotMotor = new PivotMotor();
-        pivotMotor.setDefaultCommand(new CollectorPivot());
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
 //        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
 //        swerveConfig = new SwerveConfiguration(new RobotMap.Mk3Map(), new Constants.Mk3Constants(), SparkMaxDriveMotor::new, TalonSRXTurnMotorEncoder::new, null);
         swerveDrive = new SwerveDrive(swerveConfig);
-        swerveDrive.setDefaultCommand(new DriveSwerve());
+        swerveDrive.setLimelightEnabled(false);
         swerveDrive.enableDebugMode();
 //        swerveDrive.addLimelight("limelight-front");
+        robotContainer = new RobotContainer();
 
+
+        pivotMotor.setDefaultCommand(new CollectorPivot());
+        swerveDrive.setDefaultCommand(new DriveSwerve());
         //These should be at or near the bottom
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
-        robotContainer = new RobotContainer();
         oi = new OI();
         diagnostics = new Diagnostics();
         ui = new UI();
@@ -133,7 +136,7 @@ public class Robot extends TimedRobot {
         autonomousCommand = robotContainer.getAutonomousCommand();
         delay = ui.delayChooser.getSelected();
         if(delay == 0.0 && autonomousCommand != null) {
-            commandScheduler.schedule(autonomousCommand);
+            commandScheduler.schedule(new InitialAutonShoot());
         }
         else if(delay !=0.0 && autonomousCommand != null) {
             delayTimer.reset();

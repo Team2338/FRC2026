@@ -9,7 +9,7 @@ public class InitialAutonShoot extends ParallelCommandGroup {
 
     public InitialAutonShoot() {
         addCommands(
-                new ShooterAutoRPM(),
+                new ShooterAutoRPM().withTimeout(3),
                 new AgitatorAuto(),
                 new IndexerAuton()
         );
