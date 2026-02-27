@@ -138,6 +138,8 @@ public final class Constants {
 
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
+        public static final double PIVOT_CALIBRATION_PERCENT = .2;
+        public static final double PIVOT_STALL_CURRENT_THRESHOLD = 374.4;
 
 
         public static final double AUTO_COLLECTOR_PIVOT_TOLERANCE = 0.5; //Change value

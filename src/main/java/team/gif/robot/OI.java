@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
+import team.gif.robot.commands.Collector.CollectorPivotCalibration;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.DriveModes.EnableBoost;
 import team.gif.robot.commands.Shooter.IndexerBack;
@@ -114,6 +115,7 @@ public class OI {
         aStart.and(aDPadDown).onTrue(new Reset180());
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        aBack.and(aDPadDown).onTrue(new CollectorPivotCalibration());
         //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
         aRTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_FAST_PERCENT).alongWith(new AgitatorPercent()));
         aLTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_SLOW_PERCENT).alongWith(new AgitatorPercent()));

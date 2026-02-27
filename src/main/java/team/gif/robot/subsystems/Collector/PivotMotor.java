@@ -14,7 +14,7 @@ public class PivotMotor extends SubsystemBase {
     private final TalonFX pivotMotor;
     private TalonFXConfiguration config;
 
-    public PivotMotor(){
+    public PivotMotor() {
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
 
         setConfig();
@@ -24,7 +24,7 @@ public class PivotMotor extends SubsystemBase {
         pivotMotor.set(percent);
     }
 
-    public void runPivotVoltage(double volts){
+    public void runPivotVoltage(double volts) {
         pivotMotor.setVoltage(volts);
     }
 
@@ -36,17 +36,27 @@ public class PivotMotor extends SubsystemBase {
         return pivotMotor.getVelocity().getValueAsDouble() * 60;
     }
 
-    public double getPosition(){
-        return pivotMotor.getPosition().getValueAsDouble();}
+    public double getPosition() {
+        return pivotMotor.getPosition().getValueAsDouble();
+    }
 
-    public void zeroEncoder(){
-        pivotMotor.setPosition(0);}
-    public void deployedEncoder(){
-        pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);}
-    public boolean atSetPoint(double desiredSetpoint){
-        return Math.abs(getPosition() - desiredSetpoint) <= Constants.Collector.AUTO_COLLECTOR_PIVOT_TOLERANCE;}
+    public void zeroEncoder() {
+        pivotMotor.setPosition(0);
+    }
 
-    private void setConfig(){
+    public void deployedEncoder() {
+        pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);
+    }
+
+    public void deployedEncoder(double setpoint){
+        pivotMotor.setPosition(setpoint);
+    }
+
+    public boolean atSetPoint(double desiredSetpoint) {
+        return Math.abs(getPosition() - desiredSetpoint) <= Constants.Collector.AUTO_COLLECTOR_PIVOT_TOLERANCE;
+    }
+
+    private void setConfig() {
         config = new TalonFXConfiguration();
 
         config.MotorOutput.Inverted = CounterClockwise_Positive;
@@ -61,6 +71,10 @@ public class PivotMotor extends SubsystemBase {
 
     public boolean isOverTemp() {
         return pivotMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.PIVOT_SAFE_MOTOR_TEMP;
+    }
+
+    public boolean isStalling(){
+        return pivotMotor.getTorqueCurrent().getValueAsDouble() >= Constants.Collector.PIVOT_STALL_CURRENT_THRESHOLD;
     }
 
     //Change position value later after testing
