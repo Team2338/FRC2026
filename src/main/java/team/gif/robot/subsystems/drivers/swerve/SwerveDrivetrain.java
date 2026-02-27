@@ -3,14 +3,20 @@ package team.gif.robot.subsystems.drivers.swerve;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.RobotConfig;
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
@@ -27,6 +33,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import org.photonvision.EstimatedRobotPose;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.targeting.PhotonTrackedTarget;
 import team.gif.lib.LimelightHelpers;
 import team.gif.lib.drivePace;
 import team.gif.robot.Robot;
@@ -39,6 +49,9 @@ import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveMap;
 import team.gif.robot.subsystems.drivers.swerve.utilities.TurnMotor;
 import team.gif.robot.subsystems.drivers.swerve.utilities.TurnMotorFactory;
+
+import java.util.List;
+import java.util.Optional;
 
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
@@ -77,8 +90,15 @@ public class SwerveDrivetrain extends SubsystemBase {
     public SwerveDrivePoseEstimator poseEstimator;
     private drivePace drivePace;
 
-    public boolean limelightEnabled = true;
-    public String[] limelightNames = new String[] {};
+    private boolean visionEnabled = true;
+    private String[] limelightNames = new String[] {};
+    private PhotonCamera[] photonCameras = new PhotonCamera[] {};
+    private PhotonPoseEstimator[] photonPoseEstimators = new PhotonPoseEstimator[] {};
+    private static AprilTagFieldLayout tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
+    private Matrix<N3, N1> photonCurrStdDevs;
+    private Rotation2d oneEighty = Rotation2d.fromDegrees(180);
+
+    private boolean isRedAlliance = false;
     
     public boolean debugMode = false;
 
@@ -90,6 +110,8 @@ public class SwerveDrivetrain extends SubsystemBase {
             .getStructArrayTopic("ActualSwerveState", SwerveModuleState.struct).publish();
     private static final StructPublisher<Pose2d> posePublisher = NetworkTableInstance.getDefault()
             .getStructTopic("EstimatedPose", Pose2d.struct).publish();
+    private static final StructPublisher<Pose2d> estPublisher = NetworkTableInstance.getDefault()
+            .getStructTopic("EstimatedVisionPose", Pose2d.struct).publish();
     private static final StructPublisher<ChassisSpeeds> chassisSpeedsStructPublisher = NetworkTableInstance.getDefault()
             .getStructTopic("ChassisSpeeds", ChassisSpeeds.struct).publish();
 
@@ -110,7 +132,13 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         resetDriveEncoders();
 
-        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, Robot.pigeon.getRotation2d(), getPosition(), new Pose2d(0, 0, new Rotation2d(0)));
+        Rotation2d rotation = Robot.pigeon.getRotation2d();
+
+        if(checkRedAlliance()) {
+            rotation = rotation.rotateBy(oneEighty);
+        }
+
+        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getPosition(), new Pose2d(0, 0, rotation));
 
         drivePace = team.gif.lib.drivePace.COAST_FR;
 
@@ -123,20 +151,59 @@ public class SwerveDrivetrain extends SubsystemBase {
      */
     @Override
     public void periodic() {
+
+        isRedAlliance = checkRedAlliance();
+
+        Rotation2d rotation = Robot.pigeon.getRotation2d();
+
+        if(isRedAlliance) {
+            rotation = rotation.rotateBy(oneEighty);
+        }
+
         poseEstimator.update(
-            Robot.pigeon.getRotation2d(),
+            rotation,
             getPosition()
         );
 
-        if (Robot.pigeon.getYawRate() < 720) {
+        if (Robot.pigeon.getYawRate() < 720 && visionEnabled) {
+
             for (String limelightName : limelightNames) {
                 LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
-                if(limelightEnabled && estimate != null && estimate.tagCount > 0) {
-                    poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+                if (visionEnabled && estimate != null && estimate.tagCount > 0) {
                     poseEstimator.addVisionMeasurement(
                             estimate.pose,
-                            estimate.timestampSeconds);
+                            estimate.timestampSeconds,
+                            VecBuilder.fill(.7, .7, 9999999));
+
                 }
+            }
+            for (var i = 0; i < photonCameras.length; i++) {
+                PhotonCamera camera = photonCameras[i];
+                PhotonPoseEstimator estimator = photonPoseEstimators[i];
+                Optional<EstimatedRobotPose> visionEst;
+                for (var result : camera.getAllUnreadResults()) {
+                    visionEst = estimator.estimateCoprocMultiTagPose(result);
+                    if (visionEst.isEmpty()) {
+                        visionEst = estimator.estimateLowestAmbiguityPose(result);
+                    }
+
+                    updateEstimationStdDevs(visionEst, result.getTargets(), estimator);
+
+                    visionEst.ifPresent(
+                            est -> {
+                                // Change our trust in the measurement based on the tags we can see
+                                var estStdDevs = getEstimationStdDevs();
+
+                                if (debugMode) {
+                                    estPublisher.set(est.estimatedPose.toPose2d());
+                                }
+
+                                Rotation2d estRotation = isRedAlliance ? est.estimatedPose.getRotation().toRotation2d().rotateBy(oneEighty) : est.estimatedPose.getRotation().toRotation2d();
+                                var newPose = new Pose2d(est.estimatedPose.getX(), est.estimatedPose.getY(), estRotation);
+                                poseEstimator.addVisionMeasurement(newPose, est.timestampSeconds, estStdDevs);
+                            });
+                }
+
             }
         }
 
@@ -150,16 +217,16 @@ public class SwerveDrivetrain extends SubsystemBase {
      * Set the limelight enabled status
      * @param enabled - enable limelight vision updates
      */
-    public void setLimelightEnabled(boolean enabled) {
-        limelightEnabled = enabled;
+    public void setVisionEnabled(boolean enabled) {
+        visionEnabled = enabled;
     }
 
     /**
      * Get the limelight enabled status
      * @return boolean for the current limelight enabled status
      */
-    public boolean getLimelightEnabled() {
-        return limelightEnabled;
+    public boolean getVisionEnabled() {
+        return visionEnabled;
     }
 
     /**
@@ -179,6 +246,85 @@ public class SwerveDrivetrain extends SubsystemBase {
      */
     public String[] getLimelightNames() {
         return limelightNames;
+    }
+
+    public void addPhotonCamera(String newPhotonCamName, Transform3d cameraLocation) {
+        PhotonCamera[] newArray = new PhotonCamera[photonCameras.length + 1];
+        System.arraycopy(photonCameras, 0, newArray, 0, photonCameras.length);
+        newArray[newArray.length - 1] = new PhotonCamera(newPhotonCamName);
+        photonCameras = newArray;
+
+        PhotonPoseEstimator[] newEstArray = new PhotonPoseEstimator[photonPoseEstimators.length + 1];
+        System.arraycopy(photonPoseEstimators, 0, newEstArray, 0, photonPoseEstimators.length);
+        newEstArray[newEstArray.length - 1] = new PhotonPoseEstimator(tagLayout, cameraLocation);
+        photonPoseEstimators = newEstArray;
+    }
+
+    public PhotonCamera[] getPhotonCameras() {
+        return photonCameras;
+    }
+
+    public PhotonPoseEstimator[] getPhotonPoseEstimators() {
+        return photonPoseEstimators;
+    }
+
+    /**
+     * Calculates new standard deviations This algorithm is a heuristic that creates dynamic standard
+     * deviations based on number of tags, estimation strategy, and distance from the tags.
+     *
+     * @param estimatedPose The estimated pose to guess standard deviations for.
+     * @param targets All targets in this camera frame
+     */
+    private void updateEstimationStdDevs(
+            Optional<EstimatedRobotPose> estimatedPose, List<PhotonTrackedTarget> targets, PhotonPoseEstimator estimator) {
+        if (estimatedPose.isEmpty()) {
+            // No pose input. Default to single-tag std devs
+            photonCurrStdDevs = VecBuilder.fill(0.7, 0.7, 9999999);
+
+        } else {
+            // Pose present. Start running Heuristic
+            var estStdDevs = VecBuilder.fill(0.7, 0.7, 9999999);
+            int numTags = 0;
+            double avgDist = 0;
+
+            // Precalculation - see how many tags we found, and calculate an average-distance metric
+            for (var tgt : targets) {
+                var tagPose = estimator.getFieldTags().getTagPose(tgt.getFiducialId());
+                if (tagPose.isEmpty()) continue;
+                numTags++;
+                avgDist +=
+                        tagPose
+                                .get()
+                                .toPose2d()
+                                .getTranslation()
+                                .getDistance(estimatedPose.get().estimatedPose.toPose2d().getTranslation());
+            }
+
+            if (numTags == 0) {
+                // No tags visible. Default to single-tag std devs
+                photonCurrStdDevs = VecBuilder.fill(0.7, 0.7, 9999999);;
+            } else {
+                // One or more tags visible, run the full heuristic.
+                avgDist /= numTags;
+                // Decrease std devs if multiple targets are visible
+                if (numTags > 1) estStdDevs = VecBuilder.fill(0.5, 0.5, 999999);
+                // Increase std devs based on (average) distance
+                if (numTags == 1 && avgDist > 4)
+                    estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
+                else estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 30));
+                photonCurrStdDevs = estStdDevs;
+            }
+        }
+    }
+
+    /**
+     * Returns the latest standard deviations of the estimated pose from
+     * Photonvision, for use with {@link
+     * edu.wpi.first.math.estimator.SwerveDrivePoseEstimator SwerveDrivePoseEstimator}. This should
+     * only be used when there are targets visible.
+     */
+    public Matrix<N3, N1> getEstimationStdDevs() {
+        return photonCurrStdDevs;
     }
 
     /**
@@ -365,6 +511,19 @@ public class SwerveDrivetrain extends SubsystemBase {
 
     public SwerveConstants getConstants() {
         return constants;
+    }
+
+    private boolean checkRedAlliance() {
+        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+            return true;
+        } else if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
+            return false;
+        } else {
+            return true;
+            //This state should never happen unless we are not connected.
+            //It is set to red because that is what we are set up for in the shop.
+        }
+
     }
 
     private void configModules() {

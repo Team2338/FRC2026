@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
 import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
@@ -82,12 +84,12 @@ public class Robot extends TimedRobot {
         pivotMotor = new PivotMotor();
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
-//        swerveConfig = new SwerveConfiguration(new RobotMap.Mk4Map(), new Constants.Mk4Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
-//        swerveConfig = new SwerveConfiguration(new RobotMap.Mk3Map(), new Constants.Mk3Constants(), SparkMaxDriveMotor::new, TalonSRXTurnMotorEncoder::new, null);
         swerveDrive = new SwerveDrive(swerveConfig);
         swerveDrive.setLimelightEnabled(false);
         swerveDrive.enableDebugMode();
-//        swerveDrive.addLimelight("limelight-front");
+//        swerveDrive.addPhotonCamera("left-cam", Constants.Vision.LEFT_CAMERA_POSITION);
+        swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
+//        swerveDrive.addPhotonCamera("photonvision-side", Constants.Vision.SIDE_CAMERA_POSITION);
         robotContainer = new RobotContainer();
 
 
