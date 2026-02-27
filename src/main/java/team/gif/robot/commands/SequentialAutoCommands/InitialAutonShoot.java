@@ -14,7 +14,7 @@ public class InitialAutonShoot extends ParallelDeadlineGroup {
         super(new ShooterAutoRPM().withTimeout(Constants.Shooter.SHOOTER_AUTO_SECONDS));
         addCommands(
 //                new AgitatorAuto(),
-                new WaitCommand(2).andThen(new IndexerAuton())
+                new WaitCommand(1.5).andThen(new IndexerAuton())
 //                new IndexerAuton()
         );
     }
