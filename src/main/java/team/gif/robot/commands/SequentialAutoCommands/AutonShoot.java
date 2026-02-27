@@ -11,7 +11,7 @@ public class AutonShoot extends ParallelCommandGroup {
 
     public AutonShoot() {
         addCommands(
-                new ShooterAutoRPM(),
+                new ShooterAutoRPM().withTimeout(Constants.Shooter.SHOOTER_AUTO_SECONDS),
                 new CollectorAutoPercent(Constants.Collector.COLLECTOR_FAST_PERCENT, true),
                 new AgitatorAuto(),
                 new IndexerAuton()

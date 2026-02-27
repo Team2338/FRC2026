@@ -47,7 +47,7 @@ public class IndexerAuton extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= (Constants.Indexer.INDEXER_AUTON_SECONDS * 50);
+        return false;
     }
 
     // Called when the command ends or is interrupted.

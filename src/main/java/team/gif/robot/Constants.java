@@ -140,15 +140,13 @@ public final class Constants {
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
 
 
-        public static final double COLLECTOR_AUTO_SECONDS = 3; //Change value
         public static final double AUTO_COLLECTOR_PIVOT_TOLERANCE = 0.5; //Change value
 
-        public static final double AGITATOR_AUTO_SECONDS = 3; //Change value
         public static final double AGITATOR_AUTO_PERCENT = -0.3;
     }
 
     public static final class Shooter {
-        public static final double SHOOTER_AUTO_SECONDS = 3; //Change value
+        public static final double SHOOTER_AUTO_SECONDS = 0.75; //Change value
         public static final double SHOOTER_INITIAL_AUTON_RPM = 2550; //Tune
     }
 
@@ -160,7 +158,6 @@ public final class Constants {
         public static final double INDEXER_STAGE_1_PERCENT = 0.7; //Should change
         public static final double INDEXER_STAGE_2_PERCENT = 0.7; //Should change
 
-        public static final double INDEXER_AUTON_SECONDS = 3; //Change value
     }
 
     public static final class MotorTemps {

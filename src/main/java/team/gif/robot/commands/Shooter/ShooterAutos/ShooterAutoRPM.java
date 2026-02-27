@@ -5,7 +5,6 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class ShooterAutoRPM extends Command {
-    private int counter;
 
     public ShooterAutoRPM() {
         super();
@@ -16,19 +15,18 @@ public class ShooterAutoRPM extends Command {
     @Override
     public void initialize() {
         Robot.shooter.runShooter(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM);
-        counter = 0;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        counter++;
+
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= (Constants.Shooter.SHOOTER_AUTO_SECONDS * 50);
+        return false;
     }
 
     // Called when the command ends or is interrupted.

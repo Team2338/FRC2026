@@ -6,7 +6,6 @@ import team.gif.robot.Robot;
 
 public class CollectorAutoPercent extends Command {
 
-    private int counter;
     private final double percent;
     private final boolean intake;
 
@@ -23,19 +22,18 @@ public class CollectorAutoPercent extends Command {
         int sign = 0;
         sign = intake ? -1 : 1;
         Robot.collectMotor.runCollectorPercent(percent * sign);
-        counter = 0;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        counter++;
+
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= (Constants.Collector.COLLECTOR_AUTO_SECONDS*50);
+        return false;
     }
 
     // Called when the command ends or is interrupted.

@@ -5,7 +5,6 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class AgitatorAuto extends Command {
-    private int counter;
 
     public AgitatorAuto() {
         super();
@@ -16,20 +15,16 @@ public class AgitatorAuto extends Command {
     @Override
     public void initialize() {
         Robot.agitator.setPercent(Constants.Collector.AGITATOR_AUTO_PERCENT);
-        counter = 0;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {
-        counter++;
-
-    }
+    public void execute() {}
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= (Constants.Collector.AGITATOR_AUTO_SECONDS * 50);
+        return false;
     }
 
     // Called when the command ends or is interrupted.
