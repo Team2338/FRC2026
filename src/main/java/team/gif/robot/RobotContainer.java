@@ -43,8 +43,8 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-//        NamedCommands.registerCommand("Agitator Auto", new CollectorAutoPercent(0.5).alongWith(new AgitatorAuto()));
-//        NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
+        NamedCommands.registerCommand("Collector Run", new CollectorAutoPercent(0.5).alongWith(new AgitatorAuto()));
+        NamedCommands.registerCommand("Hold Collector Down", new CollectorAutoPivotDown(0.05));
 //        NamedCommands.registerCommand("Collector Collect", new CollectorAutoCollectRPM());
 //        NamedCommands.registerCommand("Indexer Run", new IndexerAutoBack(0.25).andThen(new PreIndexerAutoPercent().alongWith(new IndexerAutoPercent())));
 //        NamedCommands.registerCommand("Shoot", new ShooterAutoRPM());

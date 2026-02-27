@@ -11,9 +11,41 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Example Path"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Hold Collector Down"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collector Run"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Example Path"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Back"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

@@ -8,15 +8,16 @@ public class CollectorAutoPivotDown extends Command {
 
     double percent;
 
-    public CollectorAutoPivotDown() {
+    public CollectorAutoPivotDown(double percent) {
         super();
         addRequirements(Robot.pivotMotor);
+        this.percent = percent;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.pivotMotor.runPivotPercent(0.2);
+        Robot.pivotMotor.runPivotPercent(percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

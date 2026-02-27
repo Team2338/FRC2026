@@ -16,7 +16,7 @@ public class TalonFXDriveMotor implements DriveMotor {
     public TalonFXDriveMotor(int motorID, SwerveConstants constants) {
         motor = new TalonFX(motorID);
         positionConversion = constants.DRIVE_ENCODER_ROT_2_METER;
-        velocityConversion = constants.DRIVE_ENCODER_RPM_2_METER_PER_SEC;
+        velocityConversion = constants.DRIVE_ENCODER_ROT_2_METER;
     }
 
     /**
