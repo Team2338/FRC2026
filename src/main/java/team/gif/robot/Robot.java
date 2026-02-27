@@ -85,7 +85,6 @@ public class Robot extends TimedRobot {
 
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
         swerveDrive = new SwerveDrive(swerveConfig);
-        swerveDrive.setLimelightEnabled(false);
         swerveDrive.enableDebugMode();
 //        swerveDrive.addPhotonCamera("left-cam", Constants.Vision.LEFT_CAMERA_POSITION);
         swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
