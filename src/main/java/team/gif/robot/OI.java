@@ -8,6 +8,7 @@ import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
 import team.gif.robot.commands.DriveModes.EnableBoost;
+import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
 import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterAuto;
@@ -107,6 +108,7 @@ public class OI {
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
+//        dY.onTrue(new AutonShoot());
         dX.whileTrue(new ShooterAuto());
         dLBump.whileTrue(new IndexerBack(Constants.Indexer.INDEXER_BACK_TELEOP_SECONDS).andThen(new IndexerPercent().alongWith(new PreIndexerPercent()))); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
