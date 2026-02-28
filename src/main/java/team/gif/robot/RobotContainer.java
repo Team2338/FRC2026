@@ -17,6 +17,7 @@ import team.gif.robot.commands.Agitator.AgitatorAuto;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoCollectRPM;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
+import team.gif.robot.commands.SequentialAutoCommands.AutonCollectDown;
 import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
 import team.gif.robot.commands.SequentialAutoCommands.CollectAutoSequence;
 import team.gif.robot.commands.SequentialAutoCommands.InitialAutonShoot;
@@ -52,6 +53,7 @@ public class RobotContainer {
 //        NamedCommands.registerCommand("Shoot Sequence", new ShootAutoSequence());
         NamedCommands.registerCommand("CC-autonshoot", new InitialAutonShoot());
         NamedCommands.registerCommand("OC-autonshoot", new AutonShoot());
+        NamedCommands.registerCommand("AutonCollectorDown", new AutonCollectDown());
 
         // Configure the trigger bindings
         configureBindings();
