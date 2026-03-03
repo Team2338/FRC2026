@@ -117,7 +117,8 @@ public class SwerveDrivetrain extends SubsystemBase {
 
 
     /**
-     * Constructor for swerve drivetrain using 4 swerve modules using Kraken x60s to drive and Falcon500 to turn
+     * Constructs a SwerveDrivetrain with the specified configuration
+     * @param config The SwerveConfig for the drivetrain
      */
     public SwerveDrivetrain(SwerveConfiguration config) {
         super();
@@ -614,10 +615,6 @@ public class SwerveDrivetrain extends SubsystemBase {
             ModuleConfig moduleConfig = constants.PATHPLANNER_MODULE_CONFIG;
             ppConfig = new RobotConfig(constants.MASS_KG, constants.MOI_KGM2, moduleConfig, constants.TRACK_WIDTH_METERS);
         }
-        System.out.println("-------------------------------------");
-        System.out.println(this.getPose().toString());
-        System.out.println("-------------------------------------");
-
 
         AutoBuilder.configure(
                 this::getPose,

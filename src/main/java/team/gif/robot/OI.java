@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
@@ -13,6 +12,7 @@ import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.IndexerReverse;
 import team.gif.robot.commands.Shooter.ShooterAuto;
 import team.gif.robot.commands.Shooter.ShooterRPM;
+import team.gif.robot.commands.drivetrain.HubAutoAlign;
 
 public class OI {
     /*
@@ -109,6 +109,7 @@ public class OI {
         dY.whileTrue(new ShooterRPM());
 //        dY.onTrue(new AutonShoot());
         dX.whileTrue(new ShooterAuto());
+        dA.whileTrue(new HubAutoAlign());
         dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
