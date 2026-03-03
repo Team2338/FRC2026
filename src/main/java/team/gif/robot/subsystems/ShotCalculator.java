@@ -54,10 +54,10 @@ public class ShotCalculator {
      */
     private static Rotation2d angleToHub() {
         Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
-        Translation2d hub = Constants.Field.HUB_RED;
+        Translation2d hub = Constants.Field.HUB_RED_TRANSLATION;
 
         if (DriverStation.getAlliance().isPresent()) {
-            hub = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.HUB_BLUE : Constants.Field.HUB_RED;
+            hub = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.HUB_BLUE_TRANSLATION : Constants.Field.HUB_RED_TRANSLATION;
         }
 
         return hub.minus(robot).getAngle();
