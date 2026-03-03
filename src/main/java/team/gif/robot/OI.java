@@ -14,6 +14,7 @@ import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterAuto;
 import team.gif.robot.commands.Shooter.PreIndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
+import team.gif.robot.commands.drivetrain.HubAutoAlign;
 import team.gif.robot.commands.drivetrain.Reset0;
 import team.gif.robot.commands.drivetrain.Reset180;
 
@@ -110,6 +111,7 @@ public class OI {
         dY.whileTrue(new ShooterRPM());
 //        dY.onTrue(new AutonShoot());
         dX.whileTrue(new ShooterAuto());
+        dA.whileTrue(new HubAutoAlign());
         dLBump.whileTrue(new IndexerBack(Constants.Indexer.INDEXER_BACK_TELEOP_SECONDS).andThen(new IndexerPercent().alongWith(new PreIndexerPercent()))); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
