@@ -5,7 +5,9 @@ import team.gif.lib.drivePace;
 import team.gif.robot.Robot;
 
 public class EnableBoost extends Command {
-
+    /**
+     * Not in use, converted to instant commands
+     */
     public EnableBoost() {
         super();
         //addRequirements(Robot.climber); // uncomment

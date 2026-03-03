@@ -8,17 +8,20 @@ public class ReverseCollectorPercent extends Command {
 
     double percent = 0;
 
-
+    /**
+     * Runs the collector in reverse based on value
+     *
+     * @param perc percentage to run collector. Value is absolute (e.g. 25 runs collector backwards at 25 percent)
+     */
     public ReverseCollectorPercent(double perc) {
         super();
-        addRequirements(Robot.collectMotor);// uncomment
+        addRequirements(Robot.collectMotor);
         percent = perc;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        //percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
         Robot.collectMotor.runCollectorPercent(percent);
     }
 

@@ -80,21 +80,20 @@ public abstract class RobotMap {
     }
 
     public static final class Shooter {
-        public static final int SHOOTER_1 = 30;
-        public static final int SHOOTER_2 = 31;
-        public static final int SHOOTER_3 = 32;
-        public static final int INDEXER = 33;
-        public static final int INDEXER_2 = 34;
-        public static final int PRE_INDEXER = 36;
+        public static final int LEFT_SHOOTER_MOTOR_ID = 30;
+        public static final int MIDDLE_SHOOTER_MOTOR_ID = 31;
+        public static final int RIGHT_SHOOTER_MOTOR_ID = 32;
+        public static final int TOP_INDEXER_MOTOR_ID = 33;
+        public static final int BOTTOM_INDEXER_MOTOR_ID = 34;
     }
 
     public static final class Collector {
-        public static final int COLLECT_MOTOR = 40;
-        public static final int PIVOT_MOTOR = 41;
+        public static final int COLLECT_MOTOR_ID = 40;
+        public static final int PIVOT_MOTOR_ID = 41;
     }
 
     public static final class Agitator {
-        public static final int AGITATOR_MOTOR = 35;
+        public static final int AGITATOR_MOTOR_ID = 35;
     }
 
     public static final int PIGEON_ID = 9;

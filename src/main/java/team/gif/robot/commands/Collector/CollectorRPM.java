@@ -8,6 +8,9 @@ public class CollectorRPM extends Command {
 
     double rpm = 0;
 
+    /**
+     * Not in use
+     */
     public CollectorRPM() {
         super();
         addRequirements(Robot.collectMotor);

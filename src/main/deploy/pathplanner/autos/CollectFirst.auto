@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "CC-autonshoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonCollectorDown"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 2.0
+                }
+              }
+            ]
           }
         },
         {
@@ -21,7 +34,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Forward"
+                        "pathName": "Forward2"
                       }
                     },
                     {

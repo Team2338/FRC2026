@@ -4,15 +4,14 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import team.gif.lib.drivePace;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
-import team.gif.robot.commands.DriveModes.EnableBoost;
-import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
-import team.gif.robot.commands.Shooter.IndexerBack;
 import team.gif.robot.commands.Shooter.IndexerPercent;
+import team.gif.robot.commands.Shooter.IndexerReverse;
 import team.gif.robot.commands.Shooter.ShooterAuto;
-import team.gif.robot.commands.Shooter.PreIndexerPercent;
 import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.drivetrain.HubAutoAlign;
 import team.gif.robot.commands.drivetrain.Reset0;
@@ -103,31 +102,29 @@ public class OI {
          * Simple Test:
          *   aX.onTrue(new PrintCommand("aX"));
          */
-        dStart.and(dDPadUp).onTrue(new Reset0());
-        dStart.and(dDPadDown).onTrue(new Reset180());
-        dRBump.whileTrue(new EnableBoost());
+        dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
+        dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
+        //dRBump.whileTrue(new EnableBoost());
+        dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
+        dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
 //        dY.onTrue(new AutonShoot());
         dX.whileTrue(new ShooterAuto());
         dA.whileTrue(new HubAutoAlign());
-        dLBump.whileTrue(new IndexerBack(Constants.Indexer.INDEXER_BACK_TELEOP_SECONDS).andThen(new IndexerPercent().alongWith(new PreIndexerPercent()))); //might change to up later
+        dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
+        //dBack.and(dX).onTrue(Robot.auto);
 
-        aStart.and(aDPadUp).onTrue(new Reset0());
-        aStart.and(aDPadDown).onTrue(new Reset180());
+        aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
+        aStart.and(aDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
         aRTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_FAST_PERCENT).alongWith(new AgitatorPercent()));
         aLTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_SLOW_PERCENT).alongWith(new AgitatorPercent()));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
-
-//        aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
-//        aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-//        aRBump.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-//        aRTrigger.whileTrue(Robot.shooter.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
     }
 }

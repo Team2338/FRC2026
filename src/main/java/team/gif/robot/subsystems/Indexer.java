@@ -8,100 +8,61 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.PersistMode;
-import com.revrobotics.ResetMode;
-import com.revrobotics.spark.SparkFlex;
-import com.revrobotics.spark.SparkLowLevel;
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkFlexConfig;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 public class Indexer extends SubsystemBase {
 
-    public TalonFX indexer;
-    public TalonFX indexer2;
-    public TalonFXConfiguration config = new TalonFXConfiguration();
-    public TalonFXConfiguration config2 = new TalonFXConfiguration();
-//    public SparkFlexConfig sparkConfig = new SparkFlexConfig();
+    public TalonFX bottomIndexerMotor;
+    public TalonFX topIndexerMotor;
+    public TalonFXConfiguration bottomIndexerConfig = new TalonFXConfiguration();
+    public TalonFXConfiguration topIndexerConfig = new TalonFXConfiguration();
 
-    /** Creates a new ExampleSubsystem. */
     public Indexer() {
-       indexer = new TalonFX(RobotMap.Shooter.INDEXER);
-       indexer2 = new TalonFX(RobotMap.Shooter.INDEXER_2);
+       bottomIndexerMotor = new TalonFX(RobotMap.Shooter.BOTTOM_INDEXER_MOTOR_ID);
+       topIndexerMotor = new TalonFX(RobotMap.Shooter.TOP_INDEXER_MOTOR_ID);
 
-       config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-       config.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-       config2.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+       bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+       bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+       topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+       topIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
-       indexer.getConfigurator().apply(config);
-       indexer2.getConfigurator().apply(config2);
-    }
-/*
-    @Override
-    public void periodic() {
-
-        double netP = SmartDashboard.getNumber("PID/P", 0);
-        double netI = SmartDashboard.getNumber("PID/I", 0);
-        double netD = SmartDashboard.getNumber("PID/D", 0);
-
-        double currP = config.Slot0.kP;
-        double currI = config.Slot0.kI;
-        double currD = config.Slot0.kD;
-
-        if(netP != currP || netI != currI || netD != currD) {
-            config.Slot0.kP = netP;
-            config.Slot0.kI = netI;
-            config.Slot0.kD = netD;
-            setConfig(config);
-        }
-
+       bottomIndexerMotor.getConfigurator().apply(bottomIndexerConfig);
+       topIndexerMotor.getConfigurator().apply(topIndexerConfig);
     }
 
- */
-
-    public void runPercent(double stage1, double stage2) {
-        indexer.set(stage2);
-        indexer2.set(stage1);
+    public void runPercent(double bottomIndexerMotorPercent, double topIndexerMotorPercent) {
+        bottomIndexerMotor.set(bottomIndexerMotorPercent);
+        topIndexerMotor.set(topIndexerMotorPercent);
     }
 
-    public void runVoltage(double voltage) {
-        indexer.setVoltage(voltage);
-        indexer2.setVoltage(voltage);
+    public double getBottomIndexerSpeed() {
+        return bottomIndexerMotor.getVelocity().getValueAsDouble();
     }
 
-//    public void run(double rpm) {}
-
-    public double getSpeed() {
-        return indexer.getVelocity().getValueAsDouble();
+    public double getBottomIndexerCurrent() {
+        return bottomIndexerMotor.getSupplyCurrent().getValueAsDouble();
     }
 
-    public double getCurrent() {
-        return indexer.getSupplyCurrent().getValueAsDouble();
+    public double getBottomIndexerOutput() {
+        return bottomIndexerMotor.getBridgeOutput().getValueAsDouble();
     }
 
-    public double getOutput() {
-        return indexer.getBridgeOutput().getValueAsDouble();
+    public void stopMotors() {
+        bottomIndexerMotor.stopMotor();
+        topIndexerMotor.stopMotor();
     }
 
-    public void stopMotor() {
-        indexer.stopMotor();
-        indexer2.stopMotor();
+    public boolean isBottomIndexerMotorOverTemp() {
+        return bottomIndexerMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.BOTTOM_INDEXER_MOTOR_WARNING_CELSIUS;
     }
 
-    public boolean isIndexOneOverTemp() {
-        return indexer.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.INDEX_SAFE_MOTOR_TEMP;
+    public boolean isTopIndexerMotorOverTemp() {
+        return topIndexerMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.TOP_INDEXER_MOTOR_TEMP_WARNING_CELSIUS;
     }
 
-    public boolean isIndexTwoOverTemp() {
-        return indexer2.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.INDEX_SAFE_MOTOR_TEMP;
+    public void setBottomIndexerConfig(TalonFXConfiguration bottomIndexerConfig) {
+        bottomIndexerMotor.getConfigurator().apply(bottomIndexerConfig);
     }
-
-    public void setConfig(TalonFXConfiguration config) {
-        indexer.getConfigurator().apply(config);
-    }
-
 }

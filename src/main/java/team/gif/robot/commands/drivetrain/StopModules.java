@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
 public class StopModules extends Command {
+    /**
+     * Not in use
+     */
     public StopModules() {
         addRequirements(Robot.swerveDrive);
     }
