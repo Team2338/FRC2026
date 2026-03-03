@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
@@ -14,8 +13,6 @@ import team.gif.robot.commands.Shooter.IndexerReverse;
 import team.gif.robot.commands.Shooter.ShooterAuto;
 import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.drivetrain.HubAutoAlign;
-import team.gif.robot.commands.drivetrain.Reset0;
-import team.gif.robot.commands.drivetrain.Reset180;
 
 public class OI {
     /*
