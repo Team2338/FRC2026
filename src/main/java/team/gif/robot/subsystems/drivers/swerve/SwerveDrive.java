@@ -4,7 +4,6 @@
 
 package team.gif.robot.subsystems.drivers.swerve;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConfiguration;
 
 public class SwerveDrive extends SwerveDrivetrain {

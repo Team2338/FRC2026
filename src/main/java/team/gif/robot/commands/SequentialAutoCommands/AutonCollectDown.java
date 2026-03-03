@@ -1,7 +1,6 @@
 package team.gif.robot.commands.SequentialAutoCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
 
 

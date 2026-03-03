@@ -1,6 +1,5 @@
 package team.gif.robot.commands.Collector.CollectorAutos;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
