@@ -5,10 +5,10 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class IndexerAutoPercent extends Command {
-    double stage1 = 0;
-    double stage2 = 0;
     private int counter;
-
+    /**
+     * Not in use
+     */
     public IndexerAutoPercent() {
         super();
         addRequirements(Robot.indexer);
@@ -17,16 +17,13 @@ public class IndexerAutoPercent extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.indexer.runPercent(stage1, stage2);
-        stage1 = 0.5; //Change value
-        stage2 = 0.5; //Change value
+        Robot.indexer.runPercent(0.5, 0.5);
         counter = 0;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-
         counter++;
     }
 
@@ -39,6 +36,6 @@ public class IndexerAutoPercent extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.stopMotor();
+        Robot.indexer.stopMotors();
     }
 }

@@ -7,10 +7,12 @@ import team.gif.robot.Robot;
 public class ShooterRPM extends Command {
     double rpm = 0;
 
+    /**
+     * Runs shooter at RPM from dashboard
+     */
     public ShooterRPM() {
         super();
         addRequirements(Robot.shooter);
-        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
@@ -18,7 +20,6 @@ public class ShooterRPM extends Command {
     public void initialize() {
         rpm = SmartDashboard.getNumber("PID/Reference", 0);
         Robot.shooter.runShooter(rpm);
-
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -35,6 +36,6 @@ public class ShooterRPM extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.stopMotor();
+        Robot.shooter.stopMotors();
     }
 }

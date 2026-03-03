@@ -14,7 +14,7 @@ public class CollectorPercent extends Command {
     }
 
     /**
-     * Brings the collector in and out
+     * Brings the collector in or out
      *
      * @param perc negative value brings the collector in, positive is out
      */
@@ -24,12 +24,9 @@ public class CollectorPercent extends Command {
         percent = perc;
     }
 
-
-
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-//        percent = SmartDashboard.getNumber("Collector/PID/Collect Percent", 0);
         Robot.collectMotor.runCollectorPercent(-percent);
     }
 

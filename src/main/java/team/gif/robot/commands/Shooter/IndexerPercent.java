@@ -1,30 +1,31 @@
 package team.gif.robot.commands.Shooter;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
 public class IndexerPercent extends Command {
-    double stage1 = 0;
-    double stage2 = 0;
+    double bottomIndexerMotorPercent = 0;
+    double topIndexerMotorPercent = 0;
 
+    /**
+     * Runs both indexer motors at given percents
+     */
     public IndexerPercent() {
         super();
         addRequirements(Robot.indexer);
-        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        stage1 = SmartDashboard.getNumber("Indexer/Stage 1", 0);
-        stage2 = SmartDashboard.getNumber("Indexer/Stage 2", 0);
+        bottomIndexerMotorPercent = 0.5;
+        topIndexerMotorPercent = 0.8;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.indexer.runPercent(stage1, stage2);
+        Robot.indexer.runPercent(topIndexerMotorPercent, bottomIndexerMotorPercent);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -36,6 +37,6 @@ public class IndexerPercent extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.stopMotor();
+        Robot.indexer.stopMotors();
     }
 }

@@ -7,6 +7,9 @@ import team.gif.robot.Robot;
 public class CollectorAutoCollectRPM extends Command {
     double rpm = 0;
 
+    /**
+     * Currently not in use
+     */
     public CollectorAutoCollectRPM() {
         super();
         addRequirements(Robot.collectMotor); // uncomment

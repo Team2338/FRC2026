@@ -3,6 +3,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
 public class Reset0 extends Command {
+    /**
+     * Not in use, converted to instant commands
+     */
     public Reset0() {}
 
     // Called when the command is initially scheduled.

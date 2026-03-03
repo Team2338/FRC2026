@@ -6,6 +6,9 @@ import team.gif.robot.Robot;
 public class CollectorAutoAgitate extends Command {
     private int counter;
 
+    /**
+     * Used to automatically agitate the collector up and down during shooting
+     */
     public CollectorAutoAgitate() {
         super();
         addRequirements(Robot.pivotMotor);
@@ -14,7 +17,7 @@ public class CollectorAutoAgitate extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-       counter =0;
+       counter = 0;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

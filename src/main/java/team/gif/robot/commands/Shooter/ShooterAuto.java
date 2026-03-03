@@ -5,11 +5,12 @@ import team.gif.robot.Robot;
 import team.gif.robot.subsystems.ShotCalculator;
 
 public class ShooterAuto extends Command {
-
+    /**
+     * Runs shooter at RPM based distance to hub
+     */
     public ShooterAuto() {
         super();
         addRequirements(Robot.shooter);
-        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
@@ -31,6 +32,6 @@ public class ShooterAuto extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.stopMotor();
+        Robot.shooter.stopMotors();
     }
 }

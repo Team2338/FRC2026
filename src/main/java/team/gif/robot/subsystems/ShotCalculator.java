@@ -11,23 +11,21 @@ public class ShotCalculator {
     private final static InterpolatingDoubleTreeMap distanceMap = new InterpolatingDoubleTreeMap();
 
     static {
-        distanceMap.put(Units.feetToMeters(11.42 + 0.75), 3500.);
-        distanceMap.put(Units.feetToMeters(13.42 + 0.75), 3650.);
-        distanceMap.put(Units.feetToMeters(15 + 0.75), 3750.);
-        distanceMap.put(Units.feetToMeters(8.42 + 0.75), 3100.);
-        distanceMap.put(Units.feetToMeters(7.42 + 0.75), 3050.);
-        distanceMap.put(Units.feetToMeters(6.42 + 0.75), 3000.);
-        distanceMap.put(Units.feetToMeters(5.42 + 0.75), 2750.);
-        distanceMap.put(Units.feetToMeters(4.42 + 0.75), 2650.);
-        distanceMap.put(Units.feetToMeters(3.42 + 0.75), 2550.);
-
+        distanceMap.put(Units.feetToMeters(15.0 + 0.75), 3750.0);
+        distanceMap.put(Units.feetToMeters(13.42 + 0.75), 3650.0);
+        distanceMap.put(Units.feetToMeters(11.42 + 0.75), 3500.0);
+        distanceMap.put(Units.feetToMeters(8.42 + 0.75), 3100.0);
+        distanceMap.put(Units.feetToMeters(7.42 + 0.75), 3050.0);
+        distanceMap.put(Units.feetToMeters(6.42 + 0.75), 3000.0);
+        distanceMap.put(Units.feetToMeters(5.42 + 0.75), 2750.0);
+        distanceMap.put(Units.feetToMeters(4.42 + 0.75), 2650.0);
+        distanceMap.put(Units.feetToMeters(3.42 + 0.75), 2550.0);
     }
 
     public static double distanceToHub() {
         if (DriverStation.getAlliance().isPresent()) {
-            Translation2d hub = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.HUB_BLUE : Constants.Field.HUB_RED;
+            Translation2d hub = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.HUB_BLUE_TRANSLATION : Constants.Field.HUB_RED_TRANSLATION;
             Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
-            System.out.println(robot.getDistance(hub));
             return robot.getDistance(hub);
         } else {
             return -1;
@@ -35,8 +33,6 @@ public class ShotCalculator {
     }
 
     public static double getShotRPM() {
-        System.out.println(distanceMap.get(distanceToHub()));
         return distanceMap.get(distanceToHub());
     }
-
 }

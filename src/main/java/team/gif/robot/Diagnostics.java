@@ -21,11 +21,11 @@ public class Diagnostics extends SubsystemBase {
         return Robot.collectMotor.isOverTemp() ||
                 Robot.pivotMotor.isOverTemp() ||
                 Robot.agitator.isOverTemp() ||
-                Robot.indexer.isIndexOneOverTemp() ||
-                Robot.indexer.isIndexTwoOverTemp() ||
-                Robot.shooter.isLeftOverTemp() ||
-                Robot.shooter.isMiddleOverTemp() ||
-                Robot.shooter.isRightOverTemp();
+                Robot.indexer.isBottomIndexerMotorOverTemp() ||
+                Robot.indexer.isTopIndexerMotorOverTemp() ||
+                Robot.shooter.isLeftMotorOverTemp() ||
+                Robot.shooter.isMiddleMotorOverTemp() ||
+                Robot.shooter.isRightMotorOverTemp();
     }
 
     public boolean anyMotorTempHot() {

@@ -24,8 +24,8 @@ public final class Constants {
     public static final double DEBOUNCE_DEFAULT = 0.020;
 
     public static final class Field {
-        public static final Translation2d HUB_BLUE = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
-        public static final Translation2d HUB_RED = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+        public static final Translation2d HUB_BLUE_TRANSLATION = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
+        public static final Translation2d HUB_RED_TRANSLATION = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
     }
 
     public static final class Vision {
@@ -149,15 +149,15 @@ public final class Constants {
     public static final class Collector {
         public static final double COLLECTOR_SLOW_PERCENT = 0.5;
         public static final double COLLECTOR_FAST_PERCENT = 0.9;
-        public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.70;
 
+        public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
 
+        public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
 
-        public static final double AUTO_COLLECTOR_PIVOT_TOLERANCE = 0.5; //Change value
-
-        public static final double AGITATOR_AUTO_PERCENT = -0.3;
+        public static final double AGITATOR_MOTOR_AUTON_PERCENT = -0.3; //Separate in case we want autos to be different
+        public static final double AGITATOR_MOTOR_PERCENT = -0.3;
     }
 
     public static final class Shooter {
@@ -166,22 +166,20 @@ public final class Constants {
     }
 
     public static final class Indexer {
-        public static final double INDEXER_BACK_TELEOP_SECONDS = 0.25;
-        public static final double INDEXER_BACK_PERCENT = -0.25;
-        public static final double INDEXER_BACK_AUTO_SECONDS = 0.25;
+        public static final double INDEXER_REVERSE_TELEOP_SECONDS = 0.25;
+        public static final double INDEXER_REVERSE_PERCENT = -0.25;
+        public static final double INDEXER_REVERSE_AUTO_SECONDS = 0.25;
 
-        public static final double INDEXER_STAGE_1_PERCENT = 0.7; //Should change
-        public static final double INDEXER_STAGE_2_PERCENT = 0.7; //Should change
-
+        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.7; //Should change
+        public static final double TOP_INDEXER_MOTOR_PERCENT = 0.7; //Should change
     }
 
     public static final class MotorTemps {
-        public static final double COLLECTOR_SAFE_MOTOR_TEMP = 70.0;
-        public static final double PIVOT_SAFE_MOTOR_TEMP = 70.0;
-        public static final double AGITATOR_SAFE_MOTOR_TEMP = 70.0;
-        public static final double INDEX_SAFE_MOTOR_TEMP = 70.0;
-        public static final double SHOOTER_SAFE_MOTOR_TEMP = 70.0;
+        public static final double COLLECTOR_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double PIVOT_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double AGITATOR_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double BOTTOM_INDEXER_MOTOR_WARNING_CELSIUS = 75.0;
+        public static final double TOP_INDEXER_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double SHOOTER_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
     }
-
-
 }

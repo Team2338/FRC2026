@@ -8,21 +8,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
-import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.CollectorPivot;
-import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
-import team.gif.robot.commands.SequentialAutoCommands.InitialAutonShoot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
 import team.gif.robot.subsystems.Collector.CollectMotor;
 import team.gif.robot.subsystems.Collector.PivotMotor;
 import team.gif.robot.subsystems.Indexer;
-import team.gif.robot.subsystems.PreIndexer;
 import team.gif.robot.subsystems.Shooter;
 import team.gif.robot.subsystems.drivers.Pigeon2_0;
 import team.gif.robot.subsystems.drivers.swerve.SwerveDrive;
@@ -53,9 +44,7 @@ public class Robot extends TimedRobot {
 
     public static Shooter shooter;
     public static Indexer indexer;
-    public static PreIndexer preIndexer;
     public static Agitator agitator;
-
 
     public static CollectMotor collectMotor;
     public static PivotMotor pivotMotor;
@@ -77,7 +66,6 @@ public class Robot extends TimedRobot {
 
         shooter = new Shooter();
         indexer = new Indexer();
-        preIndexer = new PreIndexer();
         agitator = new Agitator();
 
         collectMotor = new CollectMotor();
@@ -91,7 +79,6 @@ public class Robot extends TimedRobot {
 //        swerveDrive.addPhotonCamera("photonvision-side", Constants.Vision.SIDE_CAMERA_POSITION);
         robotContainer = new RobotContainer();
 
-
         pivotMotor.setDefaultCommand(new CollectorPivot());
         swerveDrive.setDefaultCommand(new DriveSwerve());
         //These should be at or near the bottom
@@ -101,8 +88,6 @@ public class Robot extends TimedRobot {
         diagnostics = new Diagnostics();
         ui = new UI();
         pigeon.addToShuffleboard("Heading");
-
-
     }
 
     /**
@@ -121,7 +106,6 @@ public class Robot extends TimedRobot {
         commandScheduler.run();
 
         ui.update();
-
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
@@ -134,11 +118,9 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
-//        CommandScheduler.getInstance().schedule(new CollectorAutoPivotDown());
         autonomousCommand = robotContainer.getAutonomousCommand();
         delay = ui.delayChooser.getSelected();
         if(delay == 0.0 && autonomousCommand != null) {
-//            commandScheduler.schedule(new AutonShoot());
             commandScheduler.schedule(autonomousCommand);
         }
         else if(delay !=0.0 && autonomousCommand != null) {

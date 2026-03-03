@@ -15,17 +15,13 @@ public class PivotMotor extends SubsystemBase {
     private TalonFXConfiguration config;
 
     public PivotMotor(){
-        pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR);
+        pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
 
         setConfig();
     }
 
     public void runPivotPercent(double percent) {
         pivotMotor.set(percent);
-    }
-
-    public void runPivotVoltage(double volts){
-        pivotMotor.setVoltage(volts);
     }
 
     public double getPivotOutput() {
@@ -36,15 +32,21 @@ public class PivotMotor extends SubsystemBase {
         return pivotMotor.getVelocity().getValueAsDouble() * 60;
     }
 
-    public double getPosition(){
-        return pivotMotor.getPosition().getValueAsDouble();}
+    public double getPosition() {
+        return pivotMotor.getPosition().getValueAsDouble();
+    }
 
-    public void zeroEncoder(){
-        pivotMotor.setPosition(0);}
-    public void deployedEncoder(){
-        pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);}
-    public boolean atSetPoint(double desiredSetpoint){
-        return Math.abs(getPosition() - desiredSetpoint) <= Constants.Collector.AUTO_COLLECTOR_PIVOT_TOLERANCE;}
+    public void zeroEncoder() {
+        pivotMotor.setPosition(0);
+    }
+
+    public void deployedEncoder() {
+        pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);
+    }
+
+    public boolean atSetPoint(double desiredSetpoint) {
+        return Math.abs(getPosition() - desiredSetpoint) <= Constants.Collector.PIVOT_POSITION_TOLERANCE;
+    }
 
     private void setConfig(){
         config = new TalonFXConfiguration();
@@ -60,13 +62,10 @@ public class PivotMotor extends SubsystemBase {
     }
 
     public boolean isOverTemp() {
-        return pivotMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.PIVOT_SAFE_MOTOR_TEMP;
+        return pivotMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.PIVOT_MOTOR_TEMP_WARNING_CELSIUS;
     }
 
     public void stopMotor() {
         pivotMotor.stopMotor();
     }
-
-    //Change position value later after testing
-    //public void deployedEncoder(){pivotMotor.setPosition(0);}
 }
