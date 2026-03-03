@@ -148,7 +148,7 @@ public final class Constants {
 
     public static final class Collector {
         public static final double COLLECTOR_SLOW_PERCENT = 0.5;
-        public static final double COLLECTOR_FAST_PERCENT = 0.85;
+        public static final double COLLECTOR_FAST_PERCENT = 0.9;
         public static final double COLLECTOR_PERCENT_MULTIPLIER = 0.70;
 
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;

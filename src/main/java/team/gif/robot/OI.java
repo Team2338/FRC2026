@@ -2,8 +2,10 @@ package team.gif.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
 import team.gif.robot.commands.Collector.CollectorPercent;
 import team.gif.robot.commands.Collector.ReverseCollectorPercent;
@@ -114,6 +116,12 @@ public class OI {
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
 
+        dDPadUp.whileTrue(Robot.swerveDrive.sysIdDynamic("drive", SysIdRoutine.Direction.kForward));
+        dDPadDown.whileTrue(Robot.swerveDrive.sysIdDynamic("drive", SysIdRoutine.Direction.kReverse));
+        dDPadRight.whileTrue(Robot.swerveDrive.sysIdQuasistatic("drive", SysIdRoutine.Direction.kForward));
+        dDPadLeft.whileTrue(Robot.swerveDrive.sysIdQuasistatic("drive", SysIdRoutine.Direction.kReverse));
+
+
         aStart.and(aDPadUp).onTrue(new Reset0());
         aStart.and(aDPadDown).onTrue(new Reset180());
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
@@ -122,6 +130,8 @@ public class OI {
         aRTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_FAST_PERCENT).alongWith(new AgitatorPercent()));
         aLTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_SLOW_PERCENT).alongWith(new AgitatorPercent()));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
+
+
 
 //        aLBump.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kForward));
 //        aLTrigger.whileTrue(Robot.shooter.sysIdDynamic(SysIdRoutine.Direction.kReverse));

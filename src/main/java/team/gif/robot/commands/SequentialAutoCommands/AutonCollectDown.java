@@ -9,7 +9,7 @@ public class AutonCollectDown extends SequentialCommandGroup {
 
     public AutonCollectDown() {
         addCommands(
-                new CollectorAutoPivotDown(0.2).withTimeout(1.5).andThen(new CollectorAutoPivotDown(0.1))
+                new CollectorAutoPivotDown(0.4).withTimeout(1.5).andThen(new CollectorAutoPivotDown(0.1))
         );
     }
 }

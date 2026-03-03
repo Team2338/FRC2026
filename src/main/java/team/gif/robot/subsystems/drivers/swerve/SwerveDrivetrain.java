@@ -753,13 +753,17 @@ public class SwerveDrivetrain extends SubsystemBase {
             MutDistance posMut = Meters.mutable(0);
             MutLinearVelocity vMut= MetersPerSecond.mutable(0);
 
-            return new SysIdRoutine(new SysIdRoutine.Config(null, voltMut.mut_replace(5, Volts), null),
+            return new SysIdRoutine(new SysIdRoutine.Config(null, voltMut.mut_replace(8, Volts), null),
                     new SysIdRoutine.Mechanism(
                             voltage -> {
                                 fLDriveMotor.setVoltage(voltage.baseUnitMagnitude());
+                                fL.turnHoldZero();
                                 fRDriveMotor.setVoltage(voltage.baseUnitMagnitude());
+                                fR.turnHoldZero();
                                 rLDriveMotor.setVoltage(voltage.baseUnitMagnitude());
+                                rL.turnHoldZero();
                                 rRDriveMotor.setVoltage(voltage.baseUnitMagnitude());
+                                rR.turnHoldZero();
                             },
                             log -> {
                                 log.motor("fLDrive")
