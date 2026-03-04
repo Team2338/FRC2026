@@ -1,17 +1,22 @@
-package team.gif.robot.commands.drivetrain;
+package team.gif.robot.commands.DriveModes;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.lib.drivePace;
 import team.gif.robot.Robot;
 
-public class Reset0 extends Command {
+public class EnableBoost extends Command {
     /**
      * Not in use, converted to instant commands
      */
-    public Reset0() {}
+    public EnableBoost() {
+        super();
+        //addRequirements(Robot.climber); // uncomment
+    }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.pigeon.resetPigeonPosition(0);
+        Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -21,15 +26,12 @@ public class Reset0 extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
-
-    @Override
-    public boolean runsWhenDisabled() {
-        return true;
+    public void end(boolean interrupted) {
+        Robot.swerveDrive.setDrivePace(drivePace.COAST_FR);
     }
 }

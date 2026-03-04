@@ -1,24 +1,30 @@
-package team.gif.robot.commands.drivetrain;
+package team.gif.robot.commands.Shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class StopModules extends Command {
+public class ShooterRPM extends Command {
+    double rpm = 0;
+
     /**
-     * Not in use
+     * Runs shooter at RPM from dashboard
      */
-    public StopModules() {
-        addRequirements(Robot.swerveDrive);
+    public ShooterRPM() {
+        super();
+        addRequirements(Robot.shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        rpm = SmartDashboard.getNumber("PID/Reference", 0);
+        Robot.shooter.runShooter(rpm);
+    }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.swerveDrive.stopDrive();
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -29,5 +35,7 @@ public class StopModules extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Robot.shooter.stopMotors();
+    }
 }

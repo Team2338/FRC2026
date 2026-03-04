@@ -1,17 +1,26 @@
-package team.gif.robot.commands.drivetrain;
+package team.gif.robot.commands.Collector;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class Reset0 extends Command {
+public class CollectorRPM extends Command {
+
+    double rpm = 0;
+
     /**
-     * Not in use, converted to instant commands
+     * Not in use
      */
-    public Reset0() {}
+    public CollectorRPM() {
+        super();
+        addRequirements(Robot.collectMotor);
+    }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.pigeon.resetPigeonPosition(0);
+        rpm = SmartDashboard.getNumber("Collector/PID/Collect Reference", 0);
+        Robot.collectMotor.runCollector(rpm);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -21,15 +30,12 @@ public class Reset0 extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
-
-    @Override
-    public boolean runsWhenDisabled() {
-        return true;
+    public void end(boolean interrupted) {
+        Robot.collectMotor.stopMotor();
     }
 }

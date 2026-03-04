@@ -5,7 +5,6 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import team.gif.robot.Constants;
 import team.gif.robot.subsystems.drivers.swerve.utilities.DriveMotor;
 import team.gif.robot.subsystems.drivers.swerve.utilities.Encoder;
 import team.gif.robot.subsystems.drivers.swerve.utilities.TurnMotor;

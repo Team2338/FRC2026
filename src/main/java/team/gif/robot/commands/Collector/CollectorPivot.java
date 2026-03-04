@@ -1,14 +1,16 @@
-package team.gif.robot.commands.drivetrain;
+package team.gif.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class StopModules extends Command {
-    /**
-     * Not in use
-     */
-    public StopModules() {
-        addRequirements(Robot.swerveDrive);
+public class CollectorPivot extends Command {
+
+    double percent;
+
+    public CollectorPivot() {
+        super();
+        addRequirements(Robot.pivotMotor);
     }
 
     // Called when the command is initially scheduled.
@@ -18,7 +20,11 @@ public class StopModules extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.swerveDrive.stopDrive();
+        percent = -Robot.oi.aux.getLeftY();
+        percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0;
+        percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER;
+        percent =  Math.min(percent, 0.2);
+        Robot.pivotMotor.runPivotPercent(percent);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
