@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
 
     private double delay;
     private final Timer delayTimer = new Timer();
+    public boolean isCompetition = false;
 
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
@@ -106,6 +107,11 @@ public class Robot extends TimedRobot {
         commandScheduler.run();
 
         ui.update();
+
+        if (diagnostics.swerveMotorTempHot() && !isCompetition) {
+            swerveDrive.stopModules();
+            System.out.println("Driving has been disabled. The drive motors exceed the safe temperature threshold.");
+        }
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
