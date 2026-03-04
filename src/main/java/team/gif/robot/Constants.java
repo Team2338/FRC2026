@@ -149,13 +149,17 @@ public final class Constants {
     }
 
     public static final class Collector {
-        public static final double COLLECTOR_SLOW_PERCENT = 0.5;
-        public static final double COLLECTOR_FAST_PERCENT = 0.9;
+        public static final double COLLECTOR_SLOW_RPM = 3000; //TODO: Adjust
+        public static final double COLLECTOR_FAST_RPM = 4000; //TODO: Adjust
+        public static final double COLLECTOR_EJECT_RPM = 1500; //TODO: Adjust
+        public static final double COLLECTOR_kP = 0.35;
+        public static final double COLLECTOR_kI = 0.0;
+        public static final double COLLECTOR_kD = 0.0;
+
 
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
-
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
 
         public static final double AGITATOR_MOTOR_AUTON_PERCENT = -0.3; //Separate in case we want autos to be different

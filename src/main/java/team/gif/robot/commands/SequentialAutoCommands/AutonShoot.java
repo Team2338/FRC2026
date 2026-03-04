@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.Constants;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoAgitate;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPercent;
+import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoRPM;
 import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAuton;
 import team.gif.robot.commands.Shooter.ShooterAutos.AutonShooterRPM;
 
@@ -17,7 +17,7 @@ public class AutonShoot extends ParallelDeadlineGroup {
         addCommands(
                 new CollectorAutoAgitate(),
                 new WaitCommand(1.5).andThen(new IndexerAuton(true)),
-                new CollectorAutoPercent(Constants.Collector.COLLECTOR_FAST_PERCENT)
+                new CollectorAutoRPM(Constants.Collector.COLLECTOR_FAST_RPM)
         );
     }
 }
