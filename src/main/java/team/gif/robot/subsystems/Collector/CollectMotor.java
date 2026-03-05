@@ -50,13 +50,30 @@ public class CollectMotor extends SubsystemBase {
         }
     }
 
-    public void runCollectorPercent(double percent){
-        collectorMotor.set(percent);
+
+    /**
+     * A general output setter method that determines what type of control to use based off of
+     * the value of desiredOutput parameter.
+     * @param desiredOutput A double that can be between abs(0-1) for percent voltage control
+     *                      or greater than 1 for velocity control.
+     *                      Positive values intake, negative values eject.
+     */
+    public void runCollector(double desiredOutput) {
+        if (0.0 <= Math.abs(desiredOutput) && Math.abs(desiredOutput) <= 1) {
+            collectorMotor.set(desiredOutput);
+        }
+        else if (Math.abs(desiredOutput) > 1) {
+            collectorMotor.setControl(velocityVoltage.withVelocity(desiredOutput/60));
+        }
     }
 
-    public void runCollector(double rpm) {
-        collectorMotor.setControl(velocityVoltage.withVelocity(rpm/60));
-    }
+//    public void runCollectorPercent(double percent){
+//        collectorMotor.set(percent);
+//    }
+
+//    public void runCollector(double rpm) {
+//        collectorMotor.setControl(velocityVoltage.withVelocity(rpm/60));
+//    }
 
     public double getCollectOutput() {
         return collectorMotor.getMotorVoltage().getValueAsDouble() / 12;

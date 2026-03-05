@@ -149,6 +149,9 @@ public final class Constants {
     }
 
     public static final class Collector {
+        public static final double COLLECTOR_SLOW_PERCENT = 0.5;
+        public static final double COLLECTOR_FAST_PERCENT = 0.9;
+        public static final double COLLECTOR_EJECT_PERCENT = -0.25;
         public static final double COLLECTOR_SLOW_RPM = 3000; //TODO: Adjust
         public static final double COLLECTOR_FAST_RPM = 4000; //TODO: Adjust
         public static final double COLLECTOR_EJECT_RPM = 1500; //TODO: Adjust

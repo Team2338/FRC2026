@@ -27,15 +27,16 @@ public class UI {
         SmartDashboard.putString("PID/Voltage BTN", "Driver X");
         SmartDashboard.putString("PID/Reference BTN", "Driver A");
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
-        SmartDashboard.putNumber("Collector/PID/Collect P", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect I", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect D", 0);
+        SmartDashboard.putNumber("Collector/PID/Collect P", Constants.Collector.COLLECTOR_kP);
+        SmartDashboard.putNumber("Collector/PID/Collect I", Constants.Collector.COLLECTOR_kI);
+        SmartDashboard.putNumber("Collector/PID/Collect D", Constants.Collector.COLLECTOR_kD);
 //        SmartDashboard.putNumber("Collector/PID/Pivot P", 0);
 //        SmartDashboard.putNumber("Collector/PID/Pivot I", 0);
 //        SmartDashboard.putNumber("Collector/PID/Pivot D", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect Percent", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect Voltage", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect Reference", 0);
+//        SmartDashboard.putNumber("Collector/PID/Collect Percent", 0);
+//        SmartDashboard.putNumber("Collector/PID/Collect Voltage", 0);
+//        SmartDashboard.putNumber("Collector/PID/Collect Reference", 0);
+        SmartDashboard.putNumber("Collector/Desired Output", 0);
         SmartDashboard.putNumber("Collector/PID/Pivot Percent", 0);
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
         SmartDashboard.putNumber("Auto Collector/PID/Collect Reference", 0);
@@ -88,7 +89,6 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
-
         SmartDashboard.putBoolean("Diagnostics/Agitator", Robot.agitator.isOverTemp());
     }
 }

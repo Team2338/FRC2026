@@ -5,31 +5,35 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class CollectorRPM extends Command {
+public class CollectorRun extends Command {
 
-    private final double rpm;
+    private double output;
 
     /**
-     * @param rpm Positive is for collecting, negative for ejecting
+     * @param desiredOutput Positive is for collecting, negative for ejecting
      */
-    public CollectorRPM(double rpm) {
+    public CollectorRun(double desiredOutput) {
         super();
         addRequirements(Robot.collectMotor);
-        this.rpm = rpm;
+        output = desiredOutput;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        //dashRPM is meant for testing only, it should be removed after we have a good RPM value
-        double dashRPM = SmartDashboard.getNumber("Collector/PID/Collect Reference", Constants.Collector.COLLECTOR_FAST_RPM);
-        Robot.collectMotor.runCollector(dashRPM);
-//        Robot.collectMotor.runCollector(rpm);
+        Robot.collectMotor.runCollector(output);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {}
+    public void execute() {
+        //Changes output if the output is changed in dashboard
+        double newOutput = SmartDashboard.getNumber("Collector/Desired Output", output);
+        if (output != newOutput) {
+            output = newOutput;
+            Robot.collectMotor.runCollector(output);
+        }
+    }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override

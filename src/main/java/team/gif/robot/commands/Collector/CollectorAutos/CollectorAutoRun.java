@@ -3,22 +3,22 @@ package team.gif.robot.commands.Collector.CollectorAutos;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class CollectorAutoRPM extends Command {
-    private final double rpm;
+public class CollectorAutoRun extends Command {
+    private double output;
 
     /**
-     * @param rpm Positive is for collecting, negative is for ejecting
+     * @param desiredOutput Positive is for collecting, negative is for ejecting
      */
-    public CollectorAutoRPM(double rpm) {
+    public CollectorAutoRun(double desiredOutput) {
         super();
         addRequirements(Robot.collectMotor);
-        this.rpm = rpm;
+         output = desiredOutput;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.collectMotor.runCollector(rpm);
+        Robot.collectMotor.runCollector(output);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

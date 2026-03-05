@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.Agitator.AgitatorPercent;
-import team.gif.robot.commands.Collector.CollectorRPM;
+import team.gif.robot.commands.Collector.CollectorRun;
 import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.IndexerReverse;
 import team.gif.robot.commands.Shooter.ShooterAuto;
@@ -119,8 +119,8 @@ public class OI {
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
-        aRTrigger.whileTrue(new CollectorRPM(Constants.Collector.COLLECTOR_FAST_RPM).alongWith(new AgitatorPercent()));
-        aLTrigger.whileTrue(new CollectorRPM(Constants.Collector.COLLECTOR_SLOW_RPM).alongWith(new AgitatorPercent()));
-        aRBump.whileTrue(new CollectorRPM(-Constants.Collector.COLLECTOR_EJECT_RPM).alongWith(new IndexerReverse()));
+        aRTrigger.whileTrue(new CollectorRun(Constants.Collector.COLLECTOR_FAST_RPM).alongWith(new AgitatorPercent()));
+        aLTrigger.whileTrue(new CollectorRun(Constants.Collector.COLLECTOR_SLOW_RPM).alongWith(new AgitatorPercent()));
+        aRBump.whileTrue(new CollectorRun(-Constants.Collector.COLLECTOR_EJECT_RPM).alongWith(new IndexerReverse()));
     }
 }

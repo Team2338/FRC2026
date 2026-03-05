@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import team.gif.robot.Constants;
 import team.gif.robot.commands.Agitator.AgitatorAutonPercent;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoRPM;
+import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoRun;
 
 public class CollectAutoSequence extends SequentialCommandGroup {
     /**
@@ -14,7 +14,7 @@ public class CollectAutoSequence extends SequentialCommandGroup {
         addCommands(
                 new ParallelCommandGroup(
                         new AgitatorAutonPercent(),
-                        new CollectorAutoRPM(Constants.Collector.COLLECTOR_FAST_RPM)
+                        new CollectorAutoRun(Constants.Collector.COLLECTOR_FAST_RPM)
                 )
         );
     }
