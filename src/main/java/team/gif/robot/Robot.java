@@ -108,9 +108,9 @@ public class Robot extends TimedRobot {
 
         ui.update();
 
-        if (diagnostics.swerveMotorTempHot() && !isCompetition) {
+        if (diagnostics.anyMotorTempHot() && !isCompetition) {
             swerveDrive.stopModules();
-            System.out.println("Driving has been disabled. The drive motors exceed the safe temperature threshold.");
+            System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
         }
     }
 
