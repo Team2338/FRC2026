@@ -1,7 +1,7 @@
-package team.gif.robot.commands.SequentialAutoCommands;
+package team.gif.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
+import team.gif.robot.commands.collector.CollectorAutos.CollectorAutoPivotDown;
 
 
 public class AutonCollectDown extends SequentialCommandGroup {

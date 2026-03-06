@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import team.gif.robot.commands.Collector.CollectorPivot;
+import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
 import team.gif.robot.subsystems.Collector.CollectMotor;
@@ -109,7 +109,7 @@ public class Robot extends TimedRobot {
         ui.update();
 
         if (diagnostics.anyMotorTempHot() && !isCompetition) {
-            swerveDrive.stopModules();
+            swerveDrive.stopModules(); //TODO: Test
             System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
         }
     }

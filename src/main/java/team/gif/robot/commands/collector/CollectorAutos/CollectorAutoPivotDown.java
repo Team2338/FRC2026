@@ -1,30 +1,27 @@
-package team.gif.robot.commands.Collector;
+package team.gif.robot.commands.collector.CollectorAutos;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class CollectorPivot extends Command {
+public class CollectorAutoPivotDown extends Command {
 
     double percent;
 
-    public CollectorPivot() {
+    public CollectorAutoPivotDown(double percent) {
         super();
         addRequirements(Robot.pivotMotor);
+        this.percent = percent;
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        Robot.pivotMotor.runPivotPercent(percent);
+    }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        percent = -Robot.oi.aux.getLeftY();
-        percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0;
-        percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER;
-        percent =  Math.min(percent, 0.2);
-        Robot.pivotMotor.runPivotPercent(percent);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -35,5 +32,7 @@ public class CollectorPivot extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Robot.pivotMotor.runPivotPercent(0);
+    }
 }

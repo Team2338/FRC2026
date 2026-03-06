@@ -1,41 +1,35 @@
-package team.gif.robot.commands.Shooter.ShooterAutos;
+package team.gif.robot.commands.agitator;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class IndexerAutoPercent extends Command {
-    private int counter;
-    /**
-     * Not in use
-     */
-    public IndexerAutoPercent() {
+public class AgitatorPercent extends Command {
+
+    public AgitatorPercent() {
         super();
-        addRequirements(Robot.indexer);
+        addRequirements(Robot.agitator);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.indexer.runPercent(0.5, 0.5);
-        counter = 0;
+        Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_PERCENT);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {
-        counter++;
-    }
+    public void execute() {}
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return counter >= (Constants.Shooter.SHOOTER_AUTO_SECONDS * 50);
+        return false;
     }
 
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.stopMotors();
+        Robot.agitator.stopMotor();
     }
 }

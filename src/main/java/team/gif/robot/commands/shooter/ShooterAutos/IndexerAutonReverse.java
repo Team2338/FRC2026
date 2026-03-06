@@ -1,37 +1,43 @@
-package team.gif.robot.commands.DriveModes;
+package team.gif.robot.commands.shooter.ShooterAutos;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import team.gif.lib.drivePace;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class EnableBoost extends Command {
+public class IndexerAutonReverse extends Command {
+    double seconds;
+    double timer;
     /**
-     * Not in use, converted to instant commands
+     * Not in use
      */
-    public EnableBoost() {
+    public IndexerAutonReverse(double seconds) {
         super();
-        //addRequirements(Robot.climber); // uncomment
+        addRequirements(Robot.indexer);
+        this.seconds = seconds;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR);
+        Robot.indexer.runPercent(Constants.Indexer.INDEXER_REVERSE_PERCENT, 0);
+        timer = 0;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {}
+    public void execute() {
+        timer++;
+    }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return false;
+        return timer >= (Constants.Indexer.INDEXER_REVERSE_AUTO_SECONDS * 50);
     }
 
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.swerveDrive.setDrivePace(drivePace.COAST_FR);
+        Robot.indexer.stopMotors();
     }
 }

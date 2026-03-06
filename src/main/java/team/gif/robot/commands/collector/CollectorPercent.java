@@ -1,24 +1,32 @@
-package team.gif.robot.commands.Collector.CollectorAutos;
+package team.gif.robot.commands.collector;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class CollectorAutoCollectRPM extends Command {
-    double rpm = 0;
+public class CollectorPercent extends Command {
+
+    double percent = 0;
+
+    public CollectorPercent() {
+        super();
+        addRequirements(Robot.collectMotor);
+    }
 
     /**
-     * Currently not in use
+     * Brings the collector in or out
+     *
+     * @param perc negative value brings the collector in, positive is out
      */
-    public CollectorAutoCollectRPM() {
+    public CollectorPercent(double perc) {
         super();
-        addRequirements(Robot.collectMotor); // uncomment
+        addRequirements(Robot.collectMotor);
+        percent = perc;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = 3500; //If needed change value
-        Robot.collectMotor.runCollector(rpm);
+        Robot.collectMotor.runCollectorPercent(-percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
