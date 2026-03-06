@@ -26,6 +26,9 @@ public final class Constants {
     public static final class Field {
         public static final Translation2d HUB_BLUE_TRANSLATION = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
         public static final Translation2d HUB_RED_TRANSLATION = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+
+        public static final double FIELD_WIDTH = Units.inchesToMeters(317.69);
+        public static final double CENTER_LINE = FIELD_WIDTH / 2;
     }
 
     public static final class Vision {
@@ -37,6 +40,7 @@ public final class Constants {
     //These constants should be referenced via Robot.swerveDrive.getConstants();
     public static final class Mk5Constants extends SwerveConstants {
         public static final double HUB_ALIGN_P = 3; //Used in HubAutoAlign to point toward the hub
+        public static final double AUTO_COLLECT_BUFFER = Units.inchesToMeters(6); //Target distance between wall and robot during AngleCollect
 
         @Override
         protected void setConfiguration() {
