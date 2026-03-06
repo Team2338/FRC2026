@@ -5,7 +5,11 @@
 package team.gif.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
 
 /**
@@ -18,6 +22,63 @@ import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
  */
 public final class Constants {
     public static final double DEBOUNCE_DEFAULT = 0.020;
+
+    public static final class Field {
+        public static final Translation2d HUB_BLUE_TRANSLATION = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
+        public static final Translation2d HUB_RED_TRANSLATION = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+    }
+
+    public static final class Vision {
+        public static final Transform3d LEFT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(28), 0));
+        public static final Transform3d RIGHT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), -Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(25), 0));
+        public static final Transform3d SIDE_CAMERA_POSITION = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+    }
+
+    //These constants should be referenced via Robot.swerveDrive.getConstants();
+    public static final class Mk5Constants extends SwerveConstants {
+        public static final double HUB_ALIGN_P = 3; //Used in HubAutoAlign to point toward the hub
+
+        @Override
+        protected void setConfiguration() {
+            MODULE_GEAR_RATIO = 6.03;
+            TURNING_MOTOR_GEAR_RATIO = 1;
+            COEFFICIENT_OF_FRICTION = 1; //TODO: find
+            WHEEL_DIAMETER_INCHES = 4.0;
+
+            FRONT_LEFT_OFFSET = 108.017578125;
+            FRONT_RIGHT_OFFSET = -73.212890625;
+            REAR_LEFT_OFFSET = 129.111328125;
+            REAR_RIGHT_OFFSET = -105.029296875;
+
+            FL_DRIVE_INVERTED = false;
+            FR_DRIVE_INVERTED = false;
+            RL_DRIVE_INVERTED = false;
+            RR_DRIVE_INVERTED = false;
+
+            TRACK_LENGTH_INCHES = 22.5;
+            TRACK_WIDTH_INCHES = 22;
+
+            MASS_KG = 16; //TODO: Measure
+            MOI_KGM2 = 0; //TODO: Measure
+
+            TURN_P = 0.55; //TODO: Tune
+            TURN_FF = 0.01; //TODO: Tune
+
+            FL_DRIVE_FF = new SimpleMotorFeedforward(0.16095, 2.3837, 0.077757); //TODO: Tune
+            FR_DRIVE_FF = new SimpleMotorFeedforward(0.1645, 2.3928, 0.074191); //TODO: Tune
+            RL_DRIVE_FF = new SimpleMotorFeedforward(0.10265, 2.3955, 0.22997); //TODO: Tune
+            RR_DRIVE_FF = new SimpleMotorFeedforward(0.13952, 2.4217, 0.137); //TODO: Tune
+
+            AUTO_P_FORWARD = 2.5; //TODO: Tune
+            AUTO_P_ROTATION = 2.5; //TODO: Tune
+
+            PATHPLANNER_MOTOR_TYPE = DCMotor.getKrakenX60(1);
+            PATHPLANNER_CURRENT_LIMIT = 50;
+
+
+
+        }
+    }
 
     //These constants should be referenced via Robot.swerveDrive.getConstants();
     public static final class Mk4Constants extends SwerveConstants {
@@ -85,6 +146,43 @@ public final class Constants {
 
     public static final class Joystick {
         public static final double DEADBAND = 0.1;
+    }
+
+    public static final class Collector {
+        public static final double COLLECTOR_SLOW_PERCENT = 0.5;
+        public static final double COLLECTOR_FAST_PERCENT = 0.9;
+
+        public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
+        public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
+        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
+
+        public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
+
+        public static final double AGITATOR_MOTOR_AUTON_PERCENT = -0.3; //Separate in case we want autos to be different
+        public static final double AGITATOR_MOTOR_PERCENT = -0.3;
+    }
+
+    public static final class Shooter {
+        public static final double SHOOTER_AUTO_SECONDS = 2.5; //Change value
+        public static final double SHOOTER_INITIAL_AUTON_RPM = 3450; //Tune
+    }
+
+    public static final class Indexer {
+        public static final double INDEXER_REVERSE_TELEOP_SECONDS = 0.25;
+        public static final double INDEXER_REVERSE_PERCENT = -0.25;
+        public static final double INDEXER_REVERSE_AUTO_SECONDS = 0.25;
+
+        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.7; //Should change
+        public static final double TOP_INDEXER_MOTOR_PERCENT = 0.7; //Should change
+    }
+
+    public static final class MotorTemps {
+        public static final double COLLECTOR_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double PIVOT_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double AGITATOR_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double BOTTOM_INDEXER_MOTOR_WARNING_CELSIUS = 75.0;
+        public static final double TOP_INDEXER_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+        public static final double SHOOTER_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
     }
 
     public static final class MatchTimes {

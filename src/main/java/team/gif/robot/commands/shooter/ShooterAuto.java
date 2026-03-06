@@ -1,14 +1,16 @@
-package team.gif.robot.commands.drivetrain;
+package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.ShotCalculator;
 
-public class StopModules extends Command {
+public class ShooterAuto extends Command {
     /**
-     * Not in use
+     * Runs shooter at RPM based distance to hub
      */
-    public StopModules() {
-        addRequirements(Robot.swerveDrive);
+    public ShooterAuto() {
+        super();
+        addRequirements(Robot.shooter);
     }
 
     // Called when the command is initially scheduled.
@@ -18,7 +20,7 @@ public class StopModules extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.swerveDrive.stopDrive();
+        Robot.shooter.runShooter(ShotCalculator.getShotRPM());
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -29,5 +31,7 @@ public class StopModules extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        Robot.shooter.stopMotors();
+    }
 }
