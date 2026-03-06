@@ -1,43 +1,38 @@
-package team.gif.robot.commands.shooter.ShooterAutos;
+package team.gif.robot.commands.shooter.shooterautos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class IndexerAutonReverse extends Command {
-    double seconds;
-    double timer;
+public class AutonShooterRPM extends Command {
     /**
-     * Not in use
+     * Runs shooter at the auton RPM value
      */
-    public IndexerAutonReverse(double seconds) {
+    public AutonShooterRPM() {
         super();
-        addRequirements(Robot.indexer);
-        this.seconds = seconds;
+        addRequirements(Robot.shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.indexer.runPercent(Constants.Indexer.INDEXER_REVERSE_PERCENT, 0);
-        timer = 0;
+        Robot.shooter.runShooter(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        timer++;
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return timer >= (Constants.Indexer.INDEXER_REVERSE_AUTO_SECONDS * 50);
+        return false;
     }
 
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.indexer.stopMotors();
+        Robot.shooter.stopMotors();
     }
 }

@@ -1,4 +1,4 @@
-package team.gif.robot.commands.shooter.ShooterAutos;
+package team.gif.robot.commands.shooter.shooterautos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;

@@ -1,4 +1,4 @@
-package team.gif.robot.subsystems.Collector;
+package team.gif.robot.subsystems.collector;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;

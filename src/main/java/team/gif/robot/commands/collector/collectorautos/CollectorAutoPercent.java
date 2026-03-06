@@ -1,4 +1,4 @@
-package team.gif.robot.commands.collector.CollectorAutos;
+package team.gif.robot.commands.collector.collectorautos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
