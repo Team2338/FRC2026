@@ -10,7 +10,11 @@ public class ShooterRPM extends Command {
     public ShooterRPM() {
         super();
         addRequirements(Robot.shooter);
-        //addRequirements(Robot.climber); // uncomment
+    }
+
+    public ShooterRPM(double rpm) {
+        super();
+        addRequirements(Robot.shooter);
     }
 
     // Called when the command is initially scheduled.

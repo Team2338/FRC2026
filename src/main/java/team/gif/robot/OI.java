@@ -14,6 +14,7 @@ import team.gif.robot.commands.Shooter.IndexerPercent;
 import team.gif.robot.commands.Shooter.IndexerReverseManualMode;
 import team.gif.robot.commands.Shooter.ReverseShooterRPM;
 import team.gif.robot.commands.Shooter.ShooterPercent;
+import team.gif.robot.commands.Shooter.ShooterRPM;
 import team.gif.robot.commands.ToggleManualMode;
 import team.gif.robot.commands.drivetrain.Reset0;
 import team.gif.robot.commands.drivetrain.Reset180;
@@ -116,7 +117,8 @@ public class OI {
         dDPadUp.whileTrue(new IndexerBack(0.25).andThen(new IndexerPercent())); //dLBump is for boost, change later
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0)))); //Change to d-pad up
         dDPadDown.whileTrue(new ConditionalCommand(new IndexerReverseManualMode(), new PrintCommand(""), Robot::isRobotInManualMode));
-
+        dDPadLeft.whileTrue(new ConditionalCommand(new ShooterRPM(300),new PrintCommand(""), Robot::isRobotInManualMode )); //change rpm
+        dDPadRight.whileTrue(new ConditionalCommand(new ShooterRPM(500),new PrintCommand(""), Robot::isRobotInManualMode )); //change rpm
 
         aStart.and(aDPadUp).onTrue(new Reset0());
         aStart.and(aDPadDown).onTrue(new Reset180());
