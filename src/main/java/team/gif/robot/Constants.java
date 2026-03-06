@@ -86,4 +86,12 @@ public final class Constants {
     public static final class Joystick {
         public static final double DEADBAND = 0.1;
     }
+
+    public static final class MatchTimes {
+        public static final double END_OF_TRANSITION_PERIOD = 130.0;
+        public static final double END_OF_FIRST_SHIFT = 105.0;
+        public static final double END_OF_SECOND_SHIFT = 80.0;
+        public static final double END_OF_THIRD_SHIFT = 55.0;
+        public static final double END_OF_FOURTH_SHIFT = 30.0;
+    }
 }

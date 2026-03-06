@@ -15,6 +15,7 @@ import team.gif.robot.subsystems.drivers.swerve.SwerveDrivetrain;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXDriveMotor;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXTurnMotor;
 import team.gif.robot.subsystems.drivers.swerve.CANCoderEncoder;
+import static team.gif.robot.Constants.*;
 
 
 /**
@@ -112,15 +113,16 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double matchTime = DriverStation.getMatchTime();
 
-        //A match is 160 seconds long, sets the controllers to rumble throughout different intervals of the match.
+        //Set the controllers to rumble throughout different period of the match.
         oi.setRumble(
-                (134.0 >= matchTime && matchTime >= 133.0) || (131.0 >= matchTime && matchTime >= 130.0) ||
-                (111.0 >= matchTime && matchTime >= 110.0) || (106.5 >= matchTime && matchTime >= 106.0) || (105.5 >= matchTime && matchTime >= 105.0) ||
-                (86.0 >= matchTime && matchTime >= 85.0) || (81.5 >= matchTime && matchTime >= 81.0) || (80.5 >= matchTime && matchTime >= 80.0) ||
-                (61.0 >= matchTime && matchTime >= 60.0) || (56.5 >= matchTime && matchTime >= 56.0) || (55.5 >= matchTime && matchTime >= 55.0) ||
-                (36.0 >= matchTime && matchTime >= 35.0) || (31.5 >= matchTime && matchTime >= 31.0) || (30.5 >= matchTime && matchTime >= 30.0) ||
-                (30.0 >= matchTime && matchTime >= 27.0)
-                );
+                isBetweenTime(MatchTimes.END_OF_TRANSITION_PERIOD + 4, MatchTimes.END_OF_TRANSITION_PERIOD +3) || isBetweenTime(MatchTimes.END_OF_TRANSITION_PERIOD + 1, MatchTimes.END_OF_TRANSITION_PERIOD) ||
+                isBetweenTime(MatchTimes.END_OF_FIRST_SHIFT + 6, MatchTimes.END_OF_FIRST_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_FIRST_SHIFT + 1.5, MatchTimes.END_OF_FIRST_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_FIRST_SHIFT + 0.5, MatchTimes.END_OF_FIRST_SHIFT) ||
+                isBetweenTime(MatchTimes.END_OF_SECOND_SHIFT + 6, MatchTimes.END_OF_SECOND_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_SECOND_SHIFT + 1.5, MatchTimes.END_OF_SECOND_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_SECOND_SHIFT + 0.5, MatchTimes.END_OF_SECOND_SHIFT) ||
+                isBetweenTime(MatchTimes.END_OF_THIRD_SHIFT + 6, MatchTimes.END_OF_THIRD_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_THIRD_SHIFT + 1.5, MatchTimes.END_OF_THIRD_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_THIRD_SHIFT + 0.5, MatchTimes.END_OF_THIRD_SHIFT) ||
+                isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT + 6, MatchTimes.END_OF_FOURTH_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT + 1.5, MatchTimes.END_OF_FOURTH_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT + 0.5, MatchTimes.END_OF_FOURTH_SHIFT) ||
+                isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT, MatchTimes.END_OF_FOURTH_SHIFT -3)
+        );
+        
     }
 
     @Override
@@ -140,4 +142,15 @@ public class Robot extends TimedRobot {
     /** This function is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    /**
+     * Checks if the current match time is between the specified time interval.
+     * @param startTime The beginning of the time interval to be analyzed.
+     * @param endTime The end of the time interval to be analyzed, usually the end of a shift.
+     * @return True if the current match time is between the interval, false if not.
+     */
+    public boolean isBetweenTime(double startTime, double endTime) {
+        double currentMatchTime = DriverStation.getMatchTime();
+        return startTime > currentMatchTime && currentMatchTime > endTime;
+    }
 }
