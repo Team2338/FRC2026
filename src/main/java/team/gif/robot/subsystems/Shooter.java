@@ -95,7 +95,7 @@ public class Shooter extends SubsystemBase {
         shooterLeftMotor.setVoltage(voltage);
     }
 
-    public void runShooter(double rpm) {
+    public void run(double rpm) {
         shooterLeftMotor.setControl(velocityVoltage.withVelocity(rpm/60));
         shooterMiddleMotor.setControl(velocityVoltage.withVelocity(rpm/60));
         shooterRightMotor.setControl(velocityVoltage.withVelocity(rpm/60));

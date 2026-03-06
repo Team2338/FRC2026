@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class IndexerReverse extends Command {
+public class IndexerRunReverse extends Command {
     double seconds;
     double timer;
 
@@ -12,7 +12,7 @@ public class IndexerReverse extends Command {
      * Runs the bottom indexer at a given RPM for x seconds
      * @param seconds number of seconds to run indexer
      */
-    public IndexerReverse(double seconds) {
+    public IndexerRunReverse(double seconds) {
         super();
         addRequirements(Robot.indexer);
         this.seconds = seconds;
@@ -21,7 +21,7 @@ public class IndexerReverse extends Command {
     /**
      * Runs the bottom indexer at a given RPM indefinitely
      */
-    public IndexerReverse() {
+    public IndexerRunReverse() {
         super();
         addRequirements(Robot.indexer);
         this.seconds = 999;
@@ -36,7 +36,7 @@ public class IndexerReverse extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.indexer.runPercent(Constants.Indexer.INDEXER_REVERSE_PERCENT, 0);
+        Robot.indexer.run(Constants.Indexer.INDEXER_REVERSE_PERCENT, 0);
         timer++;
     }
 

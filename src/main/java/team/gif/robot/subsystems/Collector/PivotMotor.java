@@ -16,11 +16,10 @@ public class PivotMotor extends SubsystemBase {
 
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
-
         setConfig();
     }
 
-    public void runPivotPercent(double percent) {
+    public void run(double percent) {
         pivotMotor.set(percent);
     }
 

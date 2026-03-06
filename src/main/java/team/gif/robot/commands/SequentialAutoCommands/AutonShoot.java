@@ -6,14 +6,14 @@ import team.gif.robot.Constants;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoAgitate;
 import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoRun;
 import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAuton;
-import team.gif.robot.commands.Shooter.ShooterAutos.AutonShooterRPM;
+import team.gif.robot.commands.Shooter.ShooterAutos.ShooterAutoRun;
 
 public class AutonShoot extends ParallelDeadlineGroup {
     /**
      * This is the entire sequence to shoot in autos
      */
     public AutonShoot() {
-        super(new AutonShooterRPM().withTimeout(6.0));
+        super(new ShooterAutoRun().withTimeout(6.0));
         addCommands(
                 new CollectorAutoAgitate(),
                 new WaitCommand(1.5).andThen(new IndexerAuton(true)),

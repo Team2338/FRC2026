@@ -18,7 +18,7 @@ public class CollectorAutoRun extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.collectMotor.runCollector(output);
+        Robot.collectMotor.run(output);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

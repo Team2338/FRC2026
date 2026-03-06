@@ -1,26 +1,27 @@
-package team.gif.robot.commands.Shooter;
+package team.gif.robot.commands.Shooter.ShooterAutos;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
-import team.gif.robot.subsystems.ShotCalculator;
 
-public class ShooterAuto extends Command {
+public class ShooterAutoRun extends Command {
     /**
-     * Runs shooter at RPM based distance to hub
+     * Runs shooter at the auton RPM value
      */
-    public ShooterAuto() {
+    public ShooterAutoRun() {
         super();
         addRequirements(Robot.shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        Robot.shooter.run(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM);
+    }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.shooter.runShooter(ShotCalculator.getShotRPM());
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

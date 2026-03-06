@@ -161,11 +161,12 @@ public final class Constants {
 
 
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
+        public static final double PIVOT_PERCENT_LIMIT = 0.2;
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
 
-        public static final double AGITATOR_MOTOR_AUTON_PERCENT = -0.3; //Separate in case we want autos to be different
+        public static final double AGITATOR_MOTOR_AUTO_PERCENT = -0.3;
         public static final double AGITATOR_MOTOR_PERCENT = -0.3;
     }
 

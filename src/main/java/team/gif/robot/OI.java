@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
-import team.gif.robot.commands.Agitator.AgitatorPercent;
+import team.gif.robot.commands.Agitator.AgitatorRun;
 import team.gif.robot.commands.Collector.CollectorRun;
-import team.gif.robot.commands.Shooter.IndexerPercent;
-import team.gif.robot.commands.Shooter.IndexerReverse;
-import team.gif.robot.commands.Shooter.ShooterAuto;
-import team.gif.robot.commands.Shooter.ShooterRPM;
+import team.gif.robot.commands.Shooter.IndexerRun;
+import team.gif.robot.commands.Shooter.IndexerRunReverse;
+import team.gif.robot.commands.Shooter.ShooterAutoRun;
+import team.gif.robot.commands.Shooter.ShooterRun;
 import team.gif.robot.commands.drivetrain.HubAutoAlign;
 
 public class OI {
@@ -105,11 +105,11 @@ public class OI {
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
-        dY.whileTrue(new ShooterRPM());
+        dY.whileTrue(new ShooterRun());
 //        dY.onTrue(new AutonShoot());
-        dX.whileTrue(new ShooterAuto());
+        dX.whileTrue(new ShooterAutoRun());
         dA.whileTrue(new HubAutoAlign());
-        dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
+        dLBump.whileTrue(new IndexerRunReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerRun())); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
         //dBack.and(dX).onTrue(Robot.auto);
@@ -119,8 +119,8 @@ public class OI {
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
-        aRTrigger.whileTrue(new CollectorRun(Constants.Collector.COLLECTOR_FAST_RPM).alongWith(new AgitatorPercent()));
-        aLTrigger.whileTrue(new CollectorRun(Constants.Collector.COLLECTOR_SLOW_RPM).alongWith(new AgitatorPercent()));
-        aRBump.whileTrue(new CollectorRun(-Constants.Collector.COLLECTOR_EJECT_RPM).alongWith(new IndexerReverse()));
+        aRTrigger.whileTrue(new CollectorRun(Constants.Collector.COLLECTOR_FAST_RPM).alongWith(new AgitatorRun()));
+        aLTrigger.whileTrue(new CollectorRun(Constants.Collector.COLLECTOR_SLOW_RPM).alongWith(new AgitatorRun()));
+        aRBump.whileTrue(new CollectorRun(-Constants.Collector.COLLECTOR_EJECT_RPM).alongWith(new IndexerRunReverse()));
     }
 }

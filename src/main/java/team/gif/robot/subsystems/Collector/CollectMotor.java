@@ -58,7 +58,7 @@ public class CollectMotor extends SubsystemBase {
      *                      or greater than 1 for velocity control.
      *                      Positive values intake, negative values eject.
      */
-    public void runCollector(double desiredOutput) {
+    public void run(double desiredOutput) {
         if (0.0 <= Math.abs(desiredOutput) && Math.abs(desiredOutput) <= 1) {
             collectorMotor.set(desiredOutput);
         }

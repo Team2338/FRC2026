@@ -2,7 +2,6 @@ package team.gif.robot.commands.Collector;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class CollectorRun extends Command {
@@ -21,7 +20,7 @@ public class CollectorRun extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.collectMotor.runCollector(output);
+        Robot.collectMotor.run(output);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -31,7 +30,7 @@ public class CollectorRun extends Command {
         double newOutput = SmartDashboard.getNumber("Collector/Desired Output", output);
         if (output != newOutput) {
             output = newOutput;
-            Robot.collectMotor.runCollector(output);
+            Robot.collectMotor.run(output);
         }
     }
 

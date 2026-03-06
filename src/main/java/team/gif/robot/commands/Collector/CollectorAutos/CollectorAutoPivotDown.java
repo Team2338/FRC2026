@@ -16,7 +16,7 @@ public class CollectorAutoPivotDown extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.pivotMotor.runPivotPercent(percent);
+        Robot.pivotMotor.run(percent);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -33,6 +33,6 @@ public class CollectorAutoPivotDown extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.pivotMotor.runPivotPercent(0);
+        Robot.pivotMotor.run(0);
     }
 }

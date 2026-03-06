@@ -31,16 +31,16 @@ public class IndexerAuton extends Command {
     public void execute() {
         counter++;
         if(initialRunReverse && counter < (Constants.Indexer.INDEXER_REVERSE_AUTO_SECONDS * 50)){
-            Robot.indexer.runPercent(-0.25, 0);
+            Robot.indexer.run(-0.25, 0);
         }
         else {
             //Run the top indexer for a brief amount of time
             if (counter < (Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS * 50)) {
-                Robot.indexer.runPercent(0, Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
+                Robot.indexer.run(0, Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
             } else {
                 //Run the entire indexer and agitator
-                Robot.indexer.runPercent(Constants.Indexer.BOTTOM_INDEXER_MOTOR_PERCENT, Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
-                Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_AUTON_PERCENT);
+                Robot.indexer.run(Constants.Indexer.BOTTOM_INDEXER_MOTOR_PERCENT, Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
+                Robot.agitator.run(Constants.Collector.AGITATOR_MOTOR_AUTO_PERCENT);
             }
         }
     }
