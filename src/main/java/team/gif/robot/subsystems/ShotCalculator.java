@@ -1,15 +1,22 @@
 package team.gif.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
+import java.sql.Driver;
+
 public class ShotCalculator {
     private final static InterpolatingDoubleTreeMap distanceMap = new InterpolatingDoubleTreeMap();
+    private final static InterpolatingDoubleTreeMap timeMap= new InterpolatingDoubleTreeMap();
+
 
     static {
         distanceMap.put(Units.feetToMeters(15.0 + 0.75), 3750.0);
@@ -28,12 +35,15 @@ public class ShotCalculator {
      * @return the distance in meters, -1 if no alliance is found;
      */
     private static double distanceToHub() {
+        Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
+        return robot.getDistance(getTarget());
+    }
+
+    private static Translation2d getTarget() {
         if (DriverStation.getAlliance().isPresent()) {
-            Translation2d hub = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.HUB_BLUE_TRANSLATION : Constants.Field.HUB_RED_TRANSLATION;
-            Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
-            return robot.getDistance(hub);
+            return DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.HUB_BLUE_TRANSLATION : Constants.Field.HUB_RED_TRANSLATION;
         } else {
-            return -1;
+            return Robot.swerveDrive.getPose().getTranslation();
         }
     }
 
@@ -45,6 +55,45 @@ public class ShotCalculator {
      */
     public static double getShotRPM() {
         return distanceMap.get(distanceToHub());
+    }
+
+    /**
+     * @return The ideal speed of the shooter in RPM
+     */
+    public static double getShotRPMMoving() {
+
+        double phaseDelay = 0.03;
+        Pose2d estimatedPose = Robot.swerveDrive.getPose();
+        ChassisSpeeds robotRelativeVelocity = Robot.swerveDrive.getRobotRelativeSpeed();
+        Translation2d target = getTarget();
+
+        double launcherVelocityX = robotRelativeVelocity.vxMetersPerSecond;
+        double launcherVelocityY = robotRelativeVelocity.vyMetersPerSecond;
+        double distanceToTaget = distanceToHub();
+
+        estimatedPose =
+                estimatedPose.exp(
+                        new Twist2d(
+                                robotRelativeVelocity.vxMetersPerSecond * phaseDelay,
+                                robotRelativeVelocity.vyMetersPerSecond * phaseDelay,
+                                robotRelativeVelocity.omegaRadiansPerSecond * phaseDelay));
+
+        double timeOfFlight = timeMap.get(distanceToTaget);
+        Pose2d lookaheadPose = estimatedPose;
+        double lookaheadToTargetDistance = distanceToTaget;
+
+        for (int i = 0; i < 20; i++) {
+            timeOfFlight = timeMap.get(lookaheadToTargetDistance);
+            double offsetX = launcherVelocityX * timeOfFlight;
+            double offsetY = launcherVelocityY * timeOfFlight;
+            lookaheadPose =
+                    new Pose2d(
+                            estimatedPose.getTranslation().plus(new Translation2d(offsetX, offsetY)),
+                            estimatedPose.getRotation());
+            lookaheadToTargetDistance = target.getDistance(lookaheadPose.getTranslation());
+        }
+
+        return distanceMap.get(lookaheadToTargetDistance);
     }
 
     /**
