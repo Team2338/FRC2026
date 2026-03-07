@@ -191,5 +191,6 @@ public final class Constants {
         public static final double END_OF_SECOND_SHIFT = 80.0;
         public static final double END_OF_THIRD_SHIFT = 55.0;
         public static final double END_OF_FOURTH_SHIFT = 30.0;
+        public static final double END_OF_MATCH = 0.0;
     }
 }

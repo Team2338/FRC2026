@@ -163,12 +163,16 @@ public class Robot extends TimedRobot {
 
         //Set the controllers to rumble throughout different period of the match.
         oi.setRumble(
-                isBetweenTime(MatchTimes.END_OF_TRANSITION_PERIOD + 4, MatchTimes.END_OF_TRANSITION_PERIOD +3) || isBetweenTime(MatchTimes.END_OF_TRANSITION_PERIOD + 1, MatchTimes.END_OF_TRANSITION_PERIOD) ||
-                isBetweenTime(MatchTimes.END_OF_FIRST_SHIFT + 6, MatchTimes.END_OF_FIRST_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_FIRST_SHIFT + 1.5, MatchTimes.END_OF_FIRST_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_FIRST_SHIFT + 0.5, MatchTimes.END_OF_FIRST_SHIFT) ||
-                isBetweenTime(MatchTimes.END_OF_SECOND_SHIFT + 6, MatchTimes.END_OF_SECOND_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_SECOND_SHIFT + 1.5, MatchTimes.END_OF_SECOND_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_SECOND_SHIFT + 0.5, MatchTimes.END_OF_SECOND_SHIFT) ||
-                isBetweenTime(MatchTimes.END_OF_THIRD_SHIFT + 6, MatchTimes.END_OF_THIRD_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_THIRD_SHIFT + 1.5, MatchTimes.END_OF_THIRD_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_THIRD_SHIFT + 0.5, MatchTimes.END_OF_THIRD_SHIFT) ||
-                isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT + 6, MatchTimes.END_OF_FOURTH_SHIFT + 5) || isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT + 1.5, MatchTimes.END_OF_FOURTH_SHIFT + 1) || isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT + 0.5, MatchTimes.END_OF_FOURTH_SHIFT) ||
-                isBetweenTime(MatchTimes.END_OF_FOURTH_SHIFT, MatchTimes.END_OF_FOURTH_SHIFT -3)
+                isInTime(MatchTimes.END_OF_TRANSITION_PERIOD + 3.0, 3.0) || //Rumble for 3 seconds before the transition period ends.
+                isInTime(MatchTimes.END_OF_FIRST_SHIFT + 10.0, 2.0) || //Rumble for 2 seconds 10 seconds before the first shift ends.
+                isInTime(MatchTimes.END_OF_FIRST_SHIFT + 3.0, 3.0) || //Rumble for 3 seconds before the first shift ends.
+                isInTime(MatchTimes.END_OF_SECOND_SHIFT + 10.0, 2.0) || //Rumble for 2 seconds 10 seconds before the second shift ends.
+                isInTime(MatchTimes.END_OF_SECOND_SHIFT + 3.0, 3.0) || //Rumble for 3 seconds before the second shift ends.
+                isInTime(MatchTimes.END_OF_THIRD_SHIFT + 10.0, 2.0) || //Rumble for 2 seconds 10 seconds before the third shift ends.
+                isInTime(MatchTimes.END_OF_THIRD_SHIFT + 3.0, 3.0) || //Rumble for 3 seconds before the third shift ends.
+                isInTime(MatchTimes.END_OF_FOURTH_SHIFT + 10.0, 2.0) || //Rumble for 2 seconds 10 seconds before the fourth shift ends.
+                isInTime(MatchTimes.END_OF_FOURTH_SHIFT + 3.0, 3.0) || //Rumble for 3 seconds before the fourth shift ends.
+                isInTime(MatchTimes.END_OF_MATCH + 5.0, 2.0) //Rumble for 2 seconds 5 seconds before the match ends.
         );
         
     }
@@ -192,13 +196,14 @@ public class Robot extends TimedRobot {
     public void simulationPeriodic() {}
 
     /**
-     * Checks if the current match time is between the specified time interval.
+     * Checks if the current match time is in the specified interval.
      * @param startTime The beginning of the time interval to be analyzed.
-     * @param endTime The end of the time interval to be analyzed, usually the end of a shift.
+     * @param duration The duration of the time interval to be analyzed.
      * @return True if the current match time is between the interval, false if not.
      */
-    public boolean isBetweenTime(double startTime, double endTime) {
+    public boolean isInTime(double startTime, double duration) {
         double currentMatchTime = DriverStation.getMatchTime();
+        double endTime = startTime - duration;
         return startTime > currentMatchTime && currentMatchTime > endTime;
     }
 }
