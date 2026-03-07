@@ -1,10 +1,14 @@
 package team.gif.robot.subsystems.Collector;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
+import team.gif.robot.RobotContainer;
 import team.gif.robot.RobotMap;
 
 import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
@@ -13,10 +17,10 @@ public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
     private TalonFXConfiguration config;
-
+    public DutyCycleOut controlRequest;
+    public ArmFeedforward feedforward = new ArmFeedforward(Constants.Collector.kS, Constants.Collector.kG, Constants.Collector.kV);
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
-
         setConfig();
     }
 
@@ -51,6 +55,8 @@ public class PivotMotor extends SubsystemBase {
     private void setConfig(){
         config = new TalonFXConfiguration();
 
+
+
         config.MotorOutput.Inverted = CounterClockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -67,5 +73,22 @@ public class PivotMotor extends SubsystemBase {
 
     public void stopMotor() {
         pivotMotor.stopMotor();
+    }
+
+    public void holdPivotWithFF(){
+       //stops motor and exits method if it's in deployed position
+        if(getPosition() >= Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS) {
+            pivotMotor.stopMotor();
+            return;
+        }
+            double angleRad = getPosition() * (2.0 * Math.PI);
+            double FFvolts = feedforward.calculate(angleRad, 0);
+            //converts volts into a percent
+            double battery = RobotController.getBatteryVoltage();
+            double percent = FFvolts / battery;
+            //multiplies the percent by the current battery volt, gives a volt that the percent is using
+            controlRequest = new DutyCycleOut(percent);
+            //Uses the volt gotten from controlRequest to run the pivot motor
+            pivotMotor.setControl(controlRequest);
     }
 }

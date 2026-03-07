@@ -25,6 +25,8 @@ public class CollectorPivot extends Command {
         percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER;
         percent =  Math.min(percent, 0.2);
         Robot.pivotMotor.runPivotPercent(percent);
+
+        Robot.pivotMotor.holdPivotWithFF();
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
