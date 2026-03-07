@@ -3,6 +3,10 @@ package team.gif.robot.subsystems.drivers.swerve;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
@@ -214,6 +218,8 @@ public class SwerveDrivetrain extends SubsystemBase {
         }
     }
 
+
+    //region Vision
     /**
      * Set the limelight enabled status
      * @param enabled - enable limelight vision updates
@@ -328,6 +334,9 @@ public class SwerveDrivetrain extends SubsystemBase {
         return photonCurrStdDevs;
     }
 
+    //endregion
+
+   //region get/set states
     /**
      * Reset the odometry to a given pose
      *
@@ -445,14 +454,6 @@ public class SwerveDrivetrain extends SubsystemBase {
 
     }
 
-    /**
-     * Get the current pose of the robot
-     *
-     * @return The current pose of the robot (Pose2D)
-     */
-    public Pose2d getPose() {
-        return poseEstimator.getEstimatedPosition();
-    }
 
     /**
      * Stop all the modules
@@ -464,6 +465,16 @@ public class SwerveDrivetrain extends SubsystemBase {
         rL.stop();
     }
 
+    //endregion
+    /**
+     * Get the current pose of the robot
+     *
+     * @return The current pose of the robot (Pose2D)
+     */
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
+
     /**
      * Get the current position of each of the swerve modules
      *
@@ -472,6 +483,19 @@ public class SwerveDrivetrain extends SubsystemBase {
     public SwerveModulePosition[] getPosition() {
 
         return new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()};
+    }
+
+    public Command driveToPose(Pose2d pose) {
+        // Create the constraints to use while pathfinding
+        PathConstraints constraints = new PathConstraints(
+                3.0, 4.0,
+                Units.degreesToRadians(540), Units.degreesToRadians(720));
+
+        return AutoBuilder.pathfindToPose(
+                pose,
+                constraints,
+                0.0
+        );
     }
 
     /**
@@ -500,14 +524,6 @@ public class SwerveDrivetrain extends SubsystemBase {
      */
     public drivePace getDrivePace() {
         return drivePace;
-    }
-
-    public double getPoseX() {
-        return getPose().getX();
-    }
-
-    public double getPoseY() {
-        return getPose().getY();
     }
 
     public SwerveConstants getConstants() {
@@ -742,6 +758,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         SmartDashboard.putNumber("Swerve/RR Rot Output", fLTurnMotor.getOutput());
     }
 
+    //region SysID
     public SysIdRoutine getSysIdRoutine(String motors) {
         MutVoltage voltMut = Volts.mutable(0);
 
@@ -837,4 +854,5 @@ public class SwerveDrivetrain extends SubsystemBase {
     public Command sysIdDynamic(String motor, SysIdRoutine.Direction direction) {
         return getSysIdRoutine(motor).dynamic(direction);
     }
+    //endregion
 }

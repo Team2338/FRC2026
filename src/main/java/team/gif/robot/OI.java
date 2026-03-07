@@ -1,5 +1,7 @@
 package team.gif.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -101,16 +103,20 @@ public class OI {
          */
         dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
-        //dRBump.whileTrue(new EnableBoost());
-        dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
-        dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
-        dY.whileTrue(new ShooterRPM());
+
+        dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
+        dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
+        dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
+
 //        dY.onTrue(new AutonShoot());
+        dY.whileTrue(new ShooterRPM());
         dX.whileTrue(new ShooterAuto());
         dA.whileTrue(new HubAutoAlign());
-        dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
+
+        dDPadRight.and(dStart.negate()).whileTrue(Robot.swerveDrive.driveToPose(new Pose2d(0, 0, Rotation2d.fromDegrees(0))));
+
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
         //dBack.and(dX).onTrue(Robot.auto);
