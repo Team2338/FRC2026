@@ -1,0 +1,106 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonCollectorDown"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Forward2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Hold Collector Down"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collector Run"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OC-autonshoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "ForwardReturn"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collector Run"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Hold Collector Down"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OC-autonshoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
