@@ -21,12 +21,15 @@ public class CollectorPivot extends Command {
     @Override
     public void execute() {
         percent = -Robot.oi.aux.getLeftY();
-        percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0;
+        percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS - 6) ? 0.1 : 0.0); //TODO: 6 is a placeholder, need to test the value
         percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER;
         percent =  Math.min(percent, 0.2);
         Robot.pivotMotor.runPivotPercent(percent);
 
-        Robot.pivotMotor.holdPivotWithFF();
+        if(Math.abs(percent) < Constants.Joystick.DEADBAND) {
+            Robot.pivotMotor.holdPivotWithFF();
+        }
+
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
