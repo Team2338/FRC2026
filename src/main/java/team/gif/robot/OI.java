@@ -11,6 +11,7 @@ import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
 import team.gif.robot.commands.shooter.ShooterAuto;
+import team.gif.robot.commands.shooter.ShooterPassRPM;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.drivetrain.HubAutoAlign;
 
@@ -107,6 +108,7 @@ public class OI {
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
         dY.whileTrue(new ShooterRPM());
+        dLTrigger.whileTrue(new ShooterPassRPM());
 //        dY.onTrue(new AutonShoot());
         dX.whileTrue(new ShooterAuto());
         dA.whileTrue(new HubAutoAlign());

@@ -165,6 +165,7 @@ public final class Constants {
     public static final class Shooter {
         public static final double SHOOTER_AUTO_SECONDS = 2.5; //Change value
         public static final double SHOOTER_INITIAL_AUTON_RPM = 3450; //Tune
+        public static final double SHOOTER_PASS_RPM = 4000; //Tune
     }
 
     public static final class Indexer {
