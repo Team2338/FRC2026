@@ -81,6 +81,7 @@ public class PivotMotor extends SubsystemBase {
             pivotMotor.stopMotor();
             return;
         }
+        //Runs the following if the encoder value is not greater than or at deployed positon
             double angleRad = getPosition() * (2.0 * Math.PI);
             double FFvolts = feedforward.calculate(angleRad, 0);
             //converts volts into a percent
