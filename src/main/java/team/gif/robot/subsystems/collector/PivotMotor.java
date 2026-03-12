@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
-import team.gif.robot.RobotContainer;
 import team.gif.robot.RobotMap;
 
 import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
