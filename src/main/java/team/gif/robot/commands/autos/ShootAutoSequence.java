@@ -3,9 +3,9 @@ package team.gif.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import team.gif.robot.Constants;
-import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoRunReverse;
-import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAutoRun;
-import team.gif.robot.commands.Shooter.ShooterAutos.ShooterAutoRun;
+import team.gif.robot.commands.shooter.shooterautos.IndexerAutoRunReverse;
+import team.gif.robot.commands.shooter.shooterautos.IndexerAutoRun;
+import team.gif.robot.commands.shooter.shooterautos.ShooterAutoRun;
 
 public class ShootAutoSequence extends SequentialCommandGroup {
     /**

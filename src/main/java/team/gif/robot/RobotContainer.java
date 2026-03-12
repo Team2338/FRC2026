@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
-import team.gif.robot.commands.Agitator.AgitatorAutoRun;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoRun;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoPivotDown;
-import team.gif.robot.commands.SequentialAutoCommands.AutonCollectDown;
-import team.gif.robot.commands.SequentialAutoCommands.AutonShoot;
-import team.gif.robot.commands.SequentialAutoCommands.AutonInitialShoot;
+import team.gif.robot.commands.agitator.AgitatorAutoRun;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoRun;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
+import team.gif.robot.commands.autos.AutonCollectDown;
+import team.gif.robot.commands.autos.AutonShoot;
+import team.gif.robot.commands.autos.AutonInitialShoot;
 
 import java.util.ArrayList;
 import java.util.function.Function;

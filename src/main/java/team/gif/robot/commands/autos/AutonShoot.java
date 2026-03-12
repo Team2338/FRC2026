@@ -3,10 +3,10 @@ package team.gif.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.Constants;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoAgitate;
-import team.gif.robot.commands.Collector.CollectorAutos.CollectorAutoRun;
-import team.gif.robot.commands.Shooter.ShooterAutos.IndexerAuton;
-import team.gif.robot.commands.Shooter.ShooterAutos.ShooterAutoRun;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoRun;
+import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
+import team.gif.robot.commands.shooter.shooterautos.ShooterAutoRun;
 
 public class AutonShoot extends ParallelDeadlineGroup {
     /**

@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
-import team.gif.robot.commands.Agitator.AgitatorRun;
-import team.gif.robot.commands.Collector.CollectorRun;
-import team.gif.robot.commands.Shooter.IndexerRun;
-import team.gif.robot.commands.Shooter.IndexerRunReverse;
-import team.gif.robot.commands.Shooter.ShooterAutoRun;
-import team.gif.robot.commands.Shooter.ShooterRun;
+import team.gif.robot.commands.agitator.AgitatorRun;
+import team.gif.robot.commands.collector.CollectorRun;
+import team.gif.robot.commands.shooter.IndexerRun;
+import team.gif.robot.commands.shooter.IndexerRunReverse;
+import team.gif.robot.commands.shooter.ShooterAutoRun;
+import team.gif.robot.commands.shooter.ShooterRun;
 import team.gif.robot.commands.drivetrain.HubAutoAlign;
 
 public class OI {
