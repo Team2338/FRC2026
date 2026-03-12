@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import team.gif.robot.commands.Collector.CollectorPivot;
+import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
-import team.gif.robot.subsystems.Collector.CollectMotor;
-import team.gif.robot.subsystems.Collector.PivotMotor;
+import team.gif.robot.subsystems.collector.CollectMotor;
+import team.gif.robot.subsystems.collector.PivotMotor;
 import team.gif.robot.subsystems.Indexer;
 import team.gif.robot.subsystems.Shooter;
 import team.gif.robot.subsystems.drivers.Pigeon2_0;
@@ -51,7 +51,6 @@ public class Robot extends TimedRobot {
 
     private double delay;
     private final Timer delayTimer = new Timer();
-    public boolean isCompetition = false;
 
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
@@ -107,11 +106,6 @@ public class Robot extends TimedRobot {
         commandScheduler.run();
 
         ui.update();
-
-        if (diagnostics.anyMotorTempHot() && !isCompetition) {
-            swerveDrive.stopModules();
-            System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
-        }
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
