@@ -6,7 +6,7 @@ public class CommandTemplate extends Command {
 
     public CommandTemplate() {
         super();
-        //addRequirements(Robot.climber); // uncomment
+        //addRequirements(Robot.climber); // add the subsystem here
     }
 
     // Called when the command is initially scheduled.
