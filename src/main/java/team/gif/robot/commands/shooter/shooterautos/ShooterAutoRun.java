@@ -1,16 +1,14 @@
-package team.gif.robot.commands.shooter;
+package team.gif.robot.commands.shooter.shooterautos;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class ShooterRPM extends Command {
-    double rpm = 0;
-
+public class ShooterAutoRun extends Command {
     /**
-     * Runs shooter at RPM from dashboard
+     * Runs shooter at the auton RPM value
      */
-    public ShooterRPM() {
+    public ShooterAutoRun() {
         super();
         addRequirements(Robot.shooter);
     }
@@ -18,8 +16,7 @@ public class ShooterRPM extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = SmartDashboard.getNumber("PID/Reference", 0);
-        Robot.shooter.runShooter(rpm);
+        Robot.shooter.run(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

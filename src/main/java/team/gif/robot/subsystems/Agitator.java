@@ -17,7 +17,7 @@ public class Agitator extends SubsystemBase {
         agitatorMotor = new TalonFX(RobotMap.Agitator.AGITATOR_MOTOR_ID);
     }
 
-    public void setPercent(double percent) {
+    public void run(double percent) {
         agitatorMotor.set(percent);
     }
 

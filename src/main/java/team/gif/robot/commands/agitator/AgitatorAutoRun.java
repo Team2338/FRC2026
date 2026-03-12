@@ -1,27 +1,20 @@
-package team.gif.robot.commands.collector;
+package team.gif.robot.commands.agitator;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class ReverseCollectorPercent extends Command {
+public class AgitatorAutoRun extends Command {
 
-    double percent = 0;
-
-    /**
-     * Runs the collector in reverse based on value
-     *
-     * @param perc percentage to run collector. Value is absolute (e.g. 25 runs collector backwards at 25 percent)
-     */
-    public ReverseCollectorPercent(double perc) {
+    public AgitatorAutoRun() {
         super();
-        addRequirements(Robot.collectMotor);
-        percent = perc;
+        addRequirements(Robot.agitator);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.collectMotor.runCollectorPercent(percent);
+        Robot.agitator.run(Constants.Collector.AGITATOR_MOTOR_AUTO_PERCENT);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -36,5 +29,7 @@ public class ReverseCollectorPercent extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {Robot.collectMotor.stopMotor();}
+    public void end(boolean interrupted) {
+        Robot.agitator.stopMotor();
+    }
 }

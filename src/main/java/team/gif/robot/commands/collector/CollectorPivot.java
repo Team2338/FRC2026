@@ -23,8 +23,8 @@ public class CollectorPivot extends Command {
         percent = -Robot.oi.aux.getLeftY();
         percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0;
         percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER;
-        percent =  Math.min(percent, 0.2);
-        Robot.pivotMotor.runPivotPercent(percent);
+        percent =  Math.min(percent, Constants.Collector.PIVOT_PERCENT_LIMIT);
+        Robot.pivotMotor.run(percent);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

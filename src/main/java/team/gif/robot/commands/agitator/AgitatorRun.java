@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class AgitatorPercent extends Command {
+public class AgitatorRun extends Command {
 
-    public AgitatorPercent() {
+    public AgitatorRun() {
         super();
         addRequirements(Robot.agitator);
     }
@@ -14,7 +14,7 @@ public class AgitatorPercent extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_PERCENT);
+        Robot.agitator.run(Constants.Collector.AGITATOR_MOTOR_PERCENT);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

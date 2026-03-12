@@ -3,9 +3,9 @@ package team.gif.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import team.gif.robot.Constants;
-import team.gif.robot.commands.shooter.shooterautos.IndexerAutonReverse;
-import team.gif.robot.commands.shooter.shooterautos.IndexerAutoPercent;
-import team.gif.robot.commands.shooter.shooterautos.AutonShooterRPM;
+import team.gif.robot.commands.shooter.shooterautos.IndexerAutoRunReverse;
+import team.gif.robot.commands.shooter.shooterautos.IndexerAutoRun;
+import team.gif.robot.commands.shooter.shooterautos.ShooterAutoRun;
 
 public class ShootAutoSequence extends SequentialCommandGroup {
     /**
@@ -13,10 +13,10 @@ public class ShootAutoSequence extends SequentialCommandGroup {
      */
     public ShootAutoSequence() {
         addCommands(
-               new IndexerAutonReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS),
+               new IndexerAutoRunReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS),
                 new ParallelCommandGroup(
-                        new IndexerAutoPercent(),
-                        new AutonShooterRPM()
+                        new IndexerAutoRun(),
+                        new ShooterAutoRun()
                 )
         );
     }

@@ -26,39 +26,39 @@ public class CollectorAutoAgitate extends Command {
         counter++;
         // Cycle 1
         if(counter == (int)(2.0 * 50)) {
-            Robot.pivotMotor.runPivotPercent(-0.7);
+            Robot.pivotMotor.run(-0.7);
         }
         if(counter == (int)(2.3 * 50)) {
             Robot.pivotMotor.stopMotor();
         }
         if(counter == (int)(2.4 * 50)) {
-            Robot.pivotMotor.runPivotPercent(0.3);
+            Robot.pivotMotor.run(0.3);
         }
         if(counter == (int)(2.6 * 50)) {
             Robot.pivotMotor.stopMotor();
         }
         // Cycle 2
         if(counter == (int)(3.0 * 50)) {
-            Robot.pivotMotor.runPivotPercent(-0.5);
+            Robot.pivotMotor.run(-0.5);
         }
         if(counter == (int)(3.3 * 50)) {
             Robot.pivotMotor.stopMotor();
         }
         if(counter == (int)(3.4 * 50)) {
-            Robot.pivotMotor.runPivotPercent(0.3);
+            Robot.pivotMotor.run(0.3);
         }
         if(counter == (int)(3.8 * 50)) {
             Robot.pivotMotor.stopMotor();
         }
         // Cycle 3
         if(counter == (int)(4.1 * 50)) {
-            Robot.pivotMotor.runPivotPercent(-0.5);
+            Robot.pivotMotor.run(-0.5);
         }
         if(counter == (int)(4.3 * 50)) {
             Robot.pivotMotor.stopMotor();
         }
         if(counter == (int)(4.4 * 50)) {
-            Robot.pivotMotor.runPivotPercent(0.3);
+            Robot.pivotMotor.run(0.3);
         }
         if(counter == (int)(4.6 * 50)) {
             Robot.pivotMotor.stopMotor();

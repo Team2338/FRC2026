@@ -32,7 +32,7 @@ public class Indexer extends SubsystemBase {
        topIndexerMotor.getConfigurator().apply(topIndexerConfig);
     }
 
-    public void runPercent(double bottomIndexerMotorPercent, double topIndexerMotorPercent) {
+    public void run(double bottomIndexerMotorPercent, double topIndexerMotorPercent) {
         bottomIndexerMotor.set(bottomIndexerMotorPercent);
         topIndexerMotor.set(topIndexerMotorPercent);
     }

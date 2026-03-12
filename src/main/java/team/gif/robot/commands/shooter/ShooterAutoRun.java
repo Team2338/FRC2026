@@ -1,31 +1,27 @@
-package team.gif.robot.commands.collector;
+package team.gif.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
+import team.gif.robot.subsystems.ShotCalculator;
 
-public class CollectorRPM extends Command {
-
-    double rpm = 0;
-
+public class ShooterAutoRun extends Command {
     /**
-     * Not in use
+     * Runs shooter at RPM based distance to hub
      */
-    public CollectorRPM() {
+    public ShooterAutoRun() {
         super();
-        addRequirements(Robot.collectMotor);
+        addRequirements(Robot.shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-        rpm = SmartDashboard.getNumber("Collector/PID/Collect Reference", 0);
-        Robot.collectMotor.runCollector(rpm);
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {}
+    public void execute() {
+        Robot.shooter.run(ShotCalculator.getShotRPM());
+    }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
@@ -36,6 +32,6 @@ public class CollectorRPM extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collectMotor.stopMotor();
+        Robot.shooter.stopMotors();
     }
 }
