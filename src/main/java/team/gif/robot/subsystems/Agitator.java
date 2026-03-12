@@ -15,7 +15,6 @@ import team.gif.robot.RobotMap;
 public class Agitator extends SubsystemBase {
 
     private final TalonFX agitatorMotor;
-    private TalonFXConfiguration agitatorMotorConfig;
 
     public Agitator() {
         agitatorMotor = new TalonFX(RobotMap.Agitator.AGITATOR_MOTOR_ID);
@@ -35,9 +34,10 @@ public class Agitator extends SubsystemBase {
     }
 
     public void setConfig(){
-        agitatorMotorConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
-        agitatorMotorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        agitatorMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        agitatorMotor.getConfigurator().apply(agitatorMotorConfig);
+        TalonFXConfiguration config;
+        config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        agitatorMotor.getConfigurator().apply(config);
     }
 }

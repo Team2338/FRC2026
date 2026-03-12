@@ -16,8 +16,6 @@ public class Indexer extends SubsystemBase {
 
     public TalonFX bottomIndexerMotor;
     public TalonFX topIndexerMotor;
-    private TalonFXConfiguration bottomIndexerConfig;
-    private TalonFXConfiguration topIndexerConfig;
 
     public Indexer() {
        bottomIndexerMotor = new TalonFX(RobotMap.Shooter.BOTTOM_INDEXER_MOTOR_ID);
@@ -61,6 +59,8 @@ public class Indexer extends SubsystemBase {
     }
 
     public void setConfig() {
+        TalonFXConfiguration bottomIndexerConfig;
+        TalonFXConfiguration topIndexerConfig;
         bottomIndexerConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
         topIndexerConfig = new TalonFXConfiguration();
 

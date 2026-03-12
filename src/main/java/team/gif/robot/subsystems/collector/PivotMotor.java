@@ -12,7 +12,7 @@ import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
-    private TalonFXConfiguration pivotMotorConfig;
+    private TalonFXConfiguration config;
 
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
@@ -49,17 +49,18 @@ public class PivotMotor extends SubsystemBase {
     }
 
     private void setConfig(){
-        pivotMotorConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        TalonFXConfiguration config;
+        config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
 
-        pivotMotorConfig.MotorOutput.Inverted = CounterClockwise_Positive;
-        pivotMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.MotorOutput.Inverted = CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-        pivotMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        pivotMotorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
-        pivotMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        pivotMotorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Collector.PIVOT_SOFT_LIMIT_UP_ENCODER_POS;
+        config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
+        config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Collector.PIVOT_SOFT_LIMIT_UP_ENCODER_POS;
 
-        pivotMotor.getConfigurator().apply(pivotMotorConfig);
+        pivotMotor.getConfigurator().apply(config);
     }
 
     public boolean isOverTemp() {

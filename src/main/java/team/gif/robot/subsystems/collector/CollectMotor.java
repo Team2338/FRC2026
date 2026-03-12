@@ -17,7 +17,7 @@ import team.gif.robot.RobotMap;
 public class CollectMotor extends SubsystemBase {
 
     private final TalonFX collectorMotor;
-    private TalonFXConfiguration collectorMotorConfig;
+    private TalonFXConfiguration config;
     public VelocityVoltage velocityVoltage;
 
     public CollectMotor() {
@@ -35,15 +35,15 @@ public class CollectMotor extends SubsystemBase {
         double netI = SmartDashboard.getNumber("Collector/PID/Collect I", 0);
         double netD = SmartDashboard.getNumber("Collector/PID/Collect D", 0);
 
-        double currP = collectorMotorConfig.Slot0.kP;
-        double currI = collectorMotorConfig.Slot0.kI;
-        double currD = collectorMotorConfig.Slot0.kD;
+        double currP = config.Slot0.kP;
+        double currI = config.Slot0.kI;
+        double currD = config.Slot0.kD;
 
         if(netP != currP || netI != currI || netD != currD) {
-            collectorMotorConfig.Slot0.kP = netP;
-            collectorMotorConfig.Slot0.kI = netI;
-            collectorMotorConfig.Slot0.kD = netD;
-            setCollectorMotorConfig(collectorMotorConfig);
+            config.Slot0.kP = netP;
+            config.Slot0.kI = netI;
+            config.Slot0.kD = netD;
+            setConfig(config);
         }
     }
 
@@ -69,20 +69,20 @@ public class CollectMotor extends SubsystemBase {
         return collectorMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.COLLECTOR_MOTOR_TEMP_WARNING_CELSIUS;
     }
 
-    public void setCollectorMotorConfig(TalonFXConfiguration collectorMotorConfig) {
-        collectorMotor.getConfigurator().apply(collectorMotorConfig);
+    public void setConfig(TalonFXConfiguration config) {
+        collectorMotor.getConfigurator().apply(config);
     }
 
     public void setConfig() {
-        collectorMotorConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
-        collectorMotorConfig.Slot0.kP = 0.35;
-        collectorMotorConfig.Slot0.kI = 0;
-        collectorMotorConfig.Slot0.kD = 0;
+        config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        config.Slot0.kP = 0.35;
+        config.Slot0.kI = 0;
+        config.Slot0.kD = 0;
 
-        collectorMotorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        collectorMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-        collectorMotor.getConfigurator().apply(collectorMotorConfig);
+        collectorMotor.getConfigurator().apply(config);
     }
 
 }

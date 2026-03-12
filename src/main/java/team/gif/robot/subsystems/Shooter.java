@@ -29,9 +29,6 @@ public class Shooter extends SubsystemBase {
     public TalonFX shooterLeftMotor;
     public TalonFX shooterMiddleMotor;
     public TalonFX shooterRightMotor;
-    private TalonFXConfiguration shooterLeftConfig;
-    private TalonFXConfiguration shooterMiddleConfig;
-    private TalonFXConfiguration shooterRightConfig;
     public VelocityVoltage velocityVoltage;
 
     /** Creates a new ExampleSubsystem. */
@@ -148,6 +145,9 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setConfig() {
+        TalonFXConfiguration shooterLeftConfig;
+        TalonFXConfiguration shooterMiddleConfig;
+        TalonFXConfiguration shooterRightConfig;
         shooterLeftConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
 
         shooterLeftConfig.Slot0.kP = 0;
