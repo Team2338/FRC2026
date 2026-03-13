@@ -5,16 +5,24 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class AgitatorPercent extends Command {
+    private double agitatorSpeed;
 
     public AgitatorPercent() {
         super();
         addRequirements(Robot.agitator);
+        agitatorSpeed = Constants.Collector.AGITATOR_MOTOR_PERCENT;
+    }
+
+    public AgitatorPercent(double percent) {
+        super();
+        addRequirements(Robot.agitator);
+        agitatorSpeed = percent;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_PERCENT);
+        Robot.agitator.setPercent(agitatorSpeed);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

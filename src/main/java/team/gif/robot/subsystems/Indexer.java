@@ -24,7 +24,7 @@ public class Indexer extends SubsystemBase {
        topIndexerMotor = new TalonFX(RobotMap.Shooter.TOP_INDEXER_MOTOR_ID);
 
        bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-       bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+       bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
        topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
        topIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 

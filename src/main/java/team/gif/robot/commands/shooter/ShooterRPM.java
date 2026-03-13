@@ -5,20 +5,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
 public class ShooterRPM extends Command {
-    double rpm = 0;
+    double rpm;
 
     /**
-     * Runs shooter at RPM from dashboard
+     * Runs shooter at specified rpm
+     * @param rpm rpm to run shooter
      */
-    public ShooterRPM() {
+    public ShooterRPM(double rpm){
         super();
         addRequirements(Robot.shooter);
+        this.rpm = rpm;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = SmartDashboard.getNumber("PID/Reference", 0);
         Robot.shooter.runShooter(rpm);
     }
 
