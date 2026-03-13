@@ -21,7 +21,6 @@ public class UI {
         SmartDashboard.putNumber("PID/D", 0);
         SmartDashboard.putNumber("PID/Percent", 0);
         SmartDashboard.putNumber("PID/Voltage", 0);
-        SmartDashboard.putNumber("PID/Reference", 3500);
         SmartDashboard.putString("PID/Default Command", "Driver Left joystick - percent control");
         SmartDashboard.putString("PID/Percent BTN", "Driver Y");
         SmartDashboard.putString("PID/Voltage BTN", "Driver X");
@@ -88,7 +87,25 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
+        SmartDashboard.putBoolean("Competition", Robot.isCompetition);
 
-        SmartDashboard.putBoolean("Diagnostics/Agitator", Robot.agitator.isOverTemp());
+        updateTemps();
+    }
+
+    public void updateTemps(){
+        if(!Robot.isCompetition) {
+            SmartDashboard.putBoolean("MotorTemps/Agitator", Robot.agitator.isOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Bottom Indexer", Robot.indexer.isBottomIndexerMotorOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Top Indexer", Robot.indexer.isTopIndexerMotorOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Left Shooter", Robot.shooter.isLeftMotorOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Middle Shooter", Robot.shooter.isMiddleMotorOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Right Shooter", Robot.shooter.isRightMotorOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Pivot", Robot.pivotMotor.isOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Collector", Robot.collectMotor.isOverTemp());
+            SmartDashboard.putBoolean("MotorTemps/Swerve Module FR", Robot.swerveDrive.fR.isDriveMotorHot());
+            SmartDashboard.putBoolean("MotorTemps/Swerve Module FL", Robot.swerveDrive.fL.isDriveMotorHot());
+            SmartDashboard.putBoolean("MotorTemps/Swerve Module RL", Robot.swerveDrive.rL.isDriveMotorHot());
+            SmartDashboard.putBoolean("MotorTemps/Swerve Module RR", Robot.swerveDrive.rR.isDriveMotorHot());
+        }
     }
 }

@@ -22,7 +22,7 @@ public class Agitator extends SubsystemBase {
     }
 
     public void setPercent(double percent) {
-        agitatorMotor.set(percent);
+        agitatorMotor.set(-percent);
     }
 
     public void stopMotor() {

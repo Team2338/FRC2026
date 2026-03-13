@@ -29,8 +29,8 @@ public final class Constants {
     }
 
     public static final class Vision {
-        public static final Transform3d LEFT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(28), 0));
-        public static final Transform3d RIGHT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), -Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(25), 0));
+        public static final Transform3d LEFT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(20), 0));
+        public static final Transform3d RIGHT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), -Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(16), 0));
         public static final Transform3d SIDE_CAMERA_POSITION = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
     }
 
@@ -183,5 +183,14 @@ public final class Constants {
         public static final double BOTTOM_INDEXER_MOTOR_WARNING_CELSIUS = 75.0;
         public static final double TOP_INDEXER_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
         public static final double SHOOTER_MOTOR_TEMP_WARNING_CELSIUS = 75.0;
+    }
+
+    public static final class MatchTimes {
+        public static final double END_OF_TRANSITION_PERIOD = 130.0;
+        public static final double END_OF_FIRST_SHIFT = 105.0;
+        public static final double END_OF_SECOND_SHIFT = 80.0;
+        public static final double END_OF_THIRD_SHIFT = 55.0;
+        public static final double END_OF_FOURTH_SHIFT = 30.0;
+        public static final double END_OF_MATCH = 0.0;
     }
 }
