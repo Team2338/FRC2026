@@ -88,14 +88,10 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
-<<<<<<< HEAD
         updateTemps();
     }
 
     public void updateTemps(){
-=======
-
->>>>>>> main
         SmartDashboard.putBoolean("Diagnostics/Agitator", Robot.agitator.isOverTemp());
         SmartDashboard.putBoolean("Diagnostics/Bottom Indexer", Robot.indexer.isBottomIndexerMotorOverTemp());
         SmartDashboard.putBoolean("Diagnostics/Top Indexer", Robot.indexer.isTopIndexerMotorOverTemp());
@@ -108,5 +104,7 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Swerve Module FL", Robot.swerveDrive.fL.isDriveMotorHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Module RL", Robot.swerveDrive.rL.isDriveMotorHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Module RR", Robot.swerveDrive.rR.isDriveMotorHot());
+
+        SmartDashboard.putBoolean(Robot.)
     }
 }
