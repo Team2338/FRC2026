@@ -107,13 +107,12 @@ public class OI {
         dLBump.whileTrue(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5))); //Main index button for shooting - back then forward
         dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
-        dLTrigger.whileTrue(new ShooterRPM(4000)); // change value later
-        dRTrigger.whileTrue(new ShooterRPM(3000)); // change value later
+        dLTrigger.whileTrue(new ShooterRPM(4000)); // Long shot to use  if cameras break // TODO change value later
+        dRTrigger.whileTrue(new ShooterRPM(3000)); // Short shot to use if cameras break // TODO change value later
 
         dA.whileTrue(new HubAutoAlign());
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(0.3))); //Fuel eject from collector
         dX.whileTrue(new ShooterAuto());
-        dY.whileTrue(new ShooterRPM());
 //        dY.onTrue(new AutonShoot());
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
         //dBack.and(dX).onTrue(Robot.auto);

@@ -21,7 +21,6 @@ public class UI {
         SmartDashboard.putNumber("PID/D", 0);
         SmartDashboard.putNumber("PID/Percent", 0);
         SmartDashboard.putNumber("PID/Voltage", 0);
-        SmartDashboard.putNumber("PID/Reference", 3500);
         SmartDashboard.putString("PID/Default Command", "Driver Left joystick - percent control");
         SmartDashboard.putString("PID/Percent BTN", "Driver Y");
         SmartDashboard.putString("PID/Voltage BTN", "Driver X");
