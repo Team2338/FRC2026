@@ -104,7 +104,5 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Swerve Module FL", Robot.swerveDrive.fL.isDriveMotorHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Module RL", Robot.swerveDrive.rL.isDriveMotorHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Module RR", Robot.swerveDrive.rR.isDriveMotorHot());
-
-        SmartDashboard.putBoolean(Robot.)
     }
 }
