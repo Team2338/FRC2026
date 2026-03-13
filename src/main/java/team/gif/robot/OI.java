@@ -101,27 +101,29 @@ public class OI {
          */
         dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
-        //dRBump.whileTrue(new EnableBoost());
-        dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
-        dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+
+        dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
+        dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
+        dLBump.whileTrue(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5))); //Main index button for shooting - back then forward
+
+        dA.whileTrue(new HubAutoAlign());
+        dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(0.3))); //Fuel eject from collector
+        dX.whileTrue(new ShooterAuto());
         dY.whileTrue(new ShooterRPM());
 //        dY.onTrue(new AutonShoot());
-        dX.whileTrue(new ShooterAuto());
-        dA.whileTrue(new HubAutoAlign());
-        dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
-//        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));
         //dBack.and(dX).onTrue(Robot.auto);
 
         aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         aStart.and(aDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
-        //aA.whileTrue(new CollectorRPM().alongWith(new AgitatorPercent())); - pick one later
-        aRTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_FAST_PERCENT).alongWith(new AgitatorPercent()));
-        aLTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_SLOW_PERCENT).alongWith(new AgitatorPercent()));
+
+        aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent())); //Slow Collect
+        aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Fast Collect
+
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
     }
 }
