@@ -106,11 +106,10 @@ public class OI {
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
-        dY.whileTrue(new ShooterRPM());
 //        dY.onTrue(new AutonShoot());
         dX.whileTrue(new ShooterAuto());
         dA.whileTrue(new HubAutoAlign());
-        dLTrigger.whileTrue(new ShooterRPM(3000)); // change value later
+        dLTrigger.whileTrue(new ShooterRPM(4000)); // change value later
         dRTrigger.whileTrue(new ShooterRPM(3000)); // change value later
         dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
