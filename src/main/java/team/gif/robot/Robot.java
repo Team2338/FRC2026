@@ -123,8 +123,7 @@ public class Robot extends TimedRobot {
         delay = ui.delayChooser.getSelected();
         if(delay == 0.0 && autonomousCommand != null) {
             commandScheduler.schedule(autonomousCommand);
-        }
-        else if(delay !=0.0 && autonomousCommand != null) {
+        } else if(delay != 0.0 && autonomousCommand != null) {
             delayTimer.reset();
             delayTimer.start();
         }
@@ -133,10 +132,15 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        if(delay > delayTimer.get()) {
+        if(delay > delayTimer.get() && autonomousCommand != null) {
             commandScheduler.schedule(autonomousCommand);
         }
         delayTimer.stop();
+
+        if (!isCompetition && diagnostics.anyMotorTempHot()) {
+            autonomousCommand.cancel();
+            System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
+        }
     }
 
     @Override
