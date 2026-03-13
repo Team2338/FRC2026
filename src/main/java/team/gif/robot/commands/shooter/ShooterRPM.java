@@ -15,6 +15,11 @@ public class ShooterRPM extends Command {
         addRequirements(Robot.shooter);
     }
 
+    public ShooterRPM(double RPM){
+        super();
+        addRequirements(Robot.shooter);
+    }
+
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
