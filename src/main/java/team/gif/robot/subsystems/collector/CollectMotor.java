@@ -84,5 +84,4 @@ public class CollectMotor extends SubsystemBase {
 
         collectorMotor.getConfigurator().apply(config);
     }
-
 }

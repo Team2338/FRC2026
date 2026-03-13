@@ -12,7 +12,6 @@ import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
-    private TalonFXConfiguration config;
 
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
@@ -49,8 +48,7 @@ public class PivotMotor extends SubsystemBase {
     }
 
     private void setConfig(){
-        TalonFXConfiguration config;
-        config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        TalonFXConfiguration config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
 
         config.MotorOutput.Inverted = CounterClockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;

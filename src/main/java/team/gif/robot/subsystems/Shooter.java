@@ -137,18 +137,10 @@ public class Shooter extends SubsystemBase {
         return getLeftMotorSpeed() > targetRPM && getMiddleMotorSpeed() > targetRPM && getRightMotorSpeed() > targetRPM;
     }
 
-
-    public void setConfig(TalonFXConfiguration config) {
-        shooterLeftMotor.getConfigurator().apply(config);
-        shooterMiddleMotor.getConfigurator().apply(config);
-        shooterRightMotor.getConfigurator().apply(config);
-    }
-
     public void setConfig() {
-        TalonFXConfiguration shooterLeftConfig;
-        TalonFXConfiguration shooterMiddleConfig;
-        TalonFXConfiguration shooterRightConfig;
-        shooterLeftConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        TalonFXConfiguration shooterLeftConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object;
+        TalonFXConfiguration shooterMiddleConfig; //will be cloned
+        TalonFXConfiguration shooterRightConfig; //will be cloned
 
         shooterLeftConfig.Slot0.kP = 0;
         shooterLeftConfig.Slot0.kI = 0;
@@ -161,11 +153,12 @@ public class Shooter extends SubsystemBase {
         shooterRightConfig = shooterLeftConfig.clone();
 
         shooterLeftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        shooterMiddleConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        shooterRightConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
         shooterLeftConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+
+        shooterMiddleConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         shooterMiddleConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+
+        shooterRightConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         shooterRightConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
         shooterLeftMotor.getConfigurator().apply(shooterLeftConfig);

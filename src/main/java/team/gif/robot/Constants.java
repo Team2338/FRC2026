@@ -158,8 +158,8 @@ public final class Constants {
 
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
 
-        public static final double AGITATOR_MOTOR_AUTON_PERCENT = -0.3; //Separate in case we want autos to be different
-        public static final double AGITATOR_MOTOR_PERCENT = -0.3;
+        public static final double AGITATOR_MOTOR_AUTON_PERCENT = 0.3; //Separate in case we want autos to be different
+        public static final double AGITATOR_MOTOR_PERCENT = 0.3;
     }
 
     public static final class Shooter {

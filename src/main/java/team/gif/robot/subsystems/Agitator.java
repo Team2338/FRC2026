@@ -21,8 +21,12 @@ public class Agitator extends SubsystemBase {
         setConfig();
     }
 
+    /**
+     * Runs the agitator at a supplied percent (positive rotates fuel in, negative rotates fuel out)
+     * @param percent
+     */
     public void setPercent(double percent) {
-        agitatorMotor.set(-percent);
+        agitatorMotor.set(percent);
     }
 
     public void stopMotor() {
@@ -34,8 +38,8 @@ public class Agitator extends SubsystemBase {
     }
 
     public void setConfig(){
-        TalonFXConfiguration config;
-        config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        TalonFXConfiguration config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+
         config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         agitatorMotor.getConfigurator().apply(config);
