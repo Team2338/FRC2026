@@ -51,7 +51,7 @@ public class Robot extends TimedRobot {
 
     private double delay;
     private final Timer delayTimer = new Timer();
-    public boolean isCompetition = false;
+    public static boolean isCompetition = false;
 
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
