@@ -112,7 +112,7 @@ public class OI {
         dRTrigger.whileTrue(new ShooterRPM(3000)); // Short shot to use if cameras break // TODO change value later
 
         dA.whileTrue(new HubAutoAlign());
-        dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(0.3))); //Fuel eject from collector
+        dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
         dX.whileTrue(new ShooterAuto());
 //        dY.onTrue(new AutonShoot());
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));

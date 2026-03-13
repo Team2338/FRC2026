@@ -7,6 +7,8 @@ package team.gif.robot.subsystems.collector;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
@@ -15,19 +17,17 @@ import team.gif.robot.RobotMap;
 public class CollectMotor extends SubsystemBase {
 
     private final TalonFX collectorMotor;
-    public TalonFXConfiguration config = new TalonFXConfiguration();
+    private TalonFXConfiguration config;
     public VelocityVoltage velocityVoltage;
 
     public CollectMotor() {
         collectorMotor = new TalonFX(RobotMap.Collector.COLLECT_MOTOR_ID);
-        config.Slot0.kP = 0.35;
-        config.Slot0.kI = 0;
-        config.Slot0.kD = 0;
 
-        setConfig(config);
+        setConfig();
 
         velocityVoltage = new VelocityVoltage(0).withSlot(0);
     }
+
 
     @Override
     public void periodic() {
@@ -70,6 +70,18 @@ public class CollectMotor extends SubsystemBase {
     }
 
     public void setConfig(TalonFXConfiguration config) {
+        collectorMotor.getConfigurator().apply(config);
+    }
+
+    public void setConfig() {
+        config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        config.Slot0.kP = 0.35;
+        config.Slot0.kI = 0;
+        config.Slot0.kD = 0;
+
+        config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
         collectorMotor.getConfigurator().apply(config);
     }
 }

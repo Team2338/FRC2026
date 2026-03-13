@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
 import edu.wpi.first.units.measure.MutVoltage;
@@ -28,9 +29,6 @@ public class Shooter extends SubsystemBase {
     public TalonFX shooterLeftMotor;
     public TalonFX shooterMiddleMotor;
     public TalonFX shooterRightMotor;
-    public TalonFXConfiguration shooterLeftConfig = new TalonFXConfiguration();
-    public TalonFXConfiguration shooterMiddleConfig = new TalonFXConfiguration();
-    public TalonFXConfiguration shooterRightConfig = new TalonFXConfiguration();
     public VelocityVoltage velocityVoltage;
 
     /** Creates a new ExampleSubsystem. */
@@ -39,23 +37,7 @@ public class Shooter extends SubsystemBase {
        shooterMiddleMotor = new TalonFX(RobotMap.Shooter.MIDDLE_SHOOTER_MOTOR_ID);
        shooterRightMotor = new TalonFX(RobotMap.Shooter.RIGHT_SHOOTER_MOTOR_ID);
 
-       shooterLeftConfig.Slot0.kP = 0;
-       shooterLeftConfig.Slot0.kI = 0;
-       shooterLeftConfig.Slot0.kD = 0;
-       shooterLeftConfig.Slot0.kS = 0.12278;
-       shooterLeftConfig.Slot0.kV = 0.11522;
-       shooterLeftConfig.Slot0.kA = 0.0078728;
-
-       shooterMiddleConfig = shooterLeftConfig.clone();
-       shooterRightConfig = shooterLeftConfig.clone();
-
-       shooterLeftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-       shooterMiddleConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-       shooterRightConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
-       shooterLeftMotor.getConfigurator().apply(shooterLeftConfig);
-       shooterMiddleMotor.getConfigurator().apply(shooterMiddleConfig);
-       shooterRightMotor.getConfigurator().apply(shooterRightConfig);
+       setConfig();
 
        velocityVoltage = new VelocityVoltage(0).withSlot(0);
     }
@@ -155,9 +137,33 @@ public class Shooter extends SubsystemBase {
         return getLeftMotorSpeed() > targetRPM && getMiddleMotorSpeed() > targetRPM && getRightMotorSpeed() > targetRPM;
     }
 
-    public void setConfig(TalonFXConfiguration config) {
-        shooterLeftMotor.getConfigurator().apply(config);
-        shooterRightMotor.getConfigurator().apply(config);
+    public void setConfig() {
+        TalonFXConfiguration shooterLeftConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object;
+        TalonFXConfiguration shooterMiddleConfig; //will be cloned
+        TalonFXConfiguration shooterRightConfig; //will be cloned
+
+        shooterLeftConfig.Slot0.kP = 0;
+        shooterLeftConfig.Slot0.kI = 0;
+        shooterLeftConfig.Slot0.kD = 0;
+        shooterLeftConfig.Slot0.kS = 0.12278;
+        shooterLeftConfig.Slot0.kV = 0.11522;
+        shooterLeftConfig.Slot0.kA = 0.0078728;
+
+        shooterMiddleConfig = shooterLeftConfig.clone();
+        shooterRightConfig = shooterLeftConfig.clone();
+
+        shooterLeftConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        shooterLeftConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+
+        shooterMiddleConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        shooterMiddleConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+
+        shooterRightConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        shooterRightConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+
+        shooterLeftMotor.getConfigurator().apply(shooterLeftConfig);
+        shooterMiddleMotor.getConfigurator().apply(shooterMiddleConfig);
+        shooterRightMotor.getConfigurator().apply(shooterRightConfig);
     }
 
     private void sysIDVoltage(Voltage volt) {

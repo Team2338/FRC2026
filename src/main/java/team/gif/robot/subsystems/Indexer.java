@@ -16,20 +16,12 @@ public class Indexer extends SubsystemBase {
 
     public TalonFX bottomIndexerMotor;
     public TalonFX topIndexerMotor;
-    public TalonFXConfiguration bottomIndexerConfig = new TalonFXConfiguration();
-    public TalonFXConfiguration topIndexerConfig = new TalonFXConfiguration();
 
     public Indexer() {
        bottomIndexerMotor = new TalonFX(RobotMap.Shooter.BOTTOM_INDEXER_MOTOR_ID);
        topIndexerMotor = new TalonFX(RobotMap.Shooter.TOP_INDEXER_MOTOR_ID);
 
-       bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-       bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-       topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-       topIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
-       bottomIndexerMotor.getConfigurator().apply(bottomIndexerConfig);
-       topIndexerMotor.getConfigurator().apply(topIndexerConfig);
+       setConfig();
     }
 
     public void runPercent(double bottomIndexerMotorPercent, double topIndexerMotorPercent) {
@@ -64,5 +56,19 @@ public class Indexer extends SubsystemBase {
 
     public void setBottomIndexerConfig(TalonFXConfiguration bottomIndexerConfig) {
         bottomIndexerMotor.getConfigurator().apply(bottomIndexerConfig);
+    }
+
+    public void setConfig() {
+        TalonFXConfiguration bottomIndexerConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
+        TalonFXConfiguration topIndexerConfig = new TalonFXConfiguration();
+
+        bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+
+        topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        topIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
+        bottomIndexerMotor.getConfigurator().apply(bottomIndexerConfig);
+        topIndexerMotor.getConfigurator().apply(topIndexerConfig);
     }
 }
