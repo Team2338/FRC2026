@@ -90,5 +90,7 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
 
         SmartDashboard.putBoolean("Diagnostics/Agitator", Robot.agitator.isOverTemp());
+
+        SmartDashboard.putBoolean("Competition", Robot.isCompetition);
     }
 }

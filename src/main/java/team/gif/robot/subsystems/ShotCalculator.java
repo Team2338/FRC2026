@@ -12,15 +12,20 @@ public class ShotCalculator {
     private final static InterpolatingDoubleTreeMap distanceMap = new InterpolatingDoubleTreeMap();
 
     static {
-        distanceMap.put(Units.feetToMeters(15.0 + 0.75), 3750.0);
-        distanceMap.put(Units.feetToMeters(13.42 + 0.75), 3650.0);
-        distanceMap.put(Units.feetToMeters(11.42 + 0.75), 3500.0);
-        distanceMap.put(Units.feetToMeters(8.42 + 0.75), 3100.0);
-        distanceMap.put(Units.feetToMeters(7.42 + 0.75), 3050.0);
-        distanceMap.put(Units.feetToMeters(6.42 + 0.75), 3000.0);
-        distanceMap.put(Units.feetToMeters(5.42 + 0.75), 2750.0);
-        distanceMap.put(Units.feetToMeters(4.42 + 0.75), 2650.0);
-        distanceMap.put(Units.feetToMeters(3.42 + 0.75), 2550.0);
+//        distanceMap.put(Units.feetToMeters(15.0 + 0.75), 3750.0);
+//        distanceMap.put(Units.feetToMeters(13.42 + 0.75), 3650.0);
+//        distanceMap.put(Units.feetToMeters(11.42 + 0.75), 3500.0);
+//        distanceMap.put(Units.feetToMeters(8.42 + 0.75), 3100.0);
+//        distanceMap.put(Units.feetToMeters(7.42 + 0.75), 3050.0);
+//        distanceMap.put(Units.feetToMeters(6.42 + 0.75), 3000.0);
+//        distanceMap.put(Units.feetToMeters(5.42 + 0.75), 2750.0);
+//        distanceMap.put(Units.feetToMeters(4.42 + 0.75), 2650.0);
+//        distanceMap.put(Units.feetToMeters(3.42 + 0.75), 2550.0);
+
+        distanceMap.put(Units.feetToMeters(6.83 + 3.35), 3500.0);
+        distanceMap.put(Units.feetToMeters(4 + 3.35), 3050.0);
+        distanceMap.put(Units.feetToMeters(5.583 + 3.35), 3250.0);
+        distanceMap.put(Units.feetToMeters(12.96 + 3.35), 4300.0);
     }
 
     /**
