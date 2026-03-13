@@ -21,7 +21,6 @@ public class UI {
         SmartDashboard.putNumber("PID/D", 0);
         SmartDashboard.putNumber("PID/Percent", 0);
         SmartDashboard.putNumber("PID/Voltage", 0);
-        SmartDashboard.putNumber("PID/Reference", 3500);
         SmartDashboard.putString("PID/Default Command", "Driver Left joystick - percent control");
         SmartDashboard.putString("PID/Percent BTN", "Driver Y");
         SmartDashboard.putString("PID/Voltage BTN", "Driver X");
@@ -88,8 +87,9 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
+
         SmartDashboard.putBoolean("Diagnostics/Agitator", Robot.agitator.isOverTemp());
 
-        SmartDashboard.putBoolean("In Competition", Robot.isCompetition);
+        SmartDashboard.putBoolean("Competition", Robot.isCompetition);
     }
 }
