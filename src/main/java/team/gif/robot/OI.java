@@ -1,6 +1,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -126,5 +127,10 @@ public class OI {
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Fast Collect
 
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
+    }
+
+    public void setRumble(boolean doRumble){
+        driver.setRumble(GenericHID.RumbleType.kBothRumble, doRumble ? 1.0 : 0.0);
+        aux.setRumble(GenericHID.RumbleType.kBothRumble, doRumble ? 1.0 : 0.0);
     }
 }

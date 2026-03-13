@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,7 +22,7 @@ import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConfiguration;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXDriveMotor;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXTurnMotor;
 import team.gif.robot.subsystems.drivers.swerve.CANCoderEncoder;
-
+import static team.gif.robot.Constants.MatchTimes;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -56,7 +57,6 @@ public class Robot extends TimedRobot {
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
-
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -152,7 +152,39 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        double matchTime = DriverStation.getMatchTime();
+
+        //Set the controllers to rumble throughout different period of the match.
+        oi.setRumble(
+                isBetweenTime(matchTime, MatchTimes.END_OF_TRANSITION_PERIOD + 3.0, 3.0) || //Rumble for 3 seconds before the transition period ends
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_FIRST_SHIFT +  10.0, 0.3) || //Double quick rumble 10 seconds before the first shift ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_FIRST_SHIFT +   9.6, 0.3) ||
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_FIRST_SHIFT +   3.0, 3.0) || //Rumble for 3 seconds before the first shift ends
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_SECOND_SHIFT + 10.0, 0.3) || //Double quick rumble 10 seconds before the second shift ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_SECOND_SHIFT +  9.6, 0.3) ||
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_SECOND_SHIFT +  3.0, 3.0) || //Rumble for 3 seconds before the second shift ends.
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_THIRD_SHIFT +  10.0, 0.3) || //Double quick rumble 10 seconds before the third shift ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_THIRD_SHIFT +   9.6, 0.3) ||
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_THIRD_SHIFT +   3.0, 3.0) || //Rumble for 3 seconds before the third shift ends
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_FOURTH_SHIFT + 10.0, 0.3) || //Double quick rumble 10 seconds before the fourth shift ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_FOURTH_SHIFT +  9.6, 0.3) ||
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_FOURTH_SHIFT +  3.0, 3.0) || //Rumble for 3 seconds before the fourth shift ends
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_MATCH + 10.0, 0.3) || //Double quick rumble 10 seconds before the match ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_MATCH +  9.6, 0.3) ||
+
+                isBetweenTime(matchTime, MatchTimes.END_OF_MATCH +  3.0, 2.5) //Rumble for 2 seconds 3 seconds before the match ends
+        );
+    }
 
     @Override
     public void testInit() {
@@ -171,4 +203,16 @@ public class Robot extends TimedRobot {
     /** This function is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    /**
+     * Checks if the current match time is in the specified interval.
+     * @param matchTime Time for the interval to be analyzed against
+     * @param startTime The beginning of the time interval to be analyzed.
+     * @param duration The duration of the time interval to be analyzed.
+     * @return True if the match time is between the interval, false if not.
+     */
+    public boolean isBetweenTime(double matchTime, double startTime, double duration) {
+        double endTime = startTime - duration;
+        return startTime > matchTime && matchTime > endTime;
+    }
 }
