@@ -27,7 +27,7 @@ public class PivotMotor extends SubsystemBase {
     private final TalonFX pivotMotor;
     private TalonFXConfiguration config;
     public DutyCycleOut controlRequest;
-    public ArmFeedforward feedforward = new ArmFeedforward(Constants.Collector.PivotkS, Constants.Collector.PivotkG, Constants.Collector.PivotkV);
+    public ArmFeedforward feedforward = new ArmFeedforward(Constants.Collector.PivotkS, Constants.Collector.PivotkG, Constants.Collector.PivotkV, Constants.Collector.PivotkA);
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
         setConfig();
@@ -35,6 +35,10 @@ public class PivotMotor extends SubsystemBase {
 
     public void runPivotPercent(double percent) {
         pivotMotor.set(percent);
+    }
+
+    public void runPivotVoltage(double voltage) {
+        pivotMotor.setVoltage(voltage);
     }
 
     public double getPivotOutput() {
@@ -107,11 +111,7 @@ public class PivotMotor extends SubsystemBase {
     }
 
     private void sysIDVoltage(Voltage volt) {
-        double volts = (volt.baseUnitMagnitude());
-        double battery = RobotController.getBatteryVoltage();
-        double percent = volts/battery;
-        controlRequest = new DutyCycleOut(percent);
-        pivotMotor.setControl(controlRequest);
+        runPivotVoltage(volt.baseUnitMagnitude());
     }
 
     private void sysIDLog(SysIdRoutineLog log) {
