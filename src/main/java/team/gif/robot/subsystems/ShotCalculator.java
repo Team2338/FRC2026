@@ -22,10 +22,23 @@ public class ShotCalculator {
 //        distanceMap.put(Units.feetToMeters(4.42 + 0.75), 2650.0);
 //        distanceMap.put(Units.feetToMeters(3.42 + 0.75), 2550.0);
 
-        distanceMap.put(Units.feetToMeters(6.83 + 3.35), 3500.0);
-        distanceMap.put(Units.feetToMeters(4 + 3.35), 3050.0);
-        distanceMap.put(Units.feetToMeters(5.583 + 3.35), 3250.0);
-        distanceMap.put(Units.feetToMeters(12.96 + 3.35), 4300.0);
+        double measurementOffset = 3.35;
+
+//        distanceMap.put(Units.feetToMeters(6.83 + 3.35), 3500.0);
+//        distanceMap.put(Units.feetToMeters(4 + 3.35), 3050.0);
+//        distanceMap.put(Units.feetToMeters(5.583 + 3.35), 3250.0);
+//        distanceMap.put(Units.feetToMeters(12.96 + 3.35), 4300.0);
+
+        distanceMap.put(Units.feetToMeters(2.42 + measurementOffset), 2800.0);
+        distanceMap.put(Units.feetToMeters(3.94 + measurementOffset), 3000.0);
+        distanceMap.put(Units.feetToMeters(4.98 + measurementOffset), 3150.0);
+        distanceMap.put(Units.feetToMeters(5.79 + measurementOffset), 3250.0);
+        distanceMap.put(Units.feetToMeters(6.76 + measurementOffset), 3350.0);
+        distanceMap.put(Units.feetToMeters(8.82 + measurementOffset), 3550.0);
+        distanceMap.put(Units.feetToMeters(7.5 + measurementOffset), 3450.0);
+        distanceMap.put(Units.feetToMeters(9.92 + measurementOffset), 3850.0);
+        distanceMap.put(Units.feetToMeters(11.67 + measurementOffset), 4150.0);
+        distanceMap.put(Units.feetToMeters(13.92 + measurementOffset), 4300.0);
     }
 
     /**
