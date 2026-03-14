@@ -5,19 +5,29 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.units.measure.MutAngle;
+import edu.wpi.first.units.measure.MutAngularVelocity;
+import edu.wpi.first.units.measure.MutVoltage;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
     private TalonFXConfiguration config;
     public DutyCycleOut controlRequest;
-    public ArmFeedforward feedforward = new ArmFeedforward(Constants.Collector.kS, Constants.Collector.kG, Constants.Collector.kV);
+    public ArmFeedforward feedforward = new ArmFeedforward(Constants.Collector.PivotkS, Constants.Collector.PivotkG, Constants.Collector.PivotkV);
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
         setConfig();
@@ -37,6 +47,10 @@ public class PivotMotor extends SubsystemBase {
 
     public double getPosition() {
         return pivotMotor.getPosition().getValueAsDouble();
+    }
+
+    public double getPivotVoltage() {
+        return pivotMotor.getMotorVoltage().getValueAsDouble();
     }
 
     public void zeroEncoder() {
@@ -90,5 +104,39 @@ public class PivotMotor extends SubsystemBase {
             controlRequest = new DutyCycleOut(percent);
             //Uses the volt gotten from controlRequest to run the pivot motor
             pivotMotor.setControl(controlRequest);
+    }
+
+    private void sysIDVoltage(Voltage volt) {
+        double volts = (volt.baseUnitMagnitude());
+        double battery = RobotController.getBatteryVoltage();
+        double percent = volts/battery;
+        controlRequest = new DutyCycleOut(percent);
+        pivotMotor.setControl(controlRequest);
+    }
+
+    private void sysIDLog(SysIdRoutineLog log) {
+        MutVoltage voltMut = Volts.mutable(0);
+        MutAngle posMut = Rotations.mutable(0);
+        MutAngularVelocity vMut= RotationsPerSecond.mutable(0);
+
+        log.motor("Pivot")
+                .voltage(voltMut.mut_replace(getPivotVoltage(), Volts))
+                .angularVelocity(vMut.mut_replace(pivotMotor.getVelocity().getValueAsDouble(), RotationsPerSecond))
+                .angularPosition(posMut.mut_replace(pivotMotor.getPosition().getValueAsDouble(), Rotations));
+    }
+
+    public SysIdRoutine getSysID() {
+        return new SysIdRoutine(
+                new SysIdRoutine.Config(),
+                new SysIdRoutine.Mechanism(this::sysIDVoltage, this::sysIDLog, this)
+        );
+    }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return getSysID().quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return getSysID().dynamic(direction);
     }
 }

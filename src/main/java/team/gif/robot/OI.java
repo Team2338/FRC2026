@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.collector.CollectorPercent;
@@ -123,5 +124,14 @@ public class OI {
         aRTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_FAST_PERCENT).alongWith(new AgitatorPercent()));
         aLTrigger.whileTrue(new CollectorPercent(Constants.Collector.COLLECTOR_SLOW_PERCENT).alongWith(new AgitatorPercent()));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
+
+        //SysID for pivot arm
+        aX.whileTrue(Robot.pivotMotor.sysIdDynamic(SysIdRoutine.Direction.kForward));
+        aY.whileTrue(Robot.pivotMotor.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        aB.whileTrue(Robot.pivotMotor.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+        aA.whileTrue(Robot.pivotMotor.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+
+
+
     }
 }

@@ -156,11 +156,9 @@ public final class Constants {
         public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
 
-        public static final double PIVOT_HOLD_OUTPUT = -0.033;
-
-        public static final double kS = 1; //TODO: Change
-        public static final double kG = 1; //TODO: Change
-        public static final double kV = 1; //TODO: Change
+        public static final double PivotkS = 0;
+        public static final double PivotkG = 1; //TODO: Change
+        public static final double PivotkV = 0;
 
 
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
