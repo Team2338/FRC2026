@@ -25,7 +25,6 @@ import static edu.wpi.first.units.Units.Volts;
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
-    private TalonFXConfiguration config;
     public DutyCycleOut controlRequest;
     public ArmFeedforward feedforward = new ArmFeedforward(Constants.Collector.PivotkS, Constants.Collector.PivotkG, Constants.Collector.PivotkV, Constants.Collector.PivotkA);
     public PivotMotor(){
@@ -70,7 +69,7 @@ public class PivotMotor extends SubsystemBase {
     }
 
     private void setConfig(){
-        config = new TalonFXConfiguration();
+        TalonFXConfiguration config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
 
 
 
@@ -81,6 +80,7 @@ public class PivotMotor extends SubsystemBase {
         config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.Collector.PIVOT_SOFT_LIMIT_UP_ENCODER_POS;
+
         pivotMotor.getConfigurator().apply(config);
     }
 

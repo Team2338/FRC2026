@@ -22,51 +22,56 @@ public class DriveSwerve extends Command {
 
     @Override
     public void execute() {
-            double forwardSign;
-            double strafeSign;
+        if (!Robot.isCompetition && Robot.diagnostics.anyMotorTempHot()) {
+            Robot.swerveDrive.stopDrive();
+            System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
+            return;
+        }
 
-            double forward = -Robot.oi.driver.getLeftY(); // need to invert because -Y is away, +Y is pull back
-            forward = (Math.abs(forward) > Constants.Joystick.DEADBAND) ? forward : 0.0; //0.00001;
+        double forwardSign;
+        double strafeSign;
 
-            double strafe = -Robot.oi.driver.getLeftX(); // need to invert because -X is left, +X is right
-            strafe = (Math.abs(strafe) > Constants.Joystick.DEADBAND) ? strafe : 0.0;
+        double forward = -Robot.oi.driver.getLeftY(); // need to invert because -Y is away, +Y is pull back
+        forward = (Math.abs(forward) > Constants.Joystick.DEADBAND) ? forward : 0.0; //0.00001;
 
-            double rot = -Robot.oi.driver.getRightX(); // need to invert because left is negative, right is positive
-            rot = (Math.abs(rot) > Constants.Joystick.DEADBAND) ? rot : 0.0;
+        double strafe = -Robot.oi.driver.getLeftX(); // need to invert because -X is left, +X is right
+        strafe = (Math.abs(strafe) > Constants.Joystick.DEADBAND) ? strafe : 0.0;
 
-            forwardSign = forward/Math.abs(forward);
-            strafeSign = strafe/Math.abs(strafe);
-            // Use a parabolic curve (instead if linear) for the joystick to speed ratio
-            // This allows for small joystick inputs to use slower speeds
-            forward = Math.abs(forward) * forward;
-            strafe = Math.abs(strafe) * strafe;
+        double rot = -Robot.oi.driver.getRightX(); // need to invert because left is negative, right is positive
+        rot = (Math.abs(rot) > Constants.Joystick.DEADBAND) ? rot : 0.0;
 
-            forward = .5 * Math.sqrt(2 + forward*forward - strafe*strafe + 2*forward*Math.sqrt(2)) -
-                    .5 * Math.sqrt(2 + forward*forward - strafe*strafe - 2*forward*Math.sqrt(2));
+        forwardSign = forward/Math.abs(forward);
+        strafeSign = strafe/Math.abs(strafe);
+        // Use a parabolic curve (instead if linear) for the joystick to speed ratio
+        // This allows for small joystick inputs to use slower speeds
+        forward = Math.abs(forward) * forward;
+        strafe = Math.abs(strafe) * strafe;
 
-            strafe = .5 * Math.sqrt(2 - forward*forward + strafe*strafe + 2*strafe*Math.sqrt(2)) -
-                    .5 * Math.sqrt(2 - forward*forward + strafe*strafe - 2*strafe*Math.sqrt(2));
+        forward = .5 * Math.sqrt(2 + forward*forward - strafe*strafe + 2*forward*Math.sqrt(2)) -
+                .5 * Math.sqrt(2 + forward*forward - strafe*strafe - 2*forward*Math.sqrt(2));
 
-            if( Double.isNaN(forward) )
-                forward = forwardSign;
-            if( Double.isNaN(strafe) )
-                strafe = strafeSign;
+        strafe = .5 * Math.sqrt(2 - forward*forward + strafe*strafe + 2*strafe*Math.sqrt(2)) -
+                .5 * Math.sqrt(2 - forward*forward + strafe*strafe - 2*strafe*Math.sqrt(2));
 
-            //Forward speed, Sideways speed, Rotation Speed
-            forward = forwardLimiter.calculate(forward) * Robot.swerveDrive.getDrivePace().getValue();
-            strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
+        if( Double.isNaN(forward) )
+            forward = forwardSign;
+        if( Double.isNaN(strafe) )
+            strafe = strafeSign;
 
-            // slow dpwn the rotation by converting the linear response to a curve
-            if (rot < 0 ) {
-                rot = rot * -rot;
-            } else {
-                rot = rot * rot;
-            }
+        //Forward speed, Sideways speed, Rotation Speed
+        forward = forwardLimiter.calculate(forward) * Robot.swerveDrive.getDrivePace().getValue();
+        strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
-             rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+        // slow dpwn the rotation by converting the linear response to a curve
+        if (rot < 0 ) {
+            rot = rot * -rot;
+        } else {
+            rot = rot * rot;
+        }
 
-            // the robot starts facing the driver station so for this year negating y and x
-            Robot.swerveDrive.drive(forward, strafe, rot); //temp
+        rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+
+        Robot.swerveDrive.drive(forward, strafe, rot);
     }
 
     @Override
