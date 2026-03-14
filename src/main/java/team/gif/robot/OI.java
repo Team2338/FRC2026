@@ -111,7 +111,7 @@ public class OI {
 //        dY.onTrue(new AutonShoot());
         dX.whileTrue(new ShooterAuto());
         dA.whileTrue(new HubAutoAlign());
-        dB.whileTrue(new AngleCollect());
+        dB.whileTrue(new AngleCollect(true));
         dLBump.whileTrue(new IndexerReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS).andThen(new IndexerPercent())); //might change to up later
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
 //        dRBump.whileTrue(new RepeatCommand(new IndexerBack().withTimeout(0.25).andThen(new IndexerPercent().withTimeout(1.0))));

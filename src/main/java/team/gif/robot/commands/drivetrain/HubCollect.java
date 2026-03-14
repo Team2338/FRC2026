@@ -9,14 +9,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class AngleCollect extends Command {
+public class HubCollect extends Command {
     private final SlewRateLimiter forwardLimiter;
     private final SlewRateLimiter strafeLimiter;
     private final SlewRateLimiter turnLimiter;
     private boolean isRedAlliance;
     private boolean forward;
+    private int rotationTarget;
+    private Twist2d collectorOffset;
+    private double hubPosition;
 
-    public AngleCollect(boolean forward) {
+    public HubCollect(boolean forward) {
         this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
         this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
         this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND);
@@ -28,12 +31,33 @@ public class AngleCollect extends Command {
     @Override
     public void initialize() {
         isRedAlliance = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red;
+
+        Pose2d robotPose = Robot.swerveDrive.getPose();
+        boolean isRightSide = robotPose.getX() < Constants.Field.CENTER_LINE;
+
+        int baseAngle = robotPose.getY() < Constants.Field.FIELD_LENGTH / 2 ? 135 : 45;
+
+        //Find collector edge pose
+        double collectorExtension = Units.inchesToMeters(12);
+        double robotYOffset = rotationTarget < 0 ? Robot.swerveConfig.constants.TRACK_WIDTH_METERS / 2 : -Robot.swerveConfig.constants.TRACK_WIDTH_METERS / 2;
+        double robotXOffset = Robot.swerveConfig.constants.TRACK_LENGTH_METERS + collectorExtension;
+        collectorOffset = new Twist2d(robotXOffset, robotYOffset, 0);
+
+
+        hubPosition = robotPose.getY() < Constants.Field.FIELD_LENGTH / 2 ? Constants.Field.HUB_BLUE_REAR : Constants.Field.HUB_RED_REAR;
+
+
+
+        rotationTarget = isRightSide ? -baseAngle : baseAngle;
+        rotationTarget = isRedAlliance ? rotationTarget - 180 : rotationTarget;
+
+
     }
 
     @Override
     public void execute() {
         Pose2d robotPose = Robot.swerveDrive.getPose();
-        boolean isRightSide = robotPose.getX() < Constants.Field.CENTER_LINE;
+
 
         double forwardSign;
         double strafeSign;
@@ -62,36 +86,21 @@ public class AngleCollect extends Command {
         if( Double.isNaN(strafe) )
             strafe = strafeSign;
 
-        int baseAngle = this.forward ? 45 : 135;
 
         //Forward speed, Sideways speed, Rotation Speed
         forward = forwardLimiter.calculate(forward) * Robot.swerveDrive.getDrivePace().getValue();
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
-        //Find collector edge pose
-        double collectorExtension = Units.inchesToMeters(12);
-        double robotYOffset = isRightSide ? Robot.swerveConfig.constants.TRACK_WIDTH_METERS / 2 : -Robot.swerveConfig.constants.TRACK_WIDTH_METERS / 2;
-        double robotXOffset = Robot.swerveConfig.constants.TRACK_LENGTH_METERS + collectorExtension;
-        Twist2d collectorOffset = new Twist2d(robotXOffset, robotYOffset, 0);
-
-        Pose2d collectorPose = robotPose.exp(collectorOffset);
 
         //Find wall and set max speed based on distance
-        double wallPosition = isRightSide ? 0 : Constants.Field.FIELD_WIDTH;
-        if (isRedAlliance) {
-            wallPosition = Math.abs(wallPosition - Constants.Field.FIELD_WIDTH);
-        }
-        double distanceToWall = Math.abs(collectorPose.getX() - wallPosition);
-        double maxSpeed = (distanceToWall - Constants.Mk5Constants.AUTO_COLLECT_BUFFER) * 0.5; //1m away, maxSpeed = 2 m/s;
+        Pose2d collectorPose = robotPose.exp(collectorOffset);
+        double distanceToHub = Math.abs(collectorPose.getY() - hubPosition);
+        double maxSpeed = (distanceToHub - Constants.Mk5Constants.AUTO_COLLECT_BUFFER) * 0.5; //1m away, maxSpeed = 2 m/s;
 
         strafe = Math.min(maxSpeed, strafe);
 
         // Auto rotate to 45 degrees
-        double rotTarget = isRightSide ? baseAngle : -baseAngle;
-        if(isRedAlliance) {
-            rotTarget *= -1; //To adjust for the flipped left side when on red alliance
-        }
-        double rotError = Robot.pigeon.getHeading() - rotTarget;
+        double rotError = Robot.pigeon.getHeading() - rotationTarget;
         double rot = rotError * Constants.Mk5Constants.HUB_ALIGN_P / (2 * Math.PI); //Converts to -1 to 1 scale for limiter and speed calc
 
          rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;

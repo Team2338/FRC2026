@@ -24,11 +24,16 @@ public final class Constants {
     public static final double DEBOUNCE_DEFAULT = 0.020;
 
     public static final class Field {
+        public static final double FIELD_WIDTH = Units.inchesToMeters(317.69);
+        public static final double FIELD_LENGTH = Units.inchesToMeters(651.22);
+
+        public static final double CENTER_LINE = FIELD_WIDTH / 2;
+
         public static final Translation2d HUB_BLUE_TRANSLATION = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
         public static final Translation2d HUB_RED_TRANSLATION = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+        public static final double HUB_BLUE_REAR = (FIELD_LENGTH / 2) - Units.inchesToMeters(120);
+        public static final double HUB_RED_REAR = (FIELD_LENGTH / 2) + Units.inchesToMeters(120);
 
-        public static final double FIELD_WIDTH = Units.inchesToMeters(317.69);
-        public static final double CENTER_LINE = FIELD_WIDTH / 2;
     }
 
     public static final class Vision {
