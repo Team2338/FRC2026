@@ -30,6 +30,8 @@ public class Shooter extends SubsystemBase {
     public TalonFX shooterMiddleMotor;
     public TalonFX shooterRightMotor;
     public VelocityVoltage velocityVoltage;
+    public double RPMSetpointLower;
+    public double RPMSetpointHigher;
 
     /** Creates a new ExampleSubsystem. */
     public Shooter() {
@@ -83,6 +85,15 @@ public class Shooter extends SubsystemBase {
         shooterRightMotor.setControl(velocityVoltage.withVelocity(rpm/60));
     }
 
+    public boolean isShooterReady() {
+        RPMSetpointLower = ShotCalculator.getShotRPM() - 100;
+        RPMSetpointHigher = ShotCalculator.getShotRPM() + 100;
+
+        return (RPMSetpointLower <= getLeftMotorSpeed() && getLeftMotorSpeed() <= RPMSetpointHigher)
+                && (RPMSetpointLower <= getMiddleMotorSpeed() && getMiddleMotorSpeed() <= RPMSetpointHigher)
+                && (RPMSetpointLower <= getRightMotorSpeed() && getRightMotorSpeed() <= RPMSetpointHigher);
+    }
+
     public double getLeftMotorSpeed() {
         return shooterLeftMotor.getVelocity().getValueAsDouble() * 60;
     }
@@ -120,6 +131,7 @@ public class Shooter extends SubsystemBase {
         shooterMiddleMotor.stopMotor();
         shooterRightMotor.stopMotor();
     }
+
 
     public boolean isLeftMotorOverTemp() {
         return shooterLeftMotor.getDeviceTemp().getValueAsDouble() > Constants.MotorTemps.SHOOTER_MOTOR_TEMP_WARNING_CELSIUS;
