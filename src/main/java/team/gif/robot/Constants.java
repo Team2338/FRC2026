@@ -69,7 +69,7 @@ public final class Constants {
             RL_DRIVE_FF = new SimpleMotorFeedforward(0.10265, 2.3955, 0.22997); //TODO: Tune
             RR_DRIVE_FF = new SimpleMotorFeedforward(0.13952, 2.4217, 0.137); //TODO: Tune
 
-            AUTO_P_FORWARD = 2.5; //TODO: Tune
+            AUTO_P_FORWARD = 1.75; //TODO: Tune
             AUTO_P_ROTATION = 2.5; //TODO: Tune
 
             PATHPLANNER_MOTOR_TYPE = DCMotor.getKrakenX60(1);

@@ -59,6 +59,7 @@ public class RobotContainer {
         names.add("CC-autonshoot-center");
         names.add("OC-autonshoot-center");
         names.add("CollectFirst");
+        names.add("New Auto");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
 
