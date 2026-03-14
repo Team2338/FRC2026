@@ -9,10 +9,21 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.units.measure.MutAngle;
+import edu.wpi.first.units.measure.MutAngularVelocity;
+import edu.wpi.first.units.measure.MutVoltage;
+import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
+
+import static edu.wpi.first.units.Units.Rotations;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
+import static edu.wpi.first.units.Units.Volts;
 
 public class CollectMotor extends SubsystemBase {
 
@@ -75,13 +86,54 @@ public class CollectMotor extends SubsystemBase {
 
     public void setConfig() {
         config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
-        config.Slot0.kP = 0.35;
+        config.Slot0.kP = 0;
         config.Slot0.kI = 0;
         config.Slot0.kD = 0;
+        config.Slot0.kS = 0.12695;
+        config.Slot0.kV = 0.11474;
+        config.Slot0.kA = 0.0058193;
 
         config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         collectorMotor.getConfigurator().apply(config);
+    }
+
+    private void runVoltage(double voltage) {
+        collectorMotor.setVoltage(voltage);
+    }
+
+    private double getVoltage() {
+        return collectorMotor.getMotorVoltage().getValueAsDouble();
+    }
+
+    private void sysIDVoltage(Voltage volt) {
+        runVoltage(volt.baseUnitMagnitude());
+    }
+
+    private void sysIDLog(SysIdRoutineLog log) {
+        MutVoltage voltMut = Volts.mutable(0);
+        MutAngle posMut = Rotations.mutable(0);
+        MutAngularVelocity vMut= RotationsPerSecond.mutable(0);
+
+        log.motor("Shooter")
+                .voltage(voltMut.mut_replace(getVoltage(), Volts))
+                .angularVelocity(vMut.mut_replace(collectorMotor.getVelocity().getValueAsDouble(), RotationsPerSecond))
+                .angularPosition(posMut.mut_replace(collectorMotor.getPosition().getValueAsDouble(), Rotations));
+    }
+
+    public SysIdRoutine getSysID() {
+        return new SysIdRoutine(
+                new SysIdRoutine.Config(),
+                new SysIdRoutine.Mechanism(this::sysIDVoltage, this::sysIDLog, this)
+        );
+    }
+
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+        return getSysID().quasistatic(direction);
+    }
+
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+        return getSysID().dynamic(direction);
     }
 }
