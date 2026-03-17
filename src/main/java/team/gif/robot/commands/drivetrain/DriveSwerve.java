@@ -1,6 +1,7 @@
 package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -24,7 +25,7 @@ public class DriveSwerve extends Command {
     public void execute() {
         if (!Robot.isCompetition && Robot.diagnostics.anyMotorTempHot()) {
             Robot.swerveDrive.stopDrive();
-            System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
+            System.out.println(Timer.getFPGATimestamp() + " Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
             return;
         }
 
