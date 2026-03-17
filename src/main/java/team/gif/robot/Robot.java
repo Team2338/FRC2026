@@ -151,7 +151,7 @@ public class Robot extends TimedRobot {
 
         if (!isCompetition && diagnostics.anyMotorTempHot()) {
             autonomousCommand.cancel();
-            System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
+            System.out.println(Timer.getFPGATimestamp() + " Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
         }
         shiftTime = DriverStation.getMatchTime();
     }

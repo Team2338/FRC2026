@@ -112,11 +112,11 @@ public class OI {
         dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
         dLTrigger.whileTrue(new ShooterRPM(4000)); // Long shot to use  if cameras break // TODO change value later
-        dRTrigger.whileTrue(new ShooterRPM(3000)); // Short shot to use if cameras break // TODO change value later
+//        dRTrigger.whileTrue(new ShooterRPM(3000)); // Short shot to use if cameras break // TODO change value later
 
         dA.whileTrue(new HubAutoAlign());
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
-        dX.whileTrue(new ShooterAuto().alongWith(new HubAutoAlign()));
+        dRTrigger.whileTrue(new ShooterAuto().alongWith(new HubAutoAlign()).alongWith(new CollectorPercent(0.9)).alongWith(new AgitatorPercent()));
         dY.whileTrue(new ShooterRPM(4500)); //High RPM to pass/shuttle fuel from neutral zone to alliance
 //        dY.onTrue(new AutonShoot());
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
