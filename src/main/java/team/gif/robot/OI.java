@@ -115,7 +115,7 @@ public class OI {
 
         dA.whileTrue(new HubAutoAlign());
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
-        dX.whileTrue(new ShooterAuto());
+        dX.whileTrue(new ShooterAuto().alongWith(new HubAutoAlign()));
         dY.whileTrue(new ShooterRPM(4500)); //High RPM to pass/shuttle fuel from neutral zone to alliance
 //        dY.onTrue(new AutonShoot());
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
