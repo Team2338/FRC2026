@@ -1,11 +1,13 @@
 package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.drivetrain.HubAutoAlign;
 import team.gif.robot.subsystems.ShotCalculator;
 
 public class ShooterAuto extends Command {
+    private boolean readyToIndex;
+    private Command indexCommand = new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5));
     /**
      * Runs shooter at RPM based distance to hub
      */
@@ -19,7 +21,7 @@ public class ShooterAuto extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-
+        readyToIndex = false;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -28,8 +30,12 @@ public class ShooterAuto extends Command {
 
         Robot.shooter.runShooter(ShotCalculator.getShotRPM());
 
-        if (Robot.shooter.isShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 5)) {
-            new IndexerPercent(0.8, 0.5);
+        if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 5)) {
+            readyToIndex = true;
+        }
+
+        if (readyToIndex) {
+            CommandScheduler.getInstance().schedule(indexCommand);
         }
     }
 
@@ -43,5 +49,6 @@ public class ShooterAuto extends Command {
     @Override
     public void end(boolean interrupted) {
         Robot.shooter.stopMotors();
+        indexCommand.cancel();
     }
 }

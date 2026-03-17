@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
 import edu.wpi.first.units.measure.MutVoltage;
@@ -32,6 +33,9 @@ public class Shooter extends SubsystemBase {
     public VelocityVoltage velocityVoltage;
     public double RPMSetpointLower;
     public double RPMSetpointHigher;
+    private Debouncer shooterReadyDebouncer = new Debouncer(0.25);
+    private boolean shooterReady = false;
+
 
     /** Creates a new ExampleSubsystem. */
     public Shooter() {
@@ -44,32 +48,21 @@ public class Shooter extends SubsystemBase {
        velocityVoltage = new VelocityVoltage(0).withSlot(0);
     }
 
-    /*
+
     @Override
     public void periodic() {
 
-        double netP = SmartDashboard.getNumber("COLLECTOR/PID/P", 0);
-        double netI = SmartDashboard.getNumber("COLLECTOR/PID/I", 0);
-        double netD = SmartDashboard.getNumber("COLLECTOR/PID/D", 0);
+        RPMSetpointLower = ShotCalculator.getShotRPM() - 100;
+        RPMSetpointHigher = ShotCalculator.getShotRPM() + 100;
 
-        double currP = config.Slot0.kP;
-        double currI = config.Slot0.kI;
-        double currD = config.Slot0.kD;
+        boolean isShooterReadyInstant =  (RPMSetpointLower <= getLeftMotorSpeed() && getLeftMotorSpeed() <= RPMSetpointHigher)
+                && (RPMSetpointLower <= getMiddleMotorSpeed() && getMiddleMotorSpeed() <= RPMSetpointHigher)
+                && (RPMSetpointLower <= getRightMotorSpeed() && getRightMotorSpeed() <= RPMSetpointHigher);
 
-
-        if(netP != currP || netI != currI || netD != currD) {
-            config.Slot0.kP = netP;
-            config.Slot0.kI = netI;
-            config.Slot0.kD = netD;
-            config.Slot0.kS = 0.12278;
-            config.Slot0.kV = 0.11522;
-            config.Slot0.kA = 0.0078728;
-            setConfig(config);
-            velocityVoltage = new VelocityVoltage(0).withSlot(0);
-        }
+        shooterReady = shooterReadyDebouncer.calculate(isShooterReadyInstant);
 
     }
-    */
+
 
     public void runLeftShooterPercent(double percent) {
         shooterLeftMotor.set(percent);
@@ -85,13 +78,8 @@ public class Shooter extends SubsystemBase {
         shooterRightMotor.setControl(velocityVoltage.withVelocity(rpm/60));
     }
 
-    public boolean isShooterReady() {
-        RPMSetpointLower = ShotCalculator.getShotRPM() - 100;
-        RPMSetpointHigher = ShotCalculator.getShotRPM() + 100;
-
-        return (RPMSetpointLower <= getLeftMotorSpeed() && getLeftMotorSpeed() <= RPMSetpointHigher)
-                && (RPMSetpointLower <= getMiddleMotorSpeed() && getMiddleMotorSpeed() <= RPMSetpointHigher)
-                && (RPMSetpointLower <= getRightMotorSpeed() && getRightMotorSpeed() <= RPMSetpointHigher);
+    public boolean getShooterReady() {
+        return shooterReady;
     }
 
     public double getLeftMotorSpeed() {
