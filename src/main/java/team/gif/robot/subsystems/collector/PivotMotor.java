@@ -1,7 +1,9 @@
 package team.gif.robot.subsystems.collector;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
@@ -12,9 +14,11 @@ import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
 public class PivotMotor extends SubsystemBase {
 
     private final TalonFX pivotMotor;
+    private final CANcoder pivotEncoder;
 
     public PivotMotor(){
         pivotMotor = new TalonFX(RobotMap.Collector.PIVOT_MOTOR_ID);
+        pivotEncoder = new CANcoder(RobotMap.Collector.PIVOT_ENCODER_ID);
 
         setConfig();
     }
@@ -43,6 +47,10 @@ public class PivotMotor extends SubsystemBase {
         pivotMotor.setPosition(Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS);
     }
 
+    public double getAbsEncoderPos(){
+       return pivotEncoder.getAbsolutePosition().getValueAsDouble();
+    }
+
     public boolean atSetPoint(double desiredSetpoint) {
         return Math.abs(getPosition() - desiredSetpoint) <= Constants.Collector.PIVOT_POSITION_TOLERANCE;
     }
@@ -53,6 +61,8 @@ public class PivotMotor extends SubsystemBase {
         config.MotorOutput.Inverted = CounterClockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
+        config.Feedback.FeedbackRemoteSensorID = RobotMap.Collector.PIVOT_ENCODER_ID;
+        config.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RemoteCANcoder;
         config.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         config.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
         config.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;

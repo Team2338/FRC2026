@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class CollectorAutoPivotDown extends Command {
+public class CollectorAutoPivotHold extends Command {
 
 
-    public CollectorAutoPivotDown() {
+    public CollectorAutoPivotHold() {
         super();
         addRequirements(Robot.pivotMotor);
     }
@@ -21,18 +21,19 @@ public class CollectorAutoPivotDown extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.pivotMotor.runPivotPercent(1.0);
+        Robot.pivotMotor.runPivotPercent(0.03);
+
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.90;
+        return false;
     }
 
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.pivotMotor.setDefaultCommand(new CollectorAutoPivotHold());
+        Robot.pivotMotor.runPivotPercent(0);
     }
 }

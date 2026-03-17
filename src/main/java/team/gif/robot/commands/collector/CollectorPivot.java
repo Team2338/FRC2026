@@ -24,6 +24,9 @@ public class CollectorPivot extends Command {
         percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0;
         percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER;
         percent =  Math.min(percent, 0.2);
+        if ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.8) && percent >= 0){
+            percent = Math.max(percent, 0.03);
+        }
         Robot.pivotMotor.runPivotPercent(percent);
     }
 
