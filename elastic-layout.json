@@ -122,8 +122,8 @@
           },
           {
             "title": "Reference",
-            "x": 256.0,
-            "y": 128.0,
+            "x": 384.0,
+            "y": 384.0,
             "width": 128.0,
             "height": 128.0,
             "type": "Text Display",
@@ -136,8 +136,8 @@
           },
           {
             "title": "Collect P",
-            "x": 256.0,
-            "y": 256.0,
+            "x": 512.0,
+            "y": 384.0,
             "width": 128.0,
             "height": 128.0,
             "type": "Text Display",
@@ -150,8 +150,8 @@
           },
           {
             "title": "Collect I",
-            "x": 384.0,
-            "y": 256.0,
+            "x": 640.0,
+            "y": 384.0,
             "width": 128.0,
             "height": 128.0,
             "type": "Text Display",
@@ -164,8 +164,8 @@
           },
           {
             "title": "Collect D",
-            "x": 512.0,
-            "y": 256.0,
+            "x": 768.0,
+            "y": 384.0,
             "width": 128.0,
             "height": 128.0,
             "type": "Text Display",
@@ -178,8 +178,8 @@
           },
           {
             "title": "Collect AbsPos",
-            "x": 512.0,
-            "y": 128.0,
+            "x": 640.0,
+            "y": 0.0,
             "width": 128.0,
             "height": 128.0,
             "type": "Text Display",
@@ -188,6 +188,32 @@
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
+            }
+          },
+          {
+            "title": "Shift",
+            "x": 512.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Large Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/Shift",
+              "period": 0.06,
+              "data_type": "string"
+            }
+          },
+          {
+            "title": "ShiftTime",
+            "x": 256.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Large Text Display",
+            "properties": {
+              "topic": "/SmartDashboard/ShiftTime",
+              "period": 0.06,
+              "data_type": "string"
             }
           }
         ]

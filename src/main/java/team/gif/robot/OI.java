@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
-import team.gif.robot.commands.autos.AutonCollectDown;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;

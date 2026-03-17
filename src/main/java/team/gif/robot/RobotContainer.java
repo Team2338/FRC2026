@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import team.gif.robot.commands.agitator.AgitatorAutonPercent;
 import team.gif.robot.commands.collector.CollectorPercent;
-import team.gif.robot.commands.collector.collectorautos.CollectorAutoPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonCollectDown;
 import team.gif.robot.commands.autos.AutonShoot;

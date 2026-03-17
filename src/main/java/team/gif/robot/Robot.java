@@ -4,14 +4,11 @@
 
 package team.gif.robot;
 
-import com.ctre.phoenix6.SignalLogger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
@@ -25,6 +22,7 @@ import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConfiguration;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXDriveMotor;
 import team.gif.robot.subsystems.drivers.swerve.TalonFXTurnMotor;
 import team.gif.robot.subsystems.drivers.swerve.CANCoderEncoder;
+
 import static team.gif.robot.Constants.MatchTimes;
 
 /**
@@ -61,6 +59,10 @@ public class Robot extends TimedRobot {
     public static final boolean enableSwerveDebug = true;
     public static final boolean fullDashboard = true;
 
+    public static String matchShift = "N/A";
+    public static double shiftTime = 0;
+    public static  boolean winAutoShiftTwoShiftFour;
+
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -91,6 +93,8 @@ public class Robot extends TimedRobot {
         diagnostics = new Diagnostics();
         ui = new UI();
         pigeon.addToShuffleboard("Heading");
+
+        winAutoShiftTwoShiftFour = false;
 //        SignalLogger.start();
     }
 
@@ -116,6 +120,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledInit() {
 //        commandScheduler.schedule(new WaitCommand(8).andThen(new InstantCommand(() -> SignalLogger.stop())));
+        oi.setRumble(false);
     }
 
     @Override
@@ -132,6 +137,8 @@ public class Robot extends TimedRobot {
             delayTimer.reset();
             delayTimer.start();
         }
+
+        matchShift = "Go Rock!";
     }
 
     /** This function is called periodically during autonomous. */
@@ -146,6 +153,7 @@ public class Robot extends TimedRobot {
             autonomousCommand.cancel();
             System.out.println("Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
         }
+        shiftTime = DriverStation.getMatchTime();
     }
 
     @Override
@@ -158,12 +166,15 @@ public class Robot extends TimedRobot {
             autonomousCommand.cancel();
         }
         pivotMotor.setDefaultCommand(new CollectorPivot());
+        winAutoShiftTwoShiftFour = false;
     }
 
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
         double matchTime = DriverStation.getMatchTime();
+
+        updateMatchInfo(matchTime);
 
         //Set the controllers to rumble throughout different period of the match.
         oi.setRumble(
@@ -224,5 +235,63 @@ public class Robot extends TimedRobot {
     public boolean isBetweenTime(double matchTime, double startTime, double duration) {
         double endTime = startTime - duration;
         return startTime > matchTime && matchTime > endTime;
+    }
+
+    /**
+     * Updates the game data for match shift, remaining shift time, determines if
+     * alliance should be collecting/passing or scoring
+     * @param matchTime current match time from driver station
+     */
+    private void updateMatchInfo(double matchTime) {
+        String gameData = DriverStation.getGameSpecificMessage();
+
+        // if gamedata matches alliance color then we won auto and score in shifts 2 and 4
+        // need to make sure the data is there or it will crash
+        if (gameData != null && !gameData.isEmpty() && DriverStation.getAlliance().isPresent()) {
+            if (gameData.charAt(0) == (DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? 'R' : 'B')) {
+                winAutoShiftTwoShiftFour = true;
+            }
+        }
+
+        // calculate which shift is active, shoot or passing, and remaining time in current shift
+        if (matchTime > MatchTimes.END_OF_TRANSITION_PERIOD) {
+            matchShift = winAutoShiftTwoShiftFour ? "Trans->Pass" : "Trans->Shoot";
+            shiftTime = matchTime - MatchTimes.END_OF_TRANSITION_PERIOD;
+        } else if (matchTime < MatchTimes.END_OF_FOURTH_SHIFT) {
+            matchShift = "End Game";
+            shiftTime = matchTime;
+        } else {
+            matchShift = "N/A";
+            if (matchTime > MatchTimes.END_OF_FIRST_SHIFT) {
+                if (!winAutoShiftTwoShiftFour) {
+                    matchShift = "1 Shoot";
+                } else {
+                    matchShift = "1 Pass";
+                }
+            } else if (matchTime > MatchTimes.END_OF_SECOND_SHIFT) {
+                if (winAutoShiftTwoShiftFour) {
+                    matchShift = "2 Shoot";
+                } else {
+                    matchShift = "2 Pass";
+                }
+            } else if (matchTime > MatchTimes.END_OF_THIRD_SHIFT) {
+                if (!winAutoShiftTwoShiftFour) {
+                    matchShift = "3 Shoot";
+                } else {
+                    matchShift = "3 Pass";
+                }
+            } else if (matchTime > MatchTimes.END_OF_FOURTH_SHIFT) {
+                if (winAutoShiftTwoShiftFour) {
+                    matchShift = "4 Shoot";
+                } else {
+                    matchShift = "4 Pass";
+                }
+            }
+
+            shiftTime = (matchTime>MatchTimes.END_OF_FIRST_SHIFT) ? (matchTime - MatchTimes.END_OF_FIRST_SHIFT) :
+                        (matchTime>MatchTimes.END_OF_SECOND_SHIFT) ? (matchTime - MatchTimes.END_OF_SECOND_SHIFT) :
+                        (matchTime>MatchTimes.END_OF_THIRD_SHIFT) ? (matchTime - MatchTimes.END_OF_THIRD_SHIFT) :
+                        matchTime - MatchTimes.END_OF_FOURTH_SHIFT;
+        }
     }
 }
