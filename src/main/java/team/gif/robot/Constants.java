@@ -153,8 +153,8 @@ public final class Constants {
         public static final double COLLECTOR_FAST_PERCENT = 0.9;
 
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
-        public static final double PIVOT_DEPLOYED_ENCODER_POS = 45.0;
-        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 5.0;
+        public static final double PIVOT_DEPLOYED_ENCODER_POS = 0.65;
+        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 0.05;
 
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
 

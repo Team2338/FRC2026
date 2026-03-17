@@ -90,6 +90,7 @@ public abstract class RobotMap {
     public static final class Collector {
         public static final int COLLECT_MOTOR_ID = 40;
         public static final int PIVOT_MOTOR_ID = 41;
+        public static final int PIVOT_ENCODER_ID = 42;
     }
 
     public static final class Agitator {

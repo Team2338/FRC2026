@@ -80,7 +80,6 @@ public class Robot extends TimedRobot {
 //        swerveDrive.addPhotonCamera("photonvision-side", Constants.Vision.SIDE_CAMERA_POSITION);
         robotContainer = new RobotContainer();
 
-        pivotMotor.setDefaultCommand(new CollectorPivot());
         swerveDrive.setDefaultCommand(new DriveSwerve());
         //These should be at or near the bottom
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
@@ -152,6 +151,7 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+        pivotMotor.setDefaultCommand(new CollectorPivot());
     }
 
     /** This function is called periodically during operator control. */

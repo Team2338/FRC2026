@@ -7,8 +7,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
+import team.gif.robot.commands.autos.AutonCollectDown;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
 import team.gif.robot.commands.shooter.ShooterAuto;
@@ -126,6 +128,8 @@ public class OI {
 
         aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent())); //Slow Collect
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Fast Collect
+
+        aB.onTrue(new CollectorAutoPivotDown());
 
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
     }
