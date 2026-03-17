@@ -4,11 +4,14 @@
 
 package team.gif.robot;
 
+import com.ctre.phoenix6.SignalLogger;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
@@ -88,6 +91,7 @@ public class Robot extends TimedRobot {
         diagnostics = new Diagnostics();
         ui = new UI();
         pigeon.addToShuffleboard("Heading");
+//        SignalLogger.start();
     }
 
     /**
@@ -110,7 +114,9 @@ public class Robot extends TimedRobot {
 
     /** This function is called once each time the robot enters Disabled mode. */
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+//        commandScheduler.schedule(new WaitCommand(8).andThen(new InstantCommand(() -> SignalLogger.stop())));
+    }
 
     @Override
     public void disabledPeriodic() {}

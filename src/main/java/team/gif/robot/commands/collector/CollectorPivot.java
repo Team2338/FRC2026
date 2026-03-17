@@ -20,13 +20,16 @@ public class CollectorPivot extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        percent = -Robot.oi.aux.getLeftY();
-        percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0;
-        percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER;
-        percent =  Math.min(percent, 0.2);
-        if ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.8) && percent >= 0){
-            percent = Math.max(percent, 0.03);
-        }
+        percent = -Robot.oi.aux.getLeftY(); // get joystick position (Left stick forward is negative)
+        percent = (Math.abs(percent) > Constants.Joystick.DEADBAND) ? percent : 0.0; // ignore deadband
+        percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER; // 100% is too fast so slow it down
+
+        // positive value is down
+        percent =  Math.min(percent, 0.3); // use a max value of 20% when gown down/out
+//        if ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.8) && percent >= 0){
+//        if ( Robot.shooter.getLeftMotorSpeed() < 500 & percent != 0) {
+//            percent = Math.max(percent, 0.03);
+//        }
         Robot.pivotMotor.runPivotPercent(percent);
     }
 
