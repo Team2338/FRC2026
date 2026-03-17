@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.collector.CollectorPercent;
+import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
 import team.gif.robot.commands.shooter.ShooterAuto;
@@ -117,7 +119,9 @@ public class OI {
         dA.whileTrue(new HubAutoAlign());
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
         dRTrigger.whileTrue(new ShooterAuto().alongWith(new HubAutoAlign()).alongWith(new CollectorPercent(0.9)).alongWith(new AgitatorPercent()));
-        dY.whileTrue(new ShooterRPM(4500)); //High RPM to pass/shuttle fuel from neutral zone to alliance
+      //  dY.whileTrue(new ShooterRPM(4500)); //High RPM to pass/shuttle fuel from neutral zone to alliance
+        dX.onTrue(new CollectorAutonPivotDown());
+        dStart.and(dY).onTrue(new InstantCommand(() ->Robot.pivotMotor.setDefaultCommand(new CollectorPivot())));
 //        dY.onTrue(new AutonShoot());
         //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
         //dBack.and(dX).onTrue(Robot.auto);

@@ -107,7 +107,7 @@ public final class Constants {
             RL_DRIVE_FF = new SimpleMotorFeedforward(0.10265, 2.3955, 0.22997);
             RR_DRIVE_FF = new SimpleMotorFeedforward(0.13952, 2.4217, 0.137);
 
-            AUTO_P_FORWARD = 2.5;
+            AUTO_P_FORWARD = 1.75;
             AUTO_P_ROTATION = 2.5;
 
             PATHPLANNER_MOTOR_TYPE = DCMotor.getKrakenX60(1);
@@ -166,7 +166,8 @@ public final class Constants {
 
     public static final class Shooter {
         public static final double SHOOTER_AUTO_SECONDS = 2.5; //Change value
-        public static final double SHOOTER_INITIAL_AUTON_RPM = 3450; //Tune
+        public static final double SHOOTER_AUTON_FAR_RPM = 3450; //Tune
+        public static final double SHOOTER_AUTON_NEAR_RPM = 3000;
     }
 
     public static final class Indexer {

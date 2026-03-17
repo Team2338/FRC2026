@@ -13,7 +13,7 @@ public class AutonInitialShoot extends ParallelDeadlineGroup {
      * with the collector up
      */
     public AutonInitialShoot() {
-        super(new AutonShooterRPM().withTimeout(Constants.Shooter.SHOOTER_AUTO_SECONDS));
+        super(new AutonShooterRPM(Constants.Shooter.SHOOTER_AUTON_FAR_RPM).withTimeout(Constants.Shooter.SHOOTER_AUTO_SECONDS));
         addCommands(
                 new CollectorAutoPivotDown().withTimeout(1.5).andThen(new CollectorAutoPivotDown()),
                 new WaitCommand(1.5).andThen(new IndexerAuton(false))

@@ -10,15 +10,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import team.gif.robot.commands.agitator.AgitatorAutonPercent;
+import team.gif.robot.commands.autos.AutonShootNear;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonCollectDown;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.autos.AutonInitialShoot;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -40,7 +43,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("Hold Collector Down", new CollectorAutoPivotDown());
         NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot());
         NamedCommands.registerCommand("OC-autonshoot", new AutonShoot());
-        NamedCommands.registerCommand("AutonCollectorDown", new AutonCollectDown());
+        NamedCommands.registerCommand("OC-autonshoot-near", new AutonShootNear());
+        NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
 
         // Configure the trigger bindings
         configureBindings();
