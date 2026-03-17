@@ -1,5 +1,6 @@
 package team.gif.robot.commands.collector;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -25,11 +26,12 @@ public class CollectorPivot extends Command {
         percent *= Constants.Collector.PIVOT_PERCENT_MULTIPLIER; // 100% is too fast so slow it down
 
         // positive value is down
-        percent =  Math.min(percent, 0.3); // use a max value of 20% when gown down/out
-//        if ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.8) && percent >= 0){
-//        if ( Robot.shooter.getLeftMotorSpeed() < 500 & percent != 0) {
-//            percent = Math.max(percent, 0.03);
-//        }
+        percent =  Math.min(percent, 0.3); // use a max value when going down/out
+        if ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.85) && percent >= 0){
+            // apply small motor power to keep collector against the hard stop
+            percent = Math.max(percent, 0.02);
+            System.out.println(Timer.getFPGATimestamp() + " holding");
+        }
         Robot.pivotMotor.runPivotPercent(percent);
     }
 

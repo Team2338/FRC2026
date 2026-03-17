@@ -23,6 +23,10 @@ public class PivotMotor extends SubsystemBase {
         setConfig();
     }
 
+    /**
+     * Positive values deploy the collector
+     * @param percent percent of power to run pivot motor
+     */
     public void runPivotPercent(double percent) {
         pivotMotor.set(percent);
     }

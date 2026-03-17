@@ -9,6 +9,8 @@ import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
+import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
@@ -128,7 +130,9 @@ public class OI {
         aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent())); //Slow Collect
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Fast Collect
 
-        aB.onTrue(new CollectorAutoPivotDown());
+        aX.onTrue(new CollectorAutoPivotDown());
+        aA.onTrue(new CollectorAgitateOnce());
+        aB.onTrue(new CollectorAutoAgitate());
 
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
     }

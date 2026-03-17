@@ -15,7 +15,7 @@ public class AutonShoot extends ParallelDeadlineGroup {
     public AutonShoot() {
         super(new AutonShooterRPM().withTimeout(6.0));
         addCommands(
-                new CollectorAutoAgitate(),
+                new WaitCommand(2.0).andThen(new CollectorAutoAgitate()),
                 new WaitCommand(1.5).andThen(new IndexerAuton(true)),
                 new CollectorAutoPercent(Constants.Collector.COLLECTOR_FAST_PERCENT)
         );
