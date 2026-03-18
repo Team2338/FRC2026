@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorPercent;
-import team.gif.robot.commands.collector.CollectorRPM;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.shooter.shooterautos.AutonShooterRPM;
 import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
