@@ -381,6 +381,22 @@ public abstract class SwerveConstants {
      * or it will get overridden.
      */
     public PPHolonomicDriveController AUTO_DRIVE_CONTROLLER;
+
+    /**
+     * The maximum acceleration the robot can experience before odometry is invalidated.
+     *
+     * Unit: g
+     * Default: 1g
+     */
+    public double COLLISION_THRESHOLD = 1;
+
+    /**
+     * The maximum difference in transitive wheel speed allowed before odometry is invalidated.
+     * <br /> <br />
+     * Unit: meters per second <br />
+     * Default: 0.8 m/s
+     */
+    public double SKID_THRESHOLD = 0.8;
     //endregion
 
     public SwerveConstants() {
