@@ -446,12 +446,20 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
 
     /**
-     * Get the current pose of the robot
-     *
+     * Get the current pose of the robot with 0deg always facing the red alliance wall
      * @return The current pose of the robot (Pose2D)
      */
     public Pose2d getPose() {
         return poseEstimator.getEstimatedPosition();
+    }
+
+    /**
+     * Get the current pose of the robot with the opposing alliance wall being 0deg
+     * @return The current pose of the robot
+     */
+    public Pose2d getPoseAllianceRelative() {
+        Pose2d pose = getPose();
+        return new Pose2d(pose.getTranslation(), pose.getRotation().rotateBy(oneEighty));
     }
 
     /**
@@ -617,7 +625,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         }
 
         AutoBuilder.configure(
-                this::getPose,
+                this::getPoseAllianceRelative,
                 this::resetOdometry,
                 this::getRobotRelativeSpeed,
                 this::setModuleChassisSpeeds,
