@@ -225,6 +225,10 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {}
 
+    public static Command getAutonomousCommand() {
+        return autonomousCommand;
+    }
+
     /**
      * Checks if the current match time is in the specified interval.
      * @param matchTime Time for the interval to be analyzed against
