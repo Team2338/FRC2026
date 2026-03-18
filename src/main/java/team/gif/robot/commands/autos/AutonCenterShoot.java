@@ -17,9 +17,7 @@ public class AutonCenterShoot extends ParallelDeadlineGroup {
      */
     public AutonCenterShoot() {
         super(new WaitCommand(4.0));
-//        super(new AutonShooterRPM(Constants.Shooter.SHOOTER_AUTON_FAR_RPM).withTimeout(5));
         addCommands(
-//                new WaitCommand(1.5).andThen(new IndexerAuton(false)),
                 new AutonShooterRPM(Constants.Shooter.SHOOTER_AUTON_CENTER_RPM),
                 new WaitCommand(0.5).andThen(new CollectorAutoPivotDown(0.5).alongWith(new CollectorPercent(0.9).withTimeout(0.5)).andThen(new IndexerAuton(false))), // run collectorPercent in case fuel got lodged in collector
                 new InstantCommand(() -> Robot.swerveDrive.stopModules())

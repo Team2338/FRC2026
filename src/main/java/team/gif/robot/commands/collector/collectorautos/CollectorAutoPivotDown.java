@@ -8,8 +8,7 @@ public class CollectorAutoPivotDown extends Command {
     private double downPosPerc = 0.95;
 
     /**
-     * Moves the collector down/out to given % of deployed position
-     *
+     * Moves the collector down/out to default % of deployed position <br>
      * Does not stop the collector. Lets the default command pull
      * the collector down the rest of the way.
      */

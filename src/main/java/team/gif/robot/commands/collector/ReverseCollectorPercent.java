@@ -8,9 +8,9 @@ public class ReverseCollectorPercent extends Command {
     double percent = 0;
 
     /**
-     * Runs the collector in reverse based on value
+     * Runs the collector in reverse at provided percentage, never ends
      *
-     * @param perc percentage to run collector. Value is absolute (e.g. 25 runs collector backwards at 25 percent)
+     * @param perc percentage to run collector. Value is 0 to 1. Positive value ejects fuel.
      */
     public ReverseCollectorPercent(double perc) {
         super();
