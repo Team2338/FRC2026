@@ -7,12 +7,22 @@ import team.gif.robot.Robot;
 public class AgitatorPercent extends Command {
     private double agitatorSpeed;
 
+    /**
+     * Runs the agitator to pull fuel in at a default percentage, never ends
+     */
     public AgitatorPercent() {
         super();
         addRequirements(Robot.agitator);
         agitatorSpeed = Constants.Collector.AGITATOR_MOTOR_PERCENT;
     }
 
+    /**
+     * Runs tha agitator at a provided percentage. <br>
+     * Positive value rotates into Indexer, negative value rotates away from Indexer. <br>
+     * Never ends
+     *
+     * @param percent percent of power to run the agitator
+     */
     public AgitatorPercent(double percent) {
         super();
         addRequirements(Robot.agitator);

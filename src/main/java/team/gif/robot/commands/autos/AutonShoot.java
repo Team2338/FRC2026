@@ -10,7 +10,9 @@ import team.gif.robot.commands.shooter.ShooterAuto;
 
 public class AutonShoot extends ParallelCommandGroup {
     /**
-     * This is the entire sequence to shoot in autos
+     * This is the entire sequence to shoot, includes option to also agitate the collector
+     *
+     * @param agitate True if sequence should also agitate, false if agitation is done by aux controller
      */
     public AutonShoot(boolean agitate) {
         if (agitate) {
@@ -19,7 +21,7 @@ public class AutonShoot extends ParallelCommandGroup {
                     new HubAutoAlign(),
                     new CollectorPercent(0.9),
                     new AgitatorPercent(),
-                    new WaitCommand(0.75).andThen(new CollectorAutoAgitate())
+                    new WaitCommand(0.85).andThen(new CollectorAutoAgitate())
             );
         } else {
             addCommands(

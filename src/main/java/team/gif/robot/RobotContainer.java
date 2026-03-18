@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -19,7 +18,6 @@ import team.gif.robot.commands.autos.AutonCenterShoot;
 import team.gif.robot.commands.autos.AutonShootNear;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
-import team.gif.robot.commands.autos.AutonCollectDown;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.autos.AutonInitialShoot;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
@@ -42,6 +40,7 @@ public class RobotContainer {
     public RobotContainer() {
         NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorAutonPercent()));
         NamedCommands.registerCommand("Hold Collector Down", new CollectorAutoPivotDown());
+        NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
         NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot());
         NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5));
         NamedCommands.registerCommand("OC-autonshoot-near", new AutonShootNear());

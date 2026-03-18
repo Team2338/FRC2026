@@ -9,17 +9,13 @@ import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
-import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
-import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
-import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.ShooterRPM;
-import team.gif.robot.commands.drivetrain.HubAutoAlign;
 
 public class OI {
     /*
@@ -106,6 +102,9 @@ public class OI {
          * Simple Test:
          *   aX.onTrue(new PrintCommand("aX"));
          */
+        /**
+         * Driver Controls
+         */
         dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
@@ -115,29 +114,30 @@ public class OI {
         dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
 
-        dRTrigger.whileTrue(new AutonShoot(false));
+        dRTrigger.whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index
 
         dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Long shot to use  if cameras break // TODO change value later
         dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Short shot to use if cameras break // TODO change value later
 
-        dA.whileTrue(new HubAutoAlign());
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
-        dX.onTrue(new CollectorAutonPivotDown());
         //dBack.and(dX).onTrue(Robot.auto);
 
+        /**
+         * Aux Controls
+         */
         aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         aStart.and(aDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent())); //Slow Collect
-        aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Fast Collect
+        aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
-        aA.onTrue(new CollectorAutoPivotDown());
-        aB.onTrue(new CollectorAgitateOnce());
-        aX.onTrue(new CollectorAutoAgitate());
+        aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Standard fuel eject from collector
+        aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
 
-        aRBump.whileTrue(new ReverseCollectorPercent(0.25));
+        aX.onTrue(new CollectorAutoPivotDown()); //Rotates collector out
+        aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)
+        aB.onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
     }
 
     public void setRumble(boolean doRumble){

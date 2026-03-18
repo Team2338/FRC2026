@@ -178,32 +178,32 @@ public class Robot extends TimedRobot {
 
         //Set the controllers to rumble throughout different period of the match.
         oi.setRumble(
-                isBetweenTime(matchTime, MatchTimes.END_OF_TRANSITION_PERIOD + 3.0, 3.0) || //Rumble for 3 seconds before the transition period ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_TRANSITION_PERIOD + 5.0, 5.0) || //Rumble for 3 seconds before the transition period ends
 
                 isBetweenTime(matchTime, MatchTimes.END_OF_FIRST_SHIFT +  10.0, 0.3) || //Double quick rumble 10 seconds before the first shift ends
                 isBetweenTime(matchTime, MatchTimes.END_OF_FIRST_SHIFT +   9.6, 0.3) ||
 
-                isBetweenTime(matchTime, MatchTimes.END_OF_FIRST_SHIFT +   3.0, 3.0) || //Rumble for 3 seconds before the first shift ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_FIRST_SHIFT +   5.0, 5.0) || //Rumble for 3 seconds before the first shift ends
 
                 isBetweenTime(matchTime, MatchTimes.END_OF_SECOND_SHIFT + 10.0, 0.3) || //Double quick rumble 10 seconds before the second shift ends
                 isBetweenTime(matchTime, MatchTimes.END_OF_SECOND_SHIFT +  9.6, 0.3) ||
 
-                isBetweenTime(matchTime, MatchTimes.END_OF_SECOND_SHIFT +  3.0, 3.0) || //Rumble for 3 seconds before the second shift ends.
+                isBetweenTime(matchTime, MatchTimes.END_OF_SECOND_SHIFT +  5.0, 5.0) || //Rumble for 3 seconds before the second shift ends.
 
                 isBetweenTime(matchTime, MatchTimes.END_OF_THIRD_SHIFT +  10.0, 0.3) || //Double quick rumble 10 seconds before the third shift ends
                 isBetweenTime(matchTime, MatchTimes.END_OF_THIRD_SHIFT +   9.6, 0.3) ||
 
-                isBetweenTime(matchTime, MatchTimes.END_OF_THIRD_SHIFT +   3.0, 3.0) || //Rumble for 3 seconds before the third shift ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_THIRD_SHIFT +   5.0, 5.0) || //Rumble for 3 seconds before the third shift ends
 
                 isBetweenTime(matchTime, MatchTimes.END_OF_FOURTH_SHIFT + 10.0, 0.3) || //Double quick rumble 10 seconds before the fourth shift ends
                 isBetweenTime(matchTime, MatchTimes.END_OF_FOURTH_SHIFT +  9.6, 0.3) ||
 
-                isBetweenTime(matchTime, MatchTimes.END_OF_FOURTH_SHIFT +  3.0, 3.0) || //Rumble for 3 seconds before the fourth shift ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_FOURTH_SHIFT +  5.0, 5.0) || //Rumble for 3 seconds before the fourth shift ends
 
                 isBetweenTime(matchTime, MatchTimes.END_OF_MATCH + 10.0, 0.3) || //Double quick rumble 10 seconds before the match ends
                 isBetweenTime(matchTime, MatchTimes.END_OF_MATCH +  9.6, 0.3) ||
 
-                isBetweenTime(matchTime, MatchTimes.END_OF_MATCH +  3.0, 2.5) //Rumble for 2 seconds 3 seconds before the match ends
+                isBetweenTime(matchTime, MatchTimes.END_OF_MATCH +  5.0, 4.0) //Rumble for 2 seconds 3 seconds before the match ends
         );
     }
 

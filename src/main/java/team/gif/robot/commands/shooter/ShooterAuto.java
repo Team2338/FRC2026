@@ -30,7 +30,7 @@ public class ShooterAuto extends Command {
 
         Robot.shooter.runShooter(ShotCalculator.getShotRPM());
 
-        if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 5)) {
+        if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 3)) {
             readyToIndex = true;
         }
 
