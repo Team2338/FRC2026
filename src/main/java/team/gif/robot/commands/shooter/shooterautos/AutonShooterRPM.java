@@ -8,15 +8,18 @@ public class AutonShooterRPM extends Command {
     /**
      * Runs shooter at the auton RPM value
      */
-    public AutonShooterRPM() {
+    private double speed;
+
+    public AutonShooterRPM(double speed) {
         super();
         addRequirements(Robot.shooter);
+        this.speed = speed;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.shooter.runShooter(Constants.Shooter.SHOOTER_INITIAL_AUTON_RPM);
+        Robot.shooter.runShooter(speed);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
