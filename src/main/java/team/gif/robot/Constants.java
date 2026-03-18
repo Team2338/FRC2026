@@ -155,7 +155,7 @@ public final class Constants {
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 0.05;
         public static final double PIVOT_LIMIT_AGITATE_POS         = 0.30;
-        public static final double PIVOT_LIMIT_AUTO_AGITATE_START_POS = 0.6;
+        public static final double PIVOT_LIMIT_AUTO_AGITATE_START_POS = 0.55;
         public static final double PIVOT_DEPLOYED_ENCODER_POS      = 0.6208;
 
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value

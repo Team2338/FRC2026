@@ -9,7 +9,6 @@ import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
-import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
@@ -17,7 +16,6 @@ import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
-import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.drivetrain.HubAutoAlign;
 
@@ -130,12 +128,14 @@ public class OI {
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent())); //Slow Collect
+//        aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent())); //Slow Collect
+        aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
+
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Fast Collect
 
-        aA.onTrue(new CollectorAutoPivotDown());
-        aB.onTrue(new CollectorAgitateOnce());
-        aX.onTrue(new CollectorAutoAgitate());
+        aX.onTrue(new CollectorAutoPivotDown());
+        aA.onTrue(new CollectorAgitateOnce());
+        aB.onTrue(new CollectorAutoAgitate());
 
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
     }
