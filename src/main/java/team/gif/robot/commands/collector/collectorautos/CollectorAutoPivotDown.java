@@ -1,14 +1,21 @@
 package team.gif.robot.commands.collector.collectorautos;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class CollectorAutoPivotDown extends Command {
+    private double downPos = 0.95;
 
     public CollectorAutoPivotDown() {
         super();
         addRequirements(Robot.pivotMotor);
+    }
+
+    public CollectorAutoPivotDown(double position) {
+        downPos = position;
+
     }
 
     // Called when the command is initially scheduled.
@@ -25,6 +32,7 @@ public class CollectorAutoPivotDown extends Command {
 
         // set a minimum value to move the pivot motor
         percent = Math.max(percent,0.2);
+        System.out.println(Timer.getFPGATimestamp() + " percent " + percent);
 
         Robot.pivotMotor.runPivotPercent(percent);
     }
@@ -33,7 +41,7 @@ public class CollectorAutoPivotDown extends Command {
     @Override
     public boolean isFinished() {
         // stop when the pivot is close to fully deployed (and then let the default command pull it down the rest of the way)
-        return Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.95;
+        return Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * downPos;
     }
 
     // Called when the command ends or is interrupted.

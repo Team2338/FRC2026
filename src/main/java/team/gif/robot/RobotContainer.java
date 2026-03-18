@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import team.gif.robot.commands.agitator.AgitatorAutonPercent;
+import team.gif.robot.commands.autos.AutonCenterShoot;
 import team.gif.robot.commands.autos.AutonShootNear;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
@@ -42,9 +43,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorAutonPercent()));
         NamedCommands.registerCommand("Hold Collector Down", new CollectorAutoPivotDown());
         NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot());
-        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot());
+        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5));
         NamedCommands.registerCommand("OC-autonshoot-near", new AutonShootNear());
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
+        NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
 
         // Configure the trigger bindings
         configureBindings();
@@ -60,10 +62,11 @@ public class RobotContainer {
         SendableChooser<Command> autoChooser = new SendableChooser<>();
 
         ArrayList<String> names = new ArrayList<>();
+        names.add("CollectFirst");
+        names.add("Center");
+        names.add("Test Auto");
         names.add("CC-autonshoot-center");
         names.add("OC-autonshoot-center");
-        names.add("CollectFirst");
-        names.add("Test Auto");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
 

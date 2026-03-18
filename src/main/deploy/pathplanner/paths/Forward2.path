@@ -21,14 +21,23 @@
       },
       "prevControl": {
         "x": 8.709914407988586,
-        "y": 8.220656205420829
+        "y": 8.22065620542083
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Auto1End"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.1845342706502684,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -135.0
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
@@ -76,7 +85,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -135.0
   },
   "reversed": false,
   "folder": null,
