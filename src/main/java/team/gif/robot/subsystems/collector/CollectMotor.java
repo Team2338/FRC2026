@@ -94,7 +94,7 @@ public class CollectMotor extends SubsystemBase {
         config.Slot0.kA = 0.0058193;
 
         config.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        config.MotorOutput.NeutralMode = NeutralModeValue.Coast; // We want brake, but CTRE suggested taking out of brake mode // TODO
 
         collectorMotor.getConfigurator().apply(config);
     }

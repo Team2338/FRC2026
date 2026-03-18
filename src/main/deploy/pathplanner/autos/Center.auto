@@ -15,6 +15,12 @@
           "data": {
             "name": "Center Shoot Sequence"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collector Down"
+          }
         }
       ]
     }

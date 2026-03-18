@@ -40,6 +40,7 @@ public class RobotContainer {
     public RobotContainer() {
         NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorAutonPercent()));
         NamedCommands.registerCommand("Hold Collector Down", new CollectorAutoPivotDown());
+        NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
         NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot());
         NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5));
         NamedCommands.registerCommand("OC-autonshoot-near", new AutonShootNear());

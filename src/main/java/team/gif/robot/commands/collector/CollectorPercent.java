@@ -13,9 +13,9 @@ public class CollectorPercent extends Command {
     }
 
     /**
-     * Brings the collector in or out
+     * Runs the collector at a provided percent, never ends
      *
-     * @param perc negative value brings the collector in, positive is out
+     * @param perc positive value collects fuel, negative value ejects fuel
      */
     public CollectorPercent(double perc) {
         super();
