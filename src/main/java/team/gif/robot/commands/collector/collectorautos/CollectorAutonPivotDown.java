@@ -1,5 +1,6 @@
 package team.gif.robot.commands.collector.collectorautos;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -17,7 +18,9 @@ public class CollectorAutonPivotDown extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        System.out.println(Timer.getFPGATimestamp() + "something");
+    }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override

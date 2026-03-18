@@ -16,7 +16,7 @@ public class ShootAutoSequence extends SequentialCommandGroup {
                new IndexerAutonReverse(Constants.Indexer.INDEXER_REVERSE_TELEOP_SECONDS),
                 new ParallelCommandGroup(
                         new IndexerAutoPercent(),
-                        new AutonShooterRPM()
+                        new AutonShooterRPM(Constants.Shooter.SHOOTER_AUTON_FAR_RPM)
                 )
         );
     }

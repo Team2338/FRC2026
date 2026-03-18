@@ -7,11 +7,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
+import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
+import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
 import team.gif.robot.commands.shooter.ShooterAuto;
@@ -111,15 +114,15 @@ public class OI {
         dLBump.whileTrue(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5))); //Main index button for shooting - back then forward
         dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
-        dLTrigger.whileTrue(new ShooterRPM(4000)); // Long shot to use  if cameras break // TODO change value later
-//        dRTrigger.whileTrue(new ShooterRPM(3000)); // Short shot to use if cameras break // TODO change value later
+
+        dRTrigger.whileTrue(new AutonShoot(false));
+
+        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Long shot to use  if cameras break // TODO change value later
+        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Short shot to use if cameras break // TODO change value later
 
         dA.whileTrue(new HubAutoAlign());
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
-        dRTrigger.whileTrue(new ShooterAuto().alongWith(new HubAutoAlign()).alongWith(new CollectorPercent(0.9)).alongWith(new AgitatorPercent()));
-        dY.whileTrue(new ShooterRPM(4500)); //High RPM to pass/shuttle fuel from neutral zone to alliance
-//        dY.onTrue(new AutonShoot());
-        //dLBump.onTrue(new WaitCommand(0.4).andThen(new CollectorAutoPivot().withTimeout(1.3)));
+        dX.onTrue(new CollectorAutonPivotDown());
         //dBack.and(dX).onTrue(Robot.auto);
 
         aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
@@ -130,9 +133,9 @@ public class OI {
         aLTrigger.whileTrue(new CollectorPercent(0.5).alongWith(new AgitatorPercent())); //Slow Collect
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Fast Collect
 
-        aX.onTrue(new CollectorAutoPivotDown());
-        aA.onTrue(new CollectorAgitateOnce());
-        aB.onTrue(new CollectorAutoAgitate());
+        aA.onTrue(new CollectorAutoPivotDown());
+        aB.onTrue(new CollectorAgitateOnce());
+        aX.onTrue(new CollectorAutoAgitate());
 
         aRBump.whileTrue(new ReverseCollectorPercent(0.25));
     }
