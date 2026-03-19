@@ -47,6 +47,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
         NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
 
+
         // Configure the trigger bindings
         configureBindings();
 
@@ -66,6 +67,7 @@ public class RobotContainer {
         names.add("Test Auto");
         names.add("CC-autonshoot-center");
         names.add("OC-autonshoot-center");
+        names.add("RightCollectFirst");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
 
