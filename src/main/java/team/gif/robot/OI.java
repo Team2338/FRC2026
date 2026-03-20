@@ -130,8 +130,7 @@ public class OI {
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        aRBump.whileTrue(new ReverseCollectorPercent(0.9)); //Runs collector (only) in reverse to eject jammed fuel
-        aLBump.whileTrue(new ReverseCollectorPercent(-0.9)); //Runs collector (only) in reverse to eject jammed fuel
+        aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Standard fuel eject from collector
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
