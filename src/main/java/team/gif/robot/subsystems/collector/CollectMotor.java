@@ -31,7 +31,6 @@ public class CollectMotor extends SubsystemBase {
     private final TalonFX collectorMotor;
     private TalonFXConfiguration config;
     public VelocityVoltage velocityVoltage;
-    public DutyCycleOut fullSpeedCommand;
 
     public CollectMotor() {
         collectorMotor = new TalonFX(RobotMap.Collector.COLLECT_MOTOR_ID);
