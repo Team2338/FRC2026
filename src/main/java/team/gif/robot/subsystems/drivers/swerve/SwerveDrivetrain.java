@@ -64,6 +64,7 @@ import static edu.wpi.first.units.Units.Volts;
 
 @SuppressWarnings("unused")
 public class SwerveDrivetrain extends SubsystemBase {
+    //region Setup
     //--------------------
     //-------Utility------
     //--------------------
@@ -139,6 +140,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     private static final StructPublisher<ChassisSpeeds> chassisSpeedsStructPublisher = NetworkTableInstance.getDefault()
             .getStructTopic("ChassisSpeeds", ChassisSpeeds.struct).publish();
 
+    //endregion
 
     /**
      * Constructs a SwerveDrivetrain with the specified configuration
@@ -163,7 +165,7 @@ public class SwerveDrivetrain extends SubsystemBase {
             rotation = rotation.rotateBy(oneEighty);
         }
 
-        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getPosition(), new Pose2d(0, 0, rotation));
+        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getSwerveModulePositions(), new Pose2d(0, 0, rotation));
 
         drivePace = team.gif.lib.drivePace.COAST_FR;
 
@@ -176,42 +178,21 @@ public class SwerveDrivetrain extends SubsystemBase {
      */
     @Override
     public void periodic() {
-
-
         //Have to do skid detection and collision first
         //so we don't update with bad data
+        checkSkidding();
+        checkCollision();
 
-        //Skid detection
-        //The skid detection works by first separating how much of each
-        //wheel speed contributes to translation vs rotation
-        //Then they are compared to find the difference between the maximum and the minimum
-        //If the difference is over the threshold the odometry is not updated with encoders
-        //and the odometry is invalidated
-        SwerveModuleState[] moduleStates = getSwerveModuleStates();
-        double[] translationVelocities = getModuleTranslations(targetState, moduleStates);
-        double min = 100 , max = 0;
-        for (double v : translationVelocities) {
-            min = Math.min(v, min);
-            max = Math.max(v, max);
+        isRedAlliance = checkRedAlliance();
+        Rotation2d rotation = Robot.pigeon.getRotation2d();
+        if(isRedAlliance) {
+            rotation = rotation.rotateBy(oneEighty);
         }
-
-        skidding = (max-min) > constants.SKID_THRESHOLD;
-        SmartDashboard.putBoolean("Skid", skidding);
-        SmartDashboard.putNumber("Delta", (max-min));
-        SmartDashboard.putNumberArray("Wheel Translations", translationVelocities);
-
-        //Collision Detection
-        //this will also detect hard stops and starts,
-        //as it is likely that these may also cause issues.
-        double accel = Robot.pigeon.getAcceleration();
-        SmartDashboard.putNumber("Acceleration", accel);
-        //accel is measured in g's.
-        collision = accel > constants.COLLISION_THRESHOLD;
 
         if(!skidding && !collision) {
             poseEstimator.update(
-                    Robot.pigeon.getRotation2d(),
-                    getPosition()
+                    rotation,
+                    getSwerveModulePositions()
             );
         } else {
             //This is set false as long as the robot is skidding or
@@ -219,67 +200,269 @@ public class SwerveDrivetrain extends SubsystemBase {
             odometryReady = false;
         }
 
-        isRedAlliance = checkRedAlliance();
-
-        Rotation2d rotation = Robot.pigeon.getRotation2d();
-
-        if(isRedAlliance) {
-            rotation = rotation.rotateBy(oneEighty);
-        }
-
-        poseEstimator.update(
-            rotation,
-            getPosition()
-        );
-
         if (Robot.pigeon.getYawRate() < 720 && visionEnabled) {
-
-            for (String limelightName : limelightNames) {
-                LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
-                if (visionEnabled && estimate != null && estimate.tagCount > 0) {
-                    poseEstimator.addVisionMeasurement(
-                            estimate.pose,
-                            estimate.timestampSeconds,
-                            VecBuilder.fill(.7, .7, 9999999));
-                    odometryReady = true;
-                }
-            }
-
-            for (var i = 0; i < photonCameras.length; i++) {
-                PhotonCamera camera = photonCameras[i];
-                PhotonPoseEstimator estimator = photonPoseEstimators[i];
-                Optional<EstimatedRobotPose> visionEst;
-                for (var result : camera.getAllUnreadResults()) {
-                    visionEst = estimator.estimateCoprocMultiTagPose(result);
-                    if (visionEst.isEmpty()) {
-                        visionEst = estimator.estimateLowestAmbiguityPose(result);
-                    }
-
-                    updateEstimationStdDevs(visionEst, result.getTargets(), estimator);
-
-                    visionEst.ifPresent(
-                            est -> {
-                                // Change our trust in the measurement based on the tags we can see
-                                var estStdDevs = getEstimationStdDevs();
-
-                                if (debugMode) {
-                                    estPublisher.set(est.estimatedPose.toPose2d());
-                                }
-
-                                Rotation2d estRotation = isRedAlliance ? est.estimatedPose.getRotation().toRotation2d().rotateBy(oneEighty) : est.estimatedPose.getRotation().toRotation2d();
-                                var newPose = new Pose2d(est.estimatedPose.getX(), est.estimatedPose.getY(), estRotation);
-                                poseEstimator.addVisionMeasurement(newPose, est.timestampSeconds, estStdDevs);
-                                odometryReady = true;
-                            });
-                }
-
-            }
+            addLimelightEstimates();
+            addPhotonEstimates();
         }
 
         if (debugMode) {
             posePublisher.set(poseEstimator.getEstimatedPosition());
             updateShuffleboardDebug();
         }
+    }
+
+    //region Driving
+    /**
+     * Drive the bot with given params - always field relative
+     *
+     * @param x   dForward
+     * @param y   dLeft
+     * @param rot dRot
+     */
+    public void drive(double x, double y, double rot) {
+        targetState = drivePace.getIsFieldRelative() ?
+                ChassisSpeeds.fromFieldRelativeSpeeds(x, y, rot, Robot.pigeon.getRotation2d())
+                : new ChassisSpeeds(x, y, rot);
+
+        SwerveModuleState[] swerveModuleStates = constants.DRIVE_KINEMATICS.toSwerveModuleStates(targetState);
+
+        if (debugMode) {
+            SwerveModuleState[] actualStates = {fL.getState(), fR.getState(), rL.getState(), rR.getState()};
+            targetPublisher.set(swerveModuleStates);
+            actualPublisher.set(actualStates);
+        }
+        setModuleStates(swerveModuleStates);
+    }
+
+    /**
+    * Get the robot relative speed
+    * @return ChassisSpeeds of the robot relative speed
+    */
+    public ChassisSpeeds getRobotRelativeSpeed() {
+        SwerveModuleState[] states = getSwerveModuleStates();
+
+        ChassisSpeeds speed = constants.DRIVE_KINEMATICS.toChassisSpeeds(states[0], states[1], states[2], states[3]);
+
+        if (debugMode) {
+            chassisSpeedsStructPublisher.set(speed);
+        }
+
+        return speed;
+    }
+
+    /**
+     * Set the desired states for each of the 4 swerve modules using a ChassisSpeeds class
+     * @param chassisSpeeds Robot Relative ChassisSpeeds to apply to wheel speeds
+     * @implNote Use only in {@link SwerveDrivetrain}
+     */
+    public void setModuleChassisSpeeds(ChassisSpeeds chassisSpeeds) {
+        targetState = chassisSpeeds;
+
+        SwerveModuleState[] swerveModuleStates = constants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+        SwerveDriveKinematics.desaturateWheelSpeeds(
+                swerveModuleStates, drivePace.getValue()
+        );
+
+        for (SwerveModuleState state : swerveModuleStates) {
+            state.speedMetersPerSecond = Math.min(state.speedMetersPerSecond, drivePace.getValue());
+        }
+
+        fL.setDesiredState(swerveModuleStates[0]);
+        fR.setDesiredState(swerveModuleStates[1]);
+        rL.setDesiredState(swerveModuleStates[2]);
+        rR.setDesiredState(swerveModuleStates[3]);
+
+        if(debugMode) {
+            SwerveModuleState[] actualStates = { fL.getState(), fR.getState(), rL.getState(), rR.getState()};
+            actualPublisher.set(actualStates);
+            chassisSpeedsStructPublisher.set(chassisSpeeds);
+            targetPublisher.set(swerveModuleStates);
+        }
+    }
+
+    /**
+     * Get the robot relative speed
+     * @return ChassisSpeeds of the robot relative speed
+     */
+    public SwerveModuleState[] getSwerveModuleStates() {
+        SwerveModuleState frontLeftState = new SwerveModuleState(fL.getDriveVelocity(), Rotation2d.fromDegrees(fL.getTurningHeadingDegrees()));
+        SwerveModuleState frontRightState = new SwerveModuleState(fR.getDriveVelocity(), Rotation2d.fromDegrees(fR.getTurningHeadingDegrees()));
+        SwerveModuleState rearLeft = new SwerveModuleState(rL.getDriveVelocity(), Rotation2d.fromDegrees(rL.getTurningHeadingDegrees()));
+        SwerveModuleState rearRight = new SwerveModuleState(rR.getDriveVelocity(), Rotation2d.fromDegrees(rR.getTurningHeadingDegrees()));
+
+        return new SwerveModuleState[]{frontLeftState, frontRightState, rearLeft, rearRight};
+    }
+
+    /**
+     * Set the desired states for each of the 4 swerve modules using a SwerveModuleState array
+     *
+     * @param desiredStates SwerveModuleState array of desired states for each of the modules
+     * @implNote Only for use in the SwerveDrivetrain class and by pathplanner, for any general use {@link SwerveDrivetrain#drive(double x, double y, double rot)}
+     */
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(
+                desiredStates, drivePace.getValue()
+        );
+
+        fL.setDesiredState(desiredStates[0]);
+        fR.setDesiredState(desiredStates[1]);
+        rL.setDesiredState(desiredStates[2]);
+        rR.setDesiredState(desiredStates[3]);
+    }
+
+    /**
+     * Get the current position of each of the swerve modules
+     *
+     * @return An array in form fL -> fR -> rL -> rR of each of the module positions
+     */
+    public SwerveModulePosition[] getSwerveModulePositions() {
+
+        return new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()};
+    }
+
+    /**
+     * This set moves all the modules to 90 degrees. It turns the modules inward to prevent the robot from moving
+     */
+    public void modulesTo90() {
+        SwerveModuleState state90 = new SwerveModuleState(0, Rotation2d.fromDegrees(90));
+        fL.setDesiredState(state90, true);
+        fR.setDesiredState(state90, false);
+        rL.setDesiredState(state90, true);
+        rR.setDesiredState(state90, false);
+
+    }
+
+    public void setMaxDrive() {
+        fLDriveMotor.set(1);
+        fRDriveMotor.set(1);
+        rLDriveMotor.set(1);
+        rRDriveMotor.set(1);
+    }
+
+    public void stopDrive() {
+        drive(0,0,0);
+    }
+
+    /**
+     * Stop all the modules
+     */
+    public void stopModules() {
+        fL.stop();
+        fR.stop();
+        rR.stop();
+        rL.stop();
+    }
+
+    /**
+     * Reset the drive encoders
+     */
+    public void resetDriveEncoders() {
+        fL.resetDriveEncoders();
+        fR.resetDriveEncoders();
+        rL.resetDriveEncoders();
+        rR.resetDriveEncoders();
+    }
+
+    /**
+     * Get the current drivePace settings
+     *
+     * @return the current drivePace settings
+     */
+    public drivePace getDrivePace() {
+        return drivePace;
+    }
+
+    /**
+     * set the drivePace settings for the drivetrain
+     *
+     * @param drivePace the drivePace to set
+     */
+    public void setDrivePace(drivePace drivePace) {
+        this.drivePace = drivePace;
+    }
+    //endregion
+
+    //region Odometry
+    /**
+     * Reset the odometry to a given pose
+     *
+     * @param pose the pose to reset to
+     */
+    public void resetOdometry(Pose2d pose) {
+        poseEstimator.resetPosition(Robot.pigeon.getRotation2d(), new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()}, pose);
+    }
+
+    /**
+     * Compares the translational component of the wheel velocities to each other to detect skidding
+     */
+    private void checkSkidding() {
+        //Skid detection
+        //The skid detection works by first separating how much of each
+        //wheel speed contributes to translation vs rotation
+        //Then they are compared to find the difference between the maximum and the minimum
+        //If the difference is over the threshold the odometry is not updated with encoders
+        //and the odometry is invalidated
+        SwerveModuleState[] moduleStates = getSwerveModuleStates();
+        double[] translationVelocities = getSwerveModuleTranslationSpeed(targetState, moduleStates);
+        double min = 100 , max = 0;
+        for (double v : translationVelocities) {
+            min = Math.min(v, min);
+            max = Math.max(v, max);
+        }
+
+        skidding = (max-min) > constants.SKID_THRESHOLD;
+        if (debugMode) {
+            SmartDashboard.putBoolean("Skid", skidding);
+            SmartDashboard.putNumber("Delta", (max - min));
+            SmartDashboard.putNumberArray("Wheel Translations", translationVelocities);
+        }
+    }
+
+    /**
+     * Uses the pigeon to check the acceleration of the bot to detect collisions
+     */
+    private void checkCollision() {
+        //Collision Detection
+        //this will also detect hard stops and starts,
+        //as it is likely that these may also cause issues.
+        double accel = Robot.pigeon.getAcceleration();
+        if(debugMode) SmartDashboard.putNumber("Acceleration", accel);
+        //accel is measured in g's.
+        collision = accel > constants.COLLISION_THRESHOLD;
+    }
+
+    /**
+     * Uses the SKID_THRESHOLD constant to determine if the robot is skidding
+     * @return Returns true if the robot is currently skidding
+     */
+    public boolean isSkidding() {
+        return skidding;
+    }
+
+    /**
+     * Uses the COLLISION_THRESHOLD constant to determine if the robot is in a collision
+     * @return Returns true if the robot is currently in a collision
+     */
+    public boolean isCollision() {
+        return collision;
+    }
+
+    /**
+     * Checks if there has been a vision updates since a skid
+     * or collision was detected
+     * @return Returns true if the odometry is probably accurate
+     */
+    public boolean isOdometryReady() {
+        return odometryReady;
+    }
+
+    /**
+     * Get the current pose of the robot
+     *
+     * @return The current pose of the robot (Pose2D)
+     */
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
     }
 
     /**
@@ -289,7 +472,7 @@ public class SwerveDrivetrain extends SubsystemBase {
      * @param s  the current swerve module states
      * @return  an array of doubles with the transitive speeds in meters per second. The order is the same as provided in swerve module states
      */
-    private double[] getModuleTranslations(ChassisSpeeds chassisSpeeds, SwerveModuleState[] s) {
+    private double[] getSwerveModuleTranslationSpeed(ChassisSpeeds chassisSpeeds, SwerveModuleState[] s) {
         //This isn't really the intended use of the
         //Translation3d, I just need something that represents a vector
         //the vector dimensions are <x, y, rotation>
@@ -312,7 +495,9 @@ public class SwerveDrivetrain extends SubsystemBase {
                     return t.getNorm();
                 }).toArray();
     }
+    //endregion
 
+    //region Vision
     /**
      * Set the limelight enabled status
      * @param enabled - enable limelight vision updates
@@ -348,6 +533,24 @@ public class SwerveDrivetrain extends SubsystemBase {
         return limelightNames;
     }
 
+    private void addLimelightEstimates() {
+        for (String limelightName : limelightNames) {
+            LimelightHelpers.PoseEstimate estimate = LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2(limelightName);
+            if (visionEnabled && estimate != null && estimate.tagCount > 0) {
+                poseEstimator.addVisionMeasurement(
+                        estimate.pose,
+                        estimate.timestampSeconds,
+                        VecBuilder.fill(.7, .7, 9999999));
+                odometryReady = true;
+            }
+        }
+    }
+
+    /**
+     * Adds a photon vision camera to be used for vision based odometry
+     * @param newPhotonCamName the name of the camera defined in the PhotonVision UI
+     * @param cameraLocation the location of the camera, relative to the center of the bot
+     */
     public void addPhotonCamera(String newPhotonCamName, Transform3d cameraLocation) {
         PhotonCamera[] newArray = new PhotonCamera[photonCameras.length + 1];
         System.arraycopy(photonCameras, 0, newArray, 0, photonCameras.length);
@@ -360,12 +563,52 @@ public class SwerveDrivetrain extends SubsystemBase {
         photonPoseEstimators = newEstArray;
     }
 
+    /**
+     * Get the list of PhotonVision cameras currently registered
+     * @return An array of PhotonCameras
+     */
     public PhotonCamera[] getPhotonCameras() {
         return photonCameras;
     }
 
+    /**
+     * Get the list of PhotonVision pose estimators currently registered
+     * @return An array of PhotonPoseEstimators
+     */
     public PhotonPoseEstimator[] getPhotonPoseEstimators() {
         return photonPoseEstimators;
+    }
+
+    private void addPhotonEstimates() {
+        for (var i = 0; i < photonCameras.length; i++) {
+            PhotonCamera camera = photonCameras[i];
+            PhotonPoseEstimator estimator = photonPoseEstimators[i];
+            Optional<EstimatedRobotPose> visionEst;
+            for (var result : camera.getAllUnreadResults()) {
+                visionEst = estimator.estimateCoprocMultiTagPose(result);
+                if (visionEst.isEmpty()) {
+                    visionEst = estimator.estimateLowestAmbiguityPose(result);
+                }
+
+                updateEstimationStdDevs(visionEst, result.getTargets(), estimator);
+
+                visionEst.ifPresent(
+                        est -> {
+                            // Change our trust in the measurement based on the tags we can see
+                            var estStdDevs = getEstimationStdDevs();
+
+                            if (debugMode) {
+                                estPublisher.set(est.estimatedPose.toPose2d());
+                            }
+
+                            Rotation2d estRotation = isRedAlliance ? est.estimatedPose.getRotation().toRotation2d().rotateBy(oneEighty) : est.estimatedPose.getRotation().toRotation2d();
+                            var newPose = new Pose2d(est.estimatedPose.getX(), est.estimatedPose.getY(), estRotation);
+                            poseEstimator.addVisionMeasurement(newPose, est.timestampSeconds, estStdDevs);
+                            odometryReady = true;
+                        });
+            }
+
+        }
     }
 
     /**
@@ -427,226 +670,14 @@ public class SwerveDrivetrain extends SubsystemBase {
         return photonCurrStdDevs;
     }
 
-    /**
-     * Reset the odometry to a given pose
-     *
-     * @param pose the pose to reset to
-     */
-    public void resetOdometry(Pose2d pose) {
-        poseEstimator.resetPosition(Robot.pigeon.getRotation2d(), new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()}, pose);
-    }
+    //endregion
+
+    //region Configuration
 
     /**
-     * Uses the SKID_THRESHOLD constant to determine if the robot is skidding
-     * @return Returns true if the robot is currently skidding
+     * Gets the constants for this SwerveDrivetrain
+     * @return the {@link SwerveConstants} passed into the {@link SwerveConfiguration}
      */
-    public boolean isSkidding() {
-        return skidding;
-    }
-
-    /**
-     * Uses the COLLISION_THRESHOLD constant to determine if the robot is in a collision
-     * @return Returns true if the robot is currently in a collision
-     */
-    public boolean isCollision() {
-        return collision;
-    }
-
-    /**
-     * Checks if there has been a vision updates since a skid
-     * or collision was detected
-     * @return Returns true if the odometry is probably accurate
-     */
-    public boolean isOdometryReady() {
-        return odometryReady;
-    }
-
-    /**
-     * Get the robot relative speed
-     * @return ChassisSpeeds of the robot relative speed
-     */
-    public ChassisSpeeds getRobotRelativeSpeed() {
-        SwerveModuleState[] states = getSwerveModuleStates();
-
-        ChassisSpeeds speed = constants.DRIVE_KINEMATICS.toChassisSpeeds(states[0], states[1], states[2], states[3]);
-
-        if (debugMode) {
-            chassisSpeedsStructPublisher.set(speed);
-        }
-
-        return speed;
-    }
-
-    /**
-     * Get the robot relative speed
-     * @return ChassisSpeeds of the robot relative speed
-     */
-    public SwerveModuleState[] getSwerveModuleStates() {
-        SwerveModuleState frontLeftState = new SwerveModuleState(fL.getDriveVelocity(), Rotation2d.fromDegrees(fL.getTurningHeadingDegrees()));
-        SwerveModuleState frontRightState = new SwerveModuleState(fR.getDriveVelocity(), Rotation2d.fromDegrees(fR.getTurningHeadingDegrees()));
-        SwerveModuleState rearLeft = new SwerveModuleState(rL.getDriveVelocity(), Rotation2d.fromDegrees(rL.getTurningHeadingDegrees()));
-        SwerveModuleState rearRight = new SwerveModuleState(rR.getDriveVelocity(), Rotation2d.fromDegrees(rR.getTurningHeadingDegrees()));
-
-        return new SwerveModuleState[]{frontLeftState, frontRightState, rearLeft, rearRight};
-    }
-
-    /**
-     * Drive the bot with given params - always field relative
-     *
-     * @param x   dForward
-     * @param y   dLeft
-     * @param rot dRot
-     */
-    public void drive(double x, double y, double rot) {
-        targetState = drivePace.getIsFieldRelative() ?
-                ChassisSpeeds.fromFieldRelativeSpeeds(x, y, rot, Robot.pigeon.getRotation2d())
-                : new ChassisSpeeds(x, y, rot);
-
-        SwerveModuleState[] swerveModuleStates = constants.DRIVE_KINEMATICS.toSwerveModuleStates(targetState);
-
-        if (debugMode) {
-            SwerveModuleState[] actualStates = { fL.getState(), fR.getState(), rL.getState(), rR.getState()};
-            targetPublisher.set(swerveModuleStates);
-            actualPublisher.set(actualStates);
-        }
-        setModuleStates(swerveModuleStates);
-    }
-
-    public void setMaxDrive() {
-        fLDriveMotor.set(1);
-        fRDriveMotor.set(1);
-        rLDriveMotor.set(1);
-        rRDriveMotor.set(1);
-    }
-
-    public void stopDrive() {
-        drive(0,0,0);
-    }
-
-    /**
-     * Set the desired states for each of the 4 swerve modules using a SwerveModuleState array
-     *
-     * @param desiredStates SwerveModuleState array of desired states for each of the modules
-     * @implNote Only for use in the SwerveDrivetrain class and by pathplanner, for any general use {@link SwerveDrivetrain#drive(double x, double y, double rot)}
-     */
-     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(
-                desiredStates, drivePace.getValue()
-        );
-
-        fL.setDesiredState(desiredStates[0]);
-        fR.setDesiredState(desiredStates[1]);
-        rL.setDesiredState(desiredStates[2]);
-        rR.setDesiredState(desiredStates[3]);
-    }
-
-    /**
-     * Set the desired states for each of the 4 swerve modules using a ChassisSpeeds class
-     * @param chassisSpeeds Robot Relative ChassisSpeeds to apply to wheel speeds
-     * @implNote Use only in {@link SwerveDrivetrain}
-     */
-    public void setModuleChassisSpeeds(ChassisSpeeds chassisSpeeds) {
-        targetState = chassisSpeeds;
-
-        SwerveModuleState[] swerveModuleStates = constants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
-        SwerveDriveKinematics.desaturateWheelSpeeds(
-                swerveModuleStates, drivePace.getValue()
-        );
-
-        for (SwerveModuleState state : swerveModuleStates) {
-            state.speedMetersPerSecond = Math.min(state.speedMetersPerSecond, drivePace.getValue());
-        }
-
-        fL.setDesiredState(swerveModuleStates[0]);
-        fR.setDesiredState(swerveModuleStates[1]);
-        rL.setDesiredState(swerveModuleStates[2]);
-        rR.setDesiredState(swerveModuleStates[3]);
-
-        if(debugMode) {
-            SwerveModuleState[] actualStates = { fL.getState(), fR.getState(), rL.getState(), rR.getState()};
-            actualPublisher.set(actualStates);
-            chassisSpeedsStructPublisher.set(chassisSpeeds);
-            targetPublisher.set(swerveModuleStates);
-        }
-    }
-
-    /**
-     * This set moves all the modules to 90 degrees. It turns the modules inward to prevent the robot from moving
-     */
-    public void modulesTo90() {
-        SwerveModuleState state90 = new SwerveModuleState(0, Rotation2d.fromDegrees(90));
-        fL.setDesiredState(state90, true);
-        fR.setDesiredState(state90, false);
-        rL.setDesiredState(state90, true);
-        rR.setDesiredState(state90, false);
-
-    }
-
-    /**
-     * Get the current pose of the robot
-     *
-     * @return The current pose of the robot (Pose2D)
-     */
-    public Pose2d getPose() {
-        return poseEstimator.getEstimatedPosition();
-    }
-
-    /**
-     * Stop all the modules
-     */
-    public void stopModules() {
-        fL.stop();
-        fR.stop();
-        rR.stop();
-        rL.stop();
-    }
-
-    /**
-     * Get the current position of each of the swerve modules
-     *
-     * @return An array in form fL -> fR -> rL -> rR of each of the module positions
-     */
-    public SwerveModulePosition[] getPosition() {
-
-        return new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()};
-    }
-
-    /**
-     * Reset the drive encoders
-     */
-    public void resetDriveEncoders() {
-        fL.resetDriveEncoders();
-        fR.resetDriveEncoders();
-        rL.resetDriveEncoders();
-        rR.resetDriveEncoders();
-    }
-
-    /**
-     * set the drivePace settings for the drivetrain
-     *
-     * @param drivePace the drivePace to set
-     */
-    public void setDrivePace(drivePace drivePace) {
-        this.drivePace = drivePace;
-    }
-
-    /**
-     * Get the current drivePace settings
-     *
-     * @return the current drivePace settings
-     */
-    public drivePace getDrivePace() {
-        return drivePace;
-    }
-
-    public double getPoseX() {
-        return getPose().getX();
-    }
-
-    public double getPoseY() {
-        return getPose().getY();
-    }
-
     public SwerveConstants getConstants() {
         return constants;
     }
@@ -763,17 +794,14 @@ public class SwerveDrivetrain extends SubsystemBase {
                 this::setModuleChassisSpeeds,
                 constants.AUTO_DRIVE_CONTROLLER,
                 ppConfig,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
-                    if( alliance.isPresent() ){
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
+                this::checkRedAlliance,
                 this
         );
     }
 
+    //endregion
+
+    //region Reporting (Temps and Debug)
     public double fLDriveTemp() { return fLDriveMotor.getTemp(); }
     public double fRDriveTemp() { return fRDriveMotor.getTemp(); }
     public double rLDriveTemp() { return rLDriveMotor.getTemp(); }
@@ -875,7 +903,9 @@ public class SwerveDrivetrain extends SubsystemBase {
         SmartDashboard.putNumber("Swerve/RL Rot Output", fLTurnMotor.getOutput());
         SmartDashboard.putNumber("Swerve/RR Rot Output", fLTurnMotor.getOutput());
     }
+    //endregion
 
+    //region System Identification
     public SysIdRoutine getSysIdRoutine(String motors) {
         MutVoltage voltMut = Volts.mutable(0);
 
@@ -971,4 +1001,5 @@ public class SwerveDrivetrain extends SubsystemBase {
     public Command sysIdDynamic(String motor, SysIdRoutine.Direction direction) {
         return getSysIdRoutine(motor).dynamic(direction);
     }
+    //endregion
 }
