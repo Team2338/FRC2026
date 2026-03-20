@@ -7,12 +7,12 @@ import team.gif.robot.subsystems.ShotCalculator;
 
 public class ShooterAuto extends Command {
     private boolean readyToIndex;
-    private Command indexCommand = new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5));
+    private static final Command indexCommand = new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5));
+    private double rpmOffset = 0;
+
     /**
      * Runs shooter at RPM based distance to hub
      */
-
-
     public ShooterAuto() {
         super();
         addRequirements(Robot.shooter);
@@ -28,7 +28,7 @@ public class ShooterAuto extends Command {
     @Override
     public void execute() {
 
-        Robot.shooter.runShooter(ShotCalculator.getShotRPM());
+        Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
 
         if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 3)) {
             readyToIndex = true;
@@ -50,5 +50,20 @@ public class ShooterAuto extends Command {
     public void end(boolean interrupted) {
         Robot.shooter.stopMotors();
         indexCommand.cancel();
+    }
+
+    /**
+     * Adjusts the offset to the calculated required RPM
+     * @param rpm - desired change in rpm
+     */
+    public void adjustRPMOffset(double rpm) {
+        rpmOffset = rpmOffset + rpm;
+    }
+
+    /**
+     * Sets the rpm offset to zero
+     */
+    public void resetRPMOffset() {
+        rpmOffset = 0;
     }
 }

@@ -9,6 +9,8 @@ import team.gif.robot.commands.drivetrain.HubAutoAlign;
 import team.gif.robot.commands.shooter.ShooterAuto;
 
 public class AutonShoot extends ParallelCommandGroup {
+    public static HubAutoAlign hubCommand = new HubAutoAlign();
+    public static ShooterAuto shootCommand = new ShooterAuto();
     /**
      * This is the entire sequence to shoot, includes option to also agitate the collector
      *
@@ -17,16 +19,16 @@ public class AutonShoot extends ParallelCommandGroup {
     public AutonShoot(boolean agitate) {
         if (agitate) {
             addCommands(
-                    new ShooterAuto(),
-                    new HubAutoAlign(),
+                    shootCommand,
+                    hubCommand,
                     new CollectorPercent(0.9),
                     new AgitatorPercent(),
                     new WaitCommand(0.85).andThen(new CollectorAutoAgitate())
             );
         } else {
             addCommands(
-                    new ShooterAuto(),
-                    new HubAutoAlign(),
+                    shootCommand,
+                    hubCommand,
                     new CollectorPercent(0.9),
                     new AgitatorPercent()
             );

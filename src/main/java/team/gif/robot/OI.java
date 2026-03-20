@@ -130,6 +130,10 @@ public class OI {
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
+        aLBump.onTrue(new InstantCommand(() -> {
+            AutonShoot.hubCommand.resetRotationOffset();
+            AutonShoot.shootCommand.resetRPMOffset();
+        }));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Standard fuel eject from collector
@@ -138,6 +142,11 @@ public class OI {
         aX.onTrue(new CollectorAutoPivotDown()); //Rotates collector out
         aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)
         aB.onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
+
+        aDPadUp.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(25)));
+        aDPadLeft.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(1)));
+        aDPadRight.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(-1)));
+        aDPadDown.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(-25)));
     }
 
     public void setRumble(boolean doRumble){
