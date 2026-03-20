@@ -64,6 +64,7 @@ public class RobotContainer {
         ArrayList<String> names = new ArrayList<>();
         names.add("LeftCollectFirst");
         names.add("RightCollectFirst");
+        names.add("LeftMidShort");
         names.add("Center");
         names.add("Test Auto");
         names.add("CC-autonshoot-center");
