@@ -116,8 +116,8 @@ public class OI {
 
         dRTrigger.whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index
 
-        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Long shot to use  if cameras break // TODO change value later
-        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Short shot to use if cameras break // TODO change value later
+        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Long shot to use  if cameras break // TODO change value later
+        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Short shot to use if cameras break // TODO change value later
 
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
         //dBack.and(dX).onTrue(Robot.auto);
@@ -130,7 +130,8 @@ public class OI {
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
+        aRBump.whileTrue(new ReverseCollectorPercent(0.9)); //Runs collector (only) in reverse to eject jammed fuel
+        aLBump.whileTrue(new ReverseCollectorPercent(-0.9)); //Runs collector (only) in reverse to eject jammed fuel
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Standard fuel eject from collector
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
