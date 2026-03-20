@@ -15,13 +15,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Forward2"
+                        "pathName": "LeftForward2"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Back"
+                        "pathName": "LeftBack"
                       }
                     }
                   ]
@@ -72,13 +72,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ForwardHub"
+                        "pathName": "LeftForwardHub"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ReverseHub"
+                        "pathName": "LeftReverseHub"
                       }
                     }
                   ]
@@ -108,7 +108,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Reverse End"
+            "pathName": "LeftReverse End"
           }
         }
       ]

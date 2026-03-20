@@ -72,13 +72,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ForwardHubMiddle"
+                        "pathName": "LeftForwardHubMiddle"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ReverseHubMiddle"
+                        "pathName": "LeftReverseHubMiddle"
                       }
                     }
                   ]
@@ -108,7 +108,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Reverse End"
+            "pathName": "LeftReverse End"
           }
         }
       ]
