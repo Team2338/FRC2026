@@ -28,7 +28,7 @@ public class ShooterAuto extends Command {
     @Override
     public void execute() {
 
-        Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
+        Robot.shooter.runShooter(ShotCalculator.getShotRPM()); //Rpm offset is applied in this command
 
         if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 3)) {
             readyToIndex = true;
@@ -65,5 +65,13 @@ public class ShooterAuto extends Command {
      */
     public void resetRPMOffset() {
         rpmOffset = 0;
+    }
+
+    /**
+     * Returns the rpm offset
+     * @return offset in rpm
+     */
+    public double getRPMOffset() {
+        return rpmOffset;
     }
 }
