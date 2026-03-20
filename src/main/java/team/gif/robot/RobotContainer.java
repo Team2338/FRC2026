@@ -62,8 +62,8 @@ public class RobotContainer {
         SendableChooser<Command> autoChooser = new SendableChooser<>();
 
         ArrayList<String> names = new ArrayList<>();
-        names.add("Left-ToMid-MidHub");
-//        names.add("Right-ToMid-MidHub");
+        names.add("Left-ToMid-MidNeutral");
+//        names.add("Right-ToMid-MidNeutral");
         names.add("Center");
         names.add("Left-CrossMid-NearHub");
         names.add("Right-CrossMid-NearHub");
