@@ -33,7 +33,7 @@ import static team.gif.robot.Constants.MatchTimes;
  */
 public class Robot extends TimedRobot {
     private static Command autonomousCommand;
-    private RobotContainer robotContainer;
+    private static RobotContainer robotContainer;
     public static OI oi;
 
     public static Pigeon2_0 pigeon;
@@ -224,6 +224,11 @@ public class Robot extends TimedRobot {
     /** This function is called periodically whilst in simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    public static void runAutonomousCommand() {
+        autonomousCommand = robotContainer.getAutonomousCommand();
+        CommandScheduler.getInstance().schedule(autonomousCommand);
+    }
 
     /**
      * Checks if the current match time is in the specified interval.
