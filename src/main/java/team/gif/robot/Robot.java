@@ -268,29 +268,13 @@ public class Robot extends TimedRobot {
         } else {
             matchShift = "N/A";
             if (matchTime > MatchTimes.END_OF_FIRST_SHIFT) {
-                if (!winAutoShiftTwoShiftFour) {
-                    matchShift = "1 Shoot";
-                } else {
-                    matchShift = "1 Pass";
-                }
+                matchShift = (winAutoShiftTwoShiftFour ? "1 Pass" : "1 Shoot");
             } else if (matchTime > MatchTimes.END_OF_SECOND_SHIFT) {
-                if (winAutoShiftTwoShiftFour) {
-                    matchShift = "2 Shoot";
-                } else {
-                    matchShift = "2 Pass";
-                }
+                matchShift = (winAutoShiftTwoShiftFour ? "2 Shoot" : "2 Pass");
             } else if (matchTime > MatchTimes.END_OF_THIRD_SHIFT) {
-                if (!winAutoShiftTwoShiftFour) {
-                    matchShift = "3 Shoot";
-                } else {
-                    matchShift = "3 Pass";
-                }
+                matchShift = (winAutoShiftTwoShiftFour ? "3 Pass" : "3 Shoot");
             } else if (matchTime > MatchTimes.END_OF_FOURTH_SHIFT) {
-                if (winAutoShiftTwoShiftFour) {
-                    matchShift = "4 Shoot";
-                } else {
-                    matchShift = "4 Pass";
-                }
+                matchShift = (winAutoShiftTwoShiftFour ? "4 Shoot" : "4 Pass");
             }
 
             shiftTime = (matchTime>MatchTimes.END_OF_FIRST_SHIFT) ? (matchTime - MatchTimes.END_OF_FIRST_SHIFT) :

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.811654778887304,
-        "y": 4.093223965763196
+        "x": 5.850390015600623,
+        "y": 4.197722308892355
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.7340228245363765,
-        "y": 6.538630527817404
+        "x": 5.892839313572541,
+        "y": 6.221138845553821
       },
       "isLocked": false,
       "linkedName": "HubEnd"
@@ -20,8 +20,8 @@
         "y": 5.684679029957205
       },
       "prevControl": {
-        "x": 4.6020684736091315,
-        "y": 5.788188302425108
+        "x": 4.831606864274569,
+        "y": 5.6268486739469585
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.18277680140598238,
-      "rotationDegrees": -59.99999999999999
+      "waypointRelativePos": 0.17688959240205793,
+      "rotationDegrees": -45.0
     }
   ],
   "constraintZones": [],
