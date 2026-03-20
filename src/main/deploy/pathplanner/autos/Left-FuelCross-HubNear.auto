@@ -15,13 +15,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "LeftForwardMidShort"
+                        "pathName": "L-Fwd-Start-FuelCross"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "LeftMidShortBack"
+                        "pathName": "L-Rev-FuelCross-TrenchShot"
                       }
                     }
                   ]
@@ -72,13 +72,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "LeftForwardHubMiddle"
+                        "pathName": "L-Fwd-TrenchShot-HubNear"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "LeftReverseHubMiddle"
+                        "pathName": "L-Rev-HubNear-RampShot"
                       }
                     }
                   ]
@@ -108,7 +108,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftReverse End"
+            "pathName": "L-Rev-RampShot-Reverse End"
           }
         }
       ]
