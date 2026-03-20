@@ -33,7 +33,7 @@ import static team.gif.robot.Constants.MatchTimes;
  */
 public class Robot extends TimedRobot {
     private static Command autonomousCommand;
-    private RobotContainer robotContainer;
+    private static RobotContainer robotContainer;
     public static OI oi;
 
     public static Pigeon2_0 pigeon;
@@ -226,6 +226,7 @@ public class Robot extends TimedRobot {
     public void simulationPeriodic() {}
 
     public static void runAutonomousCommand() {
+        autonomousCommand = robotContainer.getAutonomousCommand();
         CommandScheduler.getInstance().schedule(autonomousCommand);
     }
 

@@ -467,7 +467,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     public void xStance() {
         SwerveModuleState fortyFive = new SwerveModuleState(0, Rotation2d.fromDegrees(45));
         SwerveModuleState oneThirtyFive = new SwerveModuleState(0, Rotation2d.fromDegrees(135));
-        SwerveModuleState[] states = {fortyFive, oneThirtyFive, fortyFive, oneThirtyFive};
+        SwerveModuleState[] states = {fortyFive, oneThirtyFive, oneThirtyFive, fortyFive};
 
         setModuleStates(states);
     }

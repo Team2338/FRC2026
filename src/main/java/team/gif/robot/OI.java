@@ -110,7 +110,7 @@ public class OI {
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        dLBump.whileTrue(new RepeatCommand(new InstantCommand(Robot.swerveDrive::xStance))); //Swerve X Stance to not get pushed around;
+        dLBump.whileTrue(new RepeatCommand(new InstantCommand(Robot.swerveDrive::xStance, Robot.swerveDrive))); //Swerve X Stance to not get pushed around;
         dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
 
