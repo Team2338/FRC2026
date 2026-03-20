@@ -225,8 +225,8 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {}
 
-    public static Command getAutonomousCommand() {
-        return autonomousCommand;
+    public static void runAutonomousCommand() {
+        CommandScheduler.getInstance().schedule(autonomousCommand);
     }
 
     /**

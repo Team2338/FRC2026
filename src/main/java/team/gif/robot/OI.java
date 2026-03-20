@@ -120,7 +120,7 @@ public class OI {
         dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Short shot to use if cameras break // TODO change value later
 
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
-        dBack.and(dX).onTrue(Robot.getAutonomousCommand());
+        dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
 
         //Aux Controls
         aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
