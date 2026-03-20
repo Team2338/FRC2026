@@ -31,6 +31,7 @@ public class CollectMotor extends SubsystemBase {
     private final TalonFX collectorMotor;
     private TalonFXConfiguration config;
     public VelocityVoltage velocityVoltage;
+    private DutyCycleOut dutyCycleOut;
 
     public CollectMotor() {
         collectorMotor = new TalonFX(RobotMap.Collector.COLLECT_MOTOR_ID);
@@ -38,6 +39,7 @@ public class CollectMotor extends SubsystemBase {
         setConfig();
 
         velocityVoltage = new VelocityVoltage(0).withSlot(0);
+        dutyCycleOut = new DutyCycleOut(0);
     }
 
 
@@ -60,8 +62,8 @@ public class CollectMotor extends SubsystemBase {
     }
 
     public void runCollectorPercent(double percent){
-//        collectorMotor.set(percent);
-        collectorMotor.setControl(new DutyCycleOut(percent).withEnableFOC(false));
+        dutyCycleOut.Output = percent;
+        collectorMotor.setControl(dutyCycleOut);
     }
 
     public void runCollector(double rpm) {
