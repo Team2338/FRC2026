@@ -40,6 +40,9 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
         SmartDashboard.putNumber("Auto Collector/PID/Collect Reference", 0);
         SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
+        SmartDashboard.putNumber("Indexer/PID/T_Index P", 0);
+        SmartDashboard.putNumber("Indexer/PID/T_Index I", 0);
+        SmartDashboard.putNumber("Indexer/PID/T_Index D", 0);
 
         delayChooser.setDefaultOption("0", 0.0);
         delayChooser.addOption("1", 1.0);
@@ -79,7 +82,8 @@ public class UI {
         SmartDashboard.putNumber("Shooter/Shooter Output", Robot.shooter.getLeftMotorOutput());
         SmartDashboard.putNumber("Shooter/Shooter Output 2", Robot.shooter.getMiddleMotorOutput());
         SmartDashboard.putNumber("Shooter/Shooter Output 3", Robot.shooter.getRightMotorOutput());
-        SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getBottomIndexerSpeed());
+        SmartDashboard.putNumber("Indexer/B_Speed", Robot.indexer.getBottomIndexerSpeed());
+        SmartDashboard.putNumber("Indexer/T_Speed", Robot.indexer.getTopIndexerSpeed());
         SmartDashboard.putNumber("Collector/PID/Collector Output", Robot.collectMotor.getCollectOutput());
         SmartDashboard.putNumber("Collector/PID/Collector Speed", Robot.collectMotor.getCollectSpeed());
         SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());

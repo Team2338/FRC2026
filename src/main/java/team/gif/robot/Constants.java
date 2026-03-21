@@ -179,6 +179,10 @@ public final class Constants {
 
         public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.7; //Should change
         public static final double TOP_INDEXER_MOTOR_PERCENT = 0.7; //Should change
+
+        public static final double TOP_INDEXER_P = 0.0;
+        public static final double TOP_INDEXER_I = 0.0;
+        public static final double TOP_INDEXER_D = 0.0;
     }
 
     public static final class MotorTemps {
