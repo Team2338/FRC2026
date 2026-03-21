@@ -14,9 +14,9 @@ public class HubAutoAlign extends Command {
     private double rotOffset = 0;
 
     public HubAutoAlign() {
-        this.forwardLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.strafeLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.turnLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND);
+        this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
+        this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
+        this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND);
         addRequirements(Robot.swerveDrive);
     }
 
@@ -61,7 +61,7 @@ public class HubAutoAlign extends Command {
             double rotError = ShotCalculator.angleToHubError().getRadians() + Units.degreesToRadians(rotOffset);
             double rot = rotError * Constants.Mk5Constants.HUB_ALIGN_P / (2 * Math.PI); //Converts to -1 to 1 scale for limiter and speed calc
 
-             rot = turnLimiter.calculate(rot) * Robot.swerveDrive.getConstants().PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+             rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
 
             // the robot starts facing the driver station so for this year negating y and x
             Robot.swerveDrive.drive(forward, strafe, rot);
