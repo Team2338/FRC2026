@@ -5,6 +5,7 @@
 package team.gif.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -31,7 +32,7 @@ public final class Constants {
     public static final class Vision {
         public static final Transform3d LEFT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(18), 0));
         public static final Transform3d RIGHT_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(7.925), -Units.inchesToMeters(11.6875), Units.inchesToMeters(21.75), new Rotation3d(0, -Units.degreesToRadians(18), 0));
-        public static final Transform3d SIDE_CAMERA_POSITION = new Transform3d(0, 0, 0, new Rotation3d(0, 0, 0));
+        public static final Transform3d SIDE_CAMERA_POSITION = new Transform3d(-Units.inchesToMeters(11.972), Units.inchesToMeters(11.852), Units.inchesToMeters(15.65), new Rotation3d(0, 0, Units.degreesToRadians(90)));
     }
 
     //These constants should be referenced via Robot.swerveDrive.getConstants();
