@@ -3,6 +3,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
@@ -104,29 +105,26 @@ public class OI {
          * Simple Test:
          *   aX.onTrue(new PrintCommand("aX"));
          */
-        /**
-         * Driver Controls
-         */
+
+        //Driver Controls
         dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        dLBump.whileTrue(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5))); //Main index button for shooting - back then forward
+        dLBump.whileTrue(new RepeatCommand(new InstantCommand(Robot.swerveDrive::xStance, Robot.swerveDrive))); //Swerve X Stance to not get pushed around;
         dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
 
         dRTrigger.whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index
 
-        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500 + rpmOffset).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Long shot to use  if cameras break // TODO change value later
-        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300 + rpmOffset).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Short shot to use if cameras break // TODO change value later
+        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Long shot to use  if cameras break // TODO change value later
+        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerPercent(0.8, 0.5)))); // Short shot to use if cameras break // TODO change value later
 
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
-        //dBack.and(dX).onTrue(Robot.auto);
+        dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
 
-        /**
-         * Aux Controls
-         */
+        //Aux Controls
         aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         aStart.and(aDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
         aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));

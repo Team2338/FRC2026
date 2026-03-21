@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.14,
-        "y": 5.684679029957205
+        "x": 6.199814550641939,
+        "y": 4.183794579172611
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.440296411856473,
-        "y": 5.669297971918877
+        "x": 6.242263848613857,
+        "y": 6.207211115834077
       },
       "isLocked": false,
-      "linkedName": "ReverseEnd"
+      "linkedName": "ForwardHubMiddle"
     },
     {
       "anchor": {
-        "x": 1.7186583463338518,
+        "x": 3.14,
         "y": 5.684679029957205
       },
       "prevControl": {
-        "x": 2.6383931357254276,
-        "y": 5.670529263966565
+        "x": 4.831606864274569,
+        "y": 5.6268486739469585
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "ReverseEnd"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.17688959240205793,
+      "rotationDegrees": -45.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.8478470346784955
+    "rotation": -48.36646066342984
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -48.36646066342984
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
