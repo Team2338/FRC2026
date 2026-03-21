@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.355941780821917,
-        "y": 0.4868664383600071
+        "x": 6.748129642133693,
+        "y": 0.464230249831196
       },
       "isLocked": false,
       "linkedName": "Right-Trench-Entrance-Sideways"
@@ -20,8 +20,8 @@
         "y": 3.871
       },
       "prevControl": {
-        "x": 6.137568493150685,
-        "y": 2.465710616438356
+        "x": 5.848035111411208,
+        "y": 2.453912896691426
       },
       "nextControl": null,
       "isLocked": false,

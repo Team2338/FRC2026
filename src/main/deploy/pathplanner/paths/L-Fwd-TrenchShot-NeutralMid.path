@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.034130952380952,
-        "y": 7.591287202380952
+        "x": 6.527941368383226,
+        "y": 7.597873872776871
       },
       "isLocked": false,
       "linkedName": "Left-Trench-Entrance-Sideways"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 6.199814550641939,
-        "y": 4.183794579172611
+        "y": 4.191
       },
       "prevControl": {
-        "x": 6.0383482142857146,
-        "y": 7.108415178571429
+        "x": 6.171145762711864,
+        "y": 6.288444067796611
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5061728395061726,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": -90.0
     }
   ],

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.892839313572541,
-        "y": 6.221138845553821
+        "x": 5.87179538560344,
+        "y": 6.221470868834629
       },
       "isLocked": false,
       "linkedName": "HubEnd"
@@ -20,8 +20,8 @@
         "y": 5.684679029957205
       },
       "prevControl": {
-        "x": 4.831606864274569,
-        "y": 5.6268486739469585
+        "x": 4.82836833389751,
+        "y": 5.5651361404603366
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -48.36646066342984
+    "rotation": -47.0
   },
   "reversed": false,
   "folder": null,
