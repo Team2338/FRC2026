@@ -4,50 +4,50 @@
     {
       "anchor": {
         "x": 2.900456490727533,
-        "y": 0.61
+        "y": 7.41845934379458
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.210984308131241,
-        "y": 0.418644793152639
+        "x": 3.317581903276129,
+        "y": 7.593666146645866
       },
       "isLocked": false,
-      "linkedName": "RightReverseEnd"
+      "linkedName": "ShooterTrench"
     },
     {
       "anchor": {
-        "x": 3.6767760342368048,
-        "y": 0.4057061340941527
+        "x": 3.72,
+        "y": 7.64
       },
       "prevControl": {
-        "x": 3.077614436188936,
-        "y": 0.40570613409415274
+        "x": 3.4215792273117174,
+        "y": 7.646411548612915
       },
       "nextControl": {
-        "x": 6.549158345221112,
-        "y": 0.4057061340941527
+        "x": 4.772440476190476,
+        "y": 7.617388392857144
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.95,
-        "y": 4.093223965763196
+        "x": 5.53,
+        "y": 7.595
       },
       "prevControl": {
-        "x": 6.545178316690441,
-        "y": 0.05636233951497971
+        "x": 4.838318452380952,
+        "y": 7.595
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightHubEnd"
+      "linkedName": "Left-Trench-Entrance-Sideways"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": 88.3634229583834
+      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [
@@ -76,14 +76,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 131.08175113593273
+    "velocity": 3.0,
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 56.74587086280259
+    "rotation": -63.43494882292214
   },
   "useDefaultConstraints": false
 }
