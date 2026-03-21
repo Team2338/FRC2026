@@ -16,28 +16,19 @@
     },
     {
       "anchor": {
-        "x": 2.900456490727533,
-        "y": 7.41845934379458
+        "x": 5.252,
+        "y": 7.595
       },
       "prevControl": {
-        "x": 7.118137595552469,
-        "y": 8.008620569840167
+        "x": 6.312410714285715,
+        "y": 7.578236607142857
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ShooterTrench"
+      "linkedName": "Left-Trench-Entrance-Rearfacing"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.7889125799573343,
-      "rotationDegrees": 0.0
-    },
-    {
-      "waypointRelativePos": 0.9392789373814043,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -50,8 +41,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -63.43494882292214
+    "velocity": 3.0,
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,

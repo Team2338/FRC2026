@@ -3,48 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.900456490727533,
-        "y": 0.644
+        "x": 5.529999999999999,
+        "y": 0.4684332191819248
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.249107142857143,
-        "y": 0.4717857142857145
+        "x": 6.401202435312024,
+        "y": 0.4709360730593619
       },
       "isLocked": false,
-      "linkedName": "R-3"
-    },
-    {
-      "anchor": {
-        "x": 3.72,
-        "y": 0.422
-      },
-      "prevControl": {
-        "x": 3.4215239621376083,
-        "y": 0.41915037731322113
-      },
-      "nextControl": {
-        "x": 6.685226111717152,
-        "y": 0.4503097285125248
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 6.31626248216833,
-        "y": 1.717
-      },
-      "prevControl": {
-        "x": 6.593647978094209,
-        "y": 0.35530989651516465
-      },
-      "nextControl": {
-        "x": 6.17393517392188,
-        "y": 2.415687169810115
-      },
-      "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right-Trench-Entrance-Sideways"
     },
     {
       "anchor": {
@@ -62,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": 90.0
     }
   ],
@@ -70,7 +38,7 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 1.5,
+      "maxWaypointRelativePos": 0.65,
       "constraints": {
         "maxVelocity": 3.0,
         "maxAcceleration": 3.0,
@@ -98,8 +66,8 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 63.43494882292214
+    "velocity": 3.0,
+    "rotation": 90.0
   },
   "useDefaultConstraints": false
 }
