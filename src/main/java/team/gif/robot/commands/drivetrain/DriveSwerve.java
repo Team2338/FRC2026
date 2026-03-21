@@ -12,9 +12,9 @@ public class DriveSwerve extends Command {
     private final SlewRateLimiter turnLimiter;
 
     public DriveSwerve() {
-        this.forwardLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.strafeLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.turnLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().MAX_ANGULAR_ACCEL_RADIANS_PER_SECOND_SQUARED);
+        this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
+        this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
+        this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ANGULAR_ACCEL_RADIANS_PER_SECOND_SQUARED);
         addRequirements(Robot.swerveDrive);
     }
 
@@ -70,7 +70,7 @@ public class DriveSwerve extends Command {
             rot = rot * rot;
         }
 
-        rot = turnLimiter.calculate(rot) * Robot.swerveDrive.getConstants().PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+        rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
 
         Robot.swerveDrive.drive(forward, strafe, rot);
     }
