@@ -129,7 +129,7 @@ public class ShotCalculator {
         double antireverse = antisetpoint - (2 * Math.PI);
 
         // Find setpoint option with minimum distance
-        double[] alternatives = { forward, reverse, antisetpoint, antiforward, antireverse };
+        double[] alternatives = { forward, reverse};
         double min = setpoint;
         double minDistance = getDistance(setpoint, position);
         for (int i = 0; i < alternatives.length; i++) {
