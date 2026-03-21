@@ -15,13 +15,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Forward2"
+                        "pathName": "R-Fwd-Start-FuelMid"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Back"
+                        "pathName": "R-Rev-FuelMid-TrenchShot"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "R-Enter-Trench"
                       }
                     }
                   ]
@@ -72,13 +78,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ForwardHub"
+                        "pathName": "R-Exit-Trench"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "ReverseHub"
+                        "pathName": "R-Fwd-TrenchShot-NeutralMid"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "R-Rev-NeutralMid-RampShot"
                       }
                     }
                   ]
@@ -108,7 +120,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Reverse End"
+            "pathName": "R-Rev-RampShot-Reverse End"
           }
         }
       ]

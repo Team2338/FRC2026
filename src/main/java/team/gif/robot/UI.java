@@ -3,6 +3,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.commands.autos.AutonShoot;
 
 public class UI {
     public SendableChooser<Double> delayChooser = new SendableChooser<>();
@@ -91,6 +92,8 @@ public class UI {
         SmartDashboard.putBoolean("Competition", Robot.isCompetition);
         SmartDashboard.putString("ShiftTime", String.format("%11.1f", Robot.shiftTime));
         SmartDashboard.putString("Shift",Robot.matchShift);
+        SmartDashboard.putString("Rot Offset", String.format("%11.0f", AutonShoot.hubCommand.getRotationOffset() * -1));
+        SmartDashboard.putString("RPM Offset", String.format("%11.0f", AutonShoot.shootCommand.getRPMOffset()));
         updateTemps();
     }
 

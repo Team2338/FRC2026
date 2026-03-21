@@ -5,6 +5,7 @@
 package team.gif.robot.subsystems.collector;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -30,6 +31,7 @@ public class CollectMotor extends SubsystemBase {
     private final TalonFX collectorMotor;
     private TalonFXConfiguration config;
     public VelocityVoltage velocityVoltage;
+    private DutyCycleOut dutyCycleOut;
 
     public CollectMotor() {
         collectorMotor = new TalonFX(RobotMap.Collector.COLLECT_MOTOR_ID);
@@ -37,6 +39,7 @@ public class CollectMotor extends SubsystemBase {
         setConfig();
 
         velocityVoltage = new VelocityVoltage(0).withSlot(0);
+        dutyCycleOut = new DutyCycleOut(0);
     }
 
 
@@ -59,7 +62,8 @@ public class CollectMotor extends SubsystemBase {
     }
 
     public void runCollectorPercent(double percent){
-        collectorMotor.set(percent);
+        dutyCycleOut.withOutput(percent).withEnableFOC(false);
+        collectorMotor.setControl(dutyCycleOut);
     }
 
     public void runCollector(double rpm) {

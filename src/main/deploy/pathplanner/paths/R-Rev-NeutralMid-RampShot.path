@@ -3,37 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.56,
-        "y": 4.035
+        "x": 6.199814550641939,
+        "y": 3.878
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.31,
-        "y": 4.035
+        "x": 6.242263848613857,
+        "y": 1.855
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "R-4"
     },
     {
       "anchor": {
-        "x": 1.9875039001560042,
-        "y": 4.035
+        "x": 3.14,
+        "y": 2.31
       },
       "prevControl": {
-        "x": 2.237503900156004,
-        "y": 4.035
+        "x": 4.831606864274569,
+        "y": 2.3680000000000003
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "R-Rev-RampShot-Reverse End"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.17688959240205793,
+      "rotationDegrees": 45.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 47.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 90.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

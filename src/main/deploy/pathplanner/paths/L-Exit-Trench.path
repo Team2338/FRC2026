@@ -3,61 +3,60 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.45,
-        "y": 7.444336661911555
+        "x": 2.900456490727533,
+        "y": 7.41845934379458
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.94281027104137,
-        "y": 7.392582025677603
+        "x": 3.317581903276129,
+        "y": 7.593666146645866
+      },
+      "isLocked": false,
+      "linkedName": "ShooterTrench"
+    },
+    {
+      "anchor": {
+        "x": 3.72,
+        "y": 7.64
+      },
+      "prevControl": {
+        "x": 3.4215792273117174,
+        "y": 7.646411548612915
+      },
+      "nextControl": {
+        "x": 4.772440476190476,
+        "y": 7.617388392857144
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.804208273894435,
-        "y": 4.028530670470756
+        "x": 5.53,
+        "y": 7.595
       },
       "prevControl": {
-        "x": 8.709914407988586,
-        "y": 8.22065620542083
+        "x": 4.838318452380952,
+        "y": 7.595
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Auto1End"
+      "linkedName": "Left-Trench-Entrance-Sideways"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.1845342706502684,
+      "waypointRelativePos": 1.0,
       "rotationDegrees": -90.0
-    },
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -135.0
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.6932482721956417,
+      "maxWaypointRelativePos": 1.25,
       "constraints": {
-        "maxVelocity": 3.5,
-        "maxAcceleration": 3.0,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
-    },
-    {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.69,
-      "maxWaypointRelativePos": 0.8293460925039865,
-      "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 3.0,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -67,14 +66,7 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "AutonCollectorDown",
-      "waypointRelativePos": 0.09,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.5,
     "maxAcceleration": 3.0,
@@ -84,14 +76,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -135.0
+    "velocity": 3.0,
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -63.43494882292214
   },
   "useDefaultConstraints": false
 }
