@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
 
     public static Pigeon2_0 pigeon;
 
+    public static SwerveConfiguration swerveConfig;
     public static SwerveDrive swerveDrive;
 
     public static UI ui;
@@ -76,7 +77,7 @@ public class Robot extends TimedRobot {
         collectMotor = new CollectMotor();
         pivotMotor = new PivotMotor();
 
-        SwerveConfiguration swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
+        swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
         swerveDrive = new SwerveDrive(swerveConfig);
         swerveDrive.enableDebugMode();
         swerveDrive.addPhotonCamera("left-cam", Constants.Vision.LEFT_CAMERA_POSITION);
