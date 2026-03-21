@@ -32,9 +32,9 @@ public class Indexer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        double netP = SmartDashboard.getNumber("Indexer/PID/T_Index P", Constants.Indexer.TOP_INDEXER_P);
-        double netI = SmartDashboard.getNumber("Indexer/PID/T_Index I", Constants.Indexer.TOP_INDEXER_I);
-        double netD = SmartDashboard.getNumber("Indexer/PID/T_Index D", Constants.Indexer.TOP_INDEXER_D);
+        double netP = SmartDashboard.getNumber("Indexer/PID/T_Index P", 0);
+        double netI = SmartDashboard.getNumber("Indexer/PID/T_Index I", 0);
+        double netD = SmartDashboard.getNumber("Indexer/PID/T_Index D", 0);
 
         double currP = topIndexerConfig.Slot0.kP;
         double currI = topIndexerConfig.Slot0.kI;
