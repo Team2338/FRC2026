@@ -81,8 +81,8 @@ public class Robot extends TimedRobot {
         swerveDrive = new SwerveDrive(swerveConfig);
         swerveDrive.enableDebugMode();
         swerveDrive.addPhotonCamera("left-cam", Constants.Vision.LEFT_CAMERA_POSITION);
-         swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
-//        swerveDrive.addPhotonCamera("photonvision-side", Constants.Vision.SIDE_CAMERA_POSITION);
+        swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
+        swerveDrive.addPhotonCamera("side-cam", Constants.Vision.SIDE_CAMERA_POSITION);
         robotContainer = new RobotContainer();
 
         swerveDrive.setDefaultCommand(new DriveSwerve());

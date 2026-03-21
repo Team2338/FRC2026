@@ -3,6 +3,7 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.commands.autos.AutonShoot;
 
 public class UI {
     public SendableChooser<Double> delayChooser = new SendableChooser<>();
@@ -71,13 +72,13 @@ public class UI {
      *     SmartDashboard.putString("Elevator", String.format("%11.2f", Elevator.getPosition());
      */
     public void update() {
-        SmartDashboard.putNumber("PID/Shooter 1 Speed", Robot.shooter.getLeftMotorSpeed());
-        SmartDashboard.putNumber("PID/Shooter 2 Speed", Robot.shooter.getMiddleMotorSpeed());
-        SmartDashboard.putNumber("PID/Shooter 3 Speed", Robot.shooter.getRightMotorSpeed());
-        SmartDashboard.putNumber("PID/Shooter Current", Robot.shooter.getLeftMotorCurrent());
-        SmartDashboard.putNumber("PID/Shooter Output", Robot.shooter.getLeftMotorOutput());
-        SmartDashboard.putNumber("PID/Shooter Output 2", Robot.shooter.getMiddleMotorOutput());
-        SmartDashboard.putNumber("PID/Shooter Output 3", Robot.shooter.getRightMotorOutput());
+        SmartDashboard.putNumber("Shooter/Shooter 1 Speed", Robot.shooter.getLeftMotorSpeed());
+        SmartDashboard.putNumber("Shooter/Shooter 2 Speed", Robot.shooter.getMiddleMotorSpeed());
+        SmartDashboard.putNumber("Shooter/Shooter 3 Speed", Robot.shooter.getRightMotorSpeed());
+        SmartDashboard.putNumber("Shooter/Shooter Current", Robot.shooter.getLeftMotorCurrent());
+        SmartDashboard.putNumber("Shooter/Shooter Output", Robot.shooter.getLeftMotorOutput());
+        SmartDashboard.putNumber("Shooter/Shooter Output 2", Robot.shooter.getMiddleMotorOutput());
+        SmartDashboard.putNumber("Shooter/Shooter Output 3", Robot.shooter.getRightMotorOutput());
         SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getBottomIndexerSpeed());
         SmartDashboard.putNumber("Collector/PID/Collector Output", Robot.collectMotor.getCollectOutput());
         SmartDashboard.putNumber("Collector/PID/Collector Speed", Robot.collectMotor.getCollectSpeed());
@@ -88,9 +89,12 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
+        SmartDashboard.putBoolean("OdometryReady", Robot.swerveDrive.isOdometryReady());
         SmartDashboard.putBoolean("Competition", Robot.isCompetition);
         SmartDashboard.putString("ShiftTime", String.format("%11.1f", Robot.shiftTime));
         SmartDashboard.putString("Shift",Robot.matchShift);
+        SmartDashboard.putString("Rot Offset", String.format("%11.0f", AutonShoot.hubCommand.getRotationOffset() * -1));
+        SmartDashboard.putString("RPM Offset", String.format("%11.0f", AutonShoot.shootCommand.getRPMOffset()));
         updateTemps();
     }
 

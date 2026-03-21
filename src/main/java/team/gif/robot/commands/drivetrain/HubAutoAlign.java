@@ -1,6 +1,7 @@
 package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -10,11 +11,12 @@ public class HubAutoAlign extends Command {
     private final SlewRateLimiter forwardLimiter;
     private final SlewRateLimiter strafeLimiter;
     private final SlewRateLimiter turnLimiter;
+    private double rotOffset = 0;
 
     public HubAutoAlign() {
-        this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND);
+        this.forwardLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().MAX_ACCEL_METERS_PER_SECOND_SQUARED);
+        this.strafeLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().MAX_ACCEL_METERS_PER_SECOND_SQUARED);
+        this.turnLimiter = new SlewRateLimiter(Robot.swerveDrive.getConstants().PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND);
         addRequirements(Robot.swerveDrive);
     }
 
@@ -56,10 +58,10 @@ public class HubAutoAlign extends Command {
 
 
             // Auto rotate to hub
-            double rotError = ShotCalculator.angleToHubError().getRadians();
+            double rotError = ShotCalculator.angleToHubError().getRadians() + Units.degreesToRadians(rotOffset);
             double rot = rotError * Constants.Mk5Constants.HUB_ALIGN_P / (2 * Math.PI); //Converts to -1 to 1 scale for limiter and speed calc
 
-             rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+             rot = turnLimiter.calculate(rot) * Robot.swerveDrive.getConstants().PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
 
             // the robot starts facing the driver station so for this year negating y and x
             Robot.swerveDrive.drive(forward, strafe, rot);
@@ -71,5 +73,24 @@ public class HubAutoAlign extends Command {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    /**
+     * Adjusts the offset to the calculated angle to the hub
+     * @param degrees - degrees to change the offset by, CCW positive
+     */
+    public void adjustRotationOffset(double degrees) {
+        rotOffset = rotOffset + degrees;
+    }
+
+    /**
+     * Sets the rotation offset to zero
+     */
+    public void resetRotationOffset() {
+        rotOffset = 0;
+    }
+
+    public double getRotationOffset() {
+        return rotOffset;
     }
 }

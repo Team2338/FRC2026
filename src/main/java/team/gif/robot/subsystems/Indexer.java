@@ -29,6 +29,10 @@ public class Indexer extends SubsystemBase {
         topIndexerMotor.set(topIndexerMotorPercent);
     }
 
+    public double getTopIndexerSpeed() {
+        return topIndexerMotor.getVelocity().getValueAsDouble();
+    }
+
     public double getBottomIndexerSpeed() {
         return bottomIndexerMotor.getVelocity().getValueAsDouble();
     }
