@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 3.14,
-        "y": 2.377
+        "y": 2.31
       },
       "prevControl": {
         "x": 4.831606864274569,
-        "y": 2.435
+        "y": 2.3680000000000003
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightReverseHubEnd"
+      "linkedName": "R-Rev-RampShot-Reverse End"
     }
   ],
   "rotationTargets": [

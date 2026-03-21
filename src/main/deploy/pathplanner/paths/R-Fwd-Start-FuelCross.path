@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.45,
-        "y": 0.49
+        "x": 4.4,
+        "y": 0.405
       },
       "prevControl": null,
       "nextControl": {
-        "x": 9.345393305225763,
-        "y": 0.567073907068308
+        "x": 9.295254315485689,
+        "y": 0.4904469819169401
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right Trench start"
     },
     {
       "anchor": {
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.1845342706502684,
+      "waypointRelativePos": 0.2,
       "rotationDegrees": 90.0
     },
     {
@@ -42,7 +42,7 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.6932482721956417,
+      "maxWaypointRelativePos": 0.7,
       "constraints": {
         "maxVelocity": 3.5,
         "maxAcceleration": 3.0,
@@ -54,8 +54,8 @@
     },
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.69,
-      "maxWaypointRelativePos": 0.8293460925039865,
+      "minWaypointRelativePos": 0.75,
+      "maxWaypointRelativePos": 0.9,
       "constraints": {
         "maxVelocity": 1.5,
         "maxAcceleration": 3.0,
