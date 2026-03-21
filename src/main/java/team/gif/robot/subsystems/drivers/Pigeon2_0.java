@@ -121,4 +121,11 @@ public class Pigeon2_0 extends SubsystemBase {
     public double getYawRate() {
         return _pigeon.getAngularVelocityXDevice().getValueAsDouble();
     }
+
+    public double getAcceleration() {
+        double aX = _pigeon.getAccelerationX().getValueAsDouble() - _pigeon.getGravityVectorX().getValueAsDouble();
+        double aY = _pigeon.getAccelerationY().getValueAsDouble() - _pigeon.getGravityVectorY().getValueAsDouble();
+        double aZ = _pigeon.getAccelerationZ().getValueAsDouble() - _pigeon.getGravityVectorZ().getValueAsDouble();
+        return Math.sqrt(aX * aX + aY * aY + aZ * aZ);
+    }
 }
