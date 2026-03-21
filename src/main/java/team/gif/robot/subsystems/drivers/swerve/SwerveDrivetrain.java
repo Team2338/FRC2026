@@ -321,6 +321,17 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
 
     /**
+     * Sets the modules in an X pattern to be resistant to defenese
+     */
+    public void xStance() {
+        SwerveModuleState fortyFive = new SwerveModuleState(0, Rotation2d.fromDegrees(45));
+        SwerveModuleState oneThirtyFive = new SwerveModuleState(0, Rotation2d.fromDegrees(135));
+        SwerveModuleState[] states = {fortyFive, oneThirtyFive, oneThirtyFive, fortyFive};
+
+        setModuleStates(states);
+    }
+
+    /**
      * This set moves all the modules to 90 degrees. It turns the modules inward to prevent the robot from moving
      */
     public void modulesTo90() {
