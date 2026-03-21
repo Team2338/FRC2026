@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 3.14,
-        "y": 2.377
+        "y": 2.31
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.527671820163624,
-        "y": 2.377
+        "y": 2.31
       },
       "isLocked": false,
-      "linkedName": "RightReverseHubEnd"
+      "linkedName": "R-Rev-RampShot-Reverse End"
     },
     {
       "anchor": {
         "x": 1.47,
-        "y": 2.377
+        "y": 2.31
       },
       "prevControl": {
         "x": 1.93594234831719,
-        "y": 2.377
+        "y": 2.31
       },
       "nextControl": null,
       "isLocked": false,
