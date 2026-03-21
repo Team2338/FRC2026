@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.14,
-        "y": 2.31
+        "y": 2.377
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5334589041095894,
-        "y": 2.2930136986301375
+        "x": 2.527671820163624,
+        "y": 2.377
       },
       "isLocked": false,
       "linkedName": "RightReverseHubEnd"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 1.47,
-        "y": 2.31
+        "y": 2.377
       },
       "prevControl": {
-        "x": 1.932808219178081,
-        "y": 2.3230479452054795
+        "x": 1.93594234831719,
+        "y": 2.377
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 51.054709261521275
+    "rotation": 47.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 49.32603673713001
+    "rotation": 47.0
   },
   "useDefaultConstraints": true
 }

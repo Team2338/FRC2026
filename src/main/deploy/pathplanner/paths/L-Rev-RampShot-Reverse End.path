@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.14,
-        "y": 5.684679029957205
+        "y": 5.685
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.440296411856473,
-        "y": 5.669297971918877
+        "x": 2.4401202496522805,
+        "y": 5.685
       },
       "isLocked": false,
       "linkedName": "ReverseEnd"
@@ -20,8 +20,8 @@
         "y": 5.685
       },
       "prevControl": {
-        "x": 2.389734789391577,
-        "y": 5.67085023400936
+        "x": 2.389843627305618,
+        "y": 5.685
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -51.08400993215152
+    "rotation": -47.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -48.36646066342984
+    "rotation": -47.0
   },
   "useDefaultConstraints": true
 }

@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 6.242263848613857,
-        "y": 6.207211115834077
+        "y": 6.207211115834076
       },
       "isLocked": false,
       "linkedName": "ForwardHubMiddle"
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -48.36646066342984
+    "rotation": -47.0
   },
   "reversed": false,
   "folder": null,
