@@ -83,8 +83,6 @@ public class OI {
     public final Trigger tDPadDown = test.povDown();
     public final Trigger tDPadLeft = test.povLeft();
 
-    private double rpmOffset = 0;
-
     public OI() {
         DriverStation.silenceJoystickConnectionWarning(true);
 

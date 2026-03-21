@@ -58,7 +58,7 @@ public class HubAutoAlign extends Command {
 
 
             // Auto rotate to hub
-            double rotError = ShotCalculator.angleToHubError().getRadians() - Units.degreesToRadians(rotOffset);
+            double rotError = ShotCalculator.angleToHubError().getRadians() + Units.degreesToRadians(rotOffset);
             double rot = rotError * Constants.Mk5Constants.HUB_ALIGN_P / (2 * Math.PI); //Converts to -1 to 1 scale for limiter and speed calc
 
              rot = turnLimiter.calculate(rot) * Robot.swerveDrive.getConstants().PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
@@ -88,5 +88,9 @@ public class HubAutoAlign extends Command {
      */
     public void resetRotationOffset() {
         rotOffset = 0;
+    }
+
+    public double getRotationOffset() {
+        return rotOffset;
     }
 }

@@ -19,8 +19,8 @@ public class AutonShoot extends ParallelCommandGroup {
     public AutonShoot(boolean agitate) {
         if (agitate) {
             addCommands(
-                    shootCommand,
-                    hubCommand,
+                    new ShooterAuto(),
+                    new HubAutoAlign(),
                     new CollectorPercent(0.9),
                     new AgitatorPercent(),
                     new WaitCommand(0.85).andThen(new CollectorAutoAgitate())
