@@ -62,7 +62,7 @@ public class CollectMotor extends SubsystemBase {
     }
 
     public void runCollectorPercent(double percent){
-        dutyCycleOut.Output = percent;
+        dutyCycleOut.withOutput(percent).withEnableFOC(false);
         collectorMotor.setControl(dutyCycleOut);
     }
 
