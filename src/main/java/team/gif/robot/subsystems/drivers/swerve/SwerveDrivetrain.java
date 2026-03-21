@@ -133,13 +133,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         resetDriveEncoders();
 
-        Rotation2d rotation = Robot.pigeon.getRotation2d();
-
-        if(checkRedAlliance()) {
-            rotation = rotation.rotateBy(oneEighty);
-        }
-
-        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getPosition(), new Pose2d(0, 0, rotation));
+        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, getAllianceRotation(), getPosition(), new Pose2d(0, 0, rotation));
 
         drivePace = team.gif.lib.drivePace.COAST_FR;
 
