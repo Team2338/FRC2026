@@ -69,7 +69,7 @@ public class Indexer extends SubsystemBase {
         bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-        topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         topIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         bottomIndexerMotor.getConfigurator().apply(bottomIndexerConfig);
