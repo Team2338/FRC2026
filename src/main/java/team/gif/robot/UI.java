@@ -80,6 +80,7 @@ public class UI {
         SmartDashboard.putNumber("PID/Shooter Output 2", Robot.shooter.getMiddleMotorOutput());
         SmartDashboard.putNumber("PID/Shooter Output 3", Robot.shooter.getRightMotorOutput());
         SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getBottomIndexerSpeed());
+        SmartDashboard.putNumber("Indexer/Speed2", Robot.indexer.getTopIndexerSpeed());
         SmartDashboard.putNumber("Collector/PID/Collector Output", Robot.collectMotor.getCollectOutput());
         SmartDashboard.putNumber("Collector/PID/Collector Speed", Robot.collectMotor.getCollectSpeed());
         SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());
