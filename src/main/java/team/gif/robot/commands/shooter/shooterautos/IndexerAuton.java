@@ -39,7 +39,7 @@ public class IndexerAuton extends Command {
                 Robot.indexer.runPercent(0, Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
             } else {
                 //Run the entire indexer and agitator
-                Robot.indexer.runPercent(Constants.Indexer.BOTTOM_INDEXER_MOTOR_PERCENT, Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
+                Robot.indexer.runForShooting();
                 Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_AUTON_PERCENT);
             }
         }

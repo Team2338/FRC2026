@@ -29,6 +29,11 @@ public class Indexer extends SubsystemBase {
         topIndexerMotor.set(topIndexerMotorPercent);
     }
 
+    public void runForShooting() {
+        bottomIndexerMotor.set(Constants.Indexer.BOTTOM_INDEXER_MOTOR_PERCENT);
+        topIndexerMotor.set(Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
+    }
+
     public double getTopIndexerSpeed() {
         return topIndexerMotor.getVelocity().getValueAsDouble();
     }
