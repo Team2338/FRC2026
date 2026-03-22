@@ -177,8 +177,8 @@ public final class Constants {
         public static final double INDEXER_REVERSE_PERCENT = -0.25;
         public static final double INDEXER_REVERSE_AUTO_SECONDS = 0.25;
 
-        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.7; //Should change
-        public static final double TOP_INDEXER_MOTOR_PERCENT = 0.7; //Should change
+        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.5; //Should change
+        public static final double TOP_INDEXER_MOTOR_PERCENT = 1.0; //Should change
     }
 
     public static final class MotorTemps {
