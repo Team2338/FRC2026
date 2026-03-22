@@ -7,7 +7,7 @@ import team.gif.robot.subsystems.ShotCalculator;
 
 public class ShooterAuto extends Command {
     private boolean readyToIndex;
-    private static final Command indexCommand = new IndexerPercent(-0.75, 0.0).withTimeout(0.15).andThen(new IndexerPercent(-0.75, 1.0).withTimeout(0.1)).andThen(new IndexerShoot());
+    private static final Command indexCommand = new IndexerPercent(-0.75, 0.0).withTimeout(0.17).andThen(new IndexerPercent(-0.75, 1.0).withTimeout(0.07)).andThen(new IndexerShoot());
     private double rpmOffset = 0;
 
     /**
