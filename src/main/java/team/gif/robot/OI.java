@@ -17,6 +17,7 @@ import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
 import team.gif.robot.commands.shooter.IndexerShoot;
+import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.ShooterRPM;
 
 public class OI {
@@ -117,9 +118,9 @@ public class OI {
 
         dRTrigger.whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index
 
-        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerShoot()))); // Long shot to use  if cameras break // TODO change value later
-        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerShoot()))); // Short shot to use if cameras break // TODO change value later
-        dDPadRight.and(dStart.negate()).whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(new IndexerReverse(0.75, 0.25).andThen(new IndexerShoot()))); // Short shot to use if cameras break // TODO change value later
+        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Long shot to use  if cameras break
+        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Short shot to use if cameras break
+        dDPadRight.and(dStart.negate()).whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Passing fuel from neutral zone to our alliance zone
 
         dB.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
         dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
