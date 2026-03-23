@@ -59,6 +59,7 @@ public class ShooterAuto extends Command {
     public void end(boolean interrupted) {
         CommandScheduler.getInstance().schedule(new ShooterRPM(3300).withTimeout(0.5));
         indexerCommand.cancel();
+        sequenceScheduled = false;
     }
 
     /**
