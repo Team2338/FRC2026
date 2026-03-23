@@ -57,7 +57,7 @@ public class ShooterAuto extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        CommandScheduler.getInstance().schedule(new ShooterRPM(3300).withTimeout(0.5));
+        Robot.shooter.stopMotors(); // added because teleop would start with shooter motor running
         indexerCommand.cancel();
         sequenceScheduled = false;
     }

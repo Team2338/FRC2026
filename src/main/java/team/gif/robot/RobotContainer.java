@@ -19,6 +19,7 @@ import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
+import team.gif.robot.commands.shooter.ShooterRPM;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -38,7 +39,7 @@ public class RobotContainer {
     public RobotContainer() {
         NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorPercent()));
         NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
-        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5));
+        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5).andThen(new ShooterRPM(4000).withTimeout(0.25)));
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
         NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
 

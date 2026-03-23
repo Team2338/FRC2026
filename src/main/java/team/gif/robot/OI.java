@@ -123,10 +123,12 @@ public class OI {
         dLBump.and(dRBump.negate()).onFalse(new ShooterRPM(4000).withTimeout(0.5));
 
         dRTrigger.and(manualMode).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(Constants.Indexer.getFullCommand()));
-        dRTrigger.and(manualMode).onFalse(new ShooterRPM(3500).withTimeout(0.5)); //Keep shooter running after command
+        dRTrigger.and(manualMode).onFalse(new ShooterRPM(3500).withTimeout(0.25)); //Keep shooter running after command
         dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
+        dRTrigger.and(manualMode.negate()).onFalse(new ShooterRPM(3500).withTimeout(0.25)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
+
         dLTrigger.whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(Constants.Indexer.getFullCommand())); // Short shot to use if cameras break
-        dLTrigger.onFalse(new ShooterRPM(3300).withTimeout(0.5));
+        dLTrigger.onFalse(new ShooterRPM(3300).withTimeout(0.25));
 
 //        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Long shot to use  if cameras break
 //        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Short shot to use if cameras break
