@@ -1,24 +1,18 @@
-package team.gif.robot.commands.collector.collectorautos;
+package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import team.gif.robot.Robot;
+import team.gif.robot.commands.autos.AutonShoot;
 
-public class CollectorAutoCollectRPM extends Command {
-    double rpm = 0;
+public class ToggleShooterManualMode extends Command {
 
-    /**
-     * Currently not in use
-     */
-    public CollectorAutoCollectRPM() {
+    public ToggleShooterManualMode() {
         super();
-        addRequirements(Robot.collectMotor); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = 3500; //If needed change value
-        Robot.collectMotor.runCollector(rpm);
+        AutonShoot.shootCommand.setManualMode(true);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -34,6 +28,6 @@ public class CollectorAutoCollectRPM extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collectMotor.stopMotor();
+        AutonShoot.shootCommand.setManualMode(false);
     }
 }

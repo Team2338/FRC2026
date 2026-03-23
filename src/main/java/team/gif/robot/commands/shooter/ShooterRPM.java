@@ -8,7 +8,7 @@ public class ShooterRPM extends Command {
     double rpm;
 
     /**
-     * Runs shooter at specified rpm, never ends
+     * Runs shooter motors at provided rpm, never self exits, stops the shooter motors when done
      * @param rpm rpm to run shooter
      */
     public ShooterRPM(double rpm){

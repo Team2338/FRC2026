@@ -4,17 +4,20 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.Constants;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
+import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
-import team.gif.robot.commands.shooter.shooterautos.AutonShooterRPM;
 
 public class AutonInitialShoot extends ParallelDeadlineGroup {
     /**
      * This is the entire sequence to shoot in autos at the start of the match
      * with the collector up
+     *
+     * No longer used and would need testing with new code structure
      */
     public AutonInitialShoot() {
-        super(new AutonShooterRPM(Constants.Shooter.SHOOTER_AUTON_FAR_RPM).withTimeout(Constants.Shooter.SHOOTER_AUTO_SECONDS));
+        super(new WaitCommand(Constants.Shooter.SHOOTER_AUTO_SECONDS)); // timeout
         addCommands(
+                new ShooterRPM(Constants.Shooter.SHOOTER_AUTON_FAR_RPM),
                 new CollectorAutoPivotDown().withTimeout(1.5).andThen(new CollectorAutoPivotDown()),
                 new WaitCommand(1.5).andThen(new IndexerAuton(false))
         );

@@ -13,7 +13,7 @@ public class CollectorPercent extends Command {
     }
 
     /**
-     * Runs the collector at a provided percent, never ends
+     * Runs the collector at a provided percent, never self exits, stops the collector motor when done
      *
      * @param perc positive value collects fuel, negative value ejects fuel
      */

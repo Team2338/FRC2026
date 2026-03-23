@@ -5,12 +5,15 @@
 package team.gif.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import team.gif.robot.commands.shooter.IndexerPercent;
+import team.gif.robot.commands.shooter.IndexerShoot;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
 
 /**
@@ -150,9 +153,6 @@ public final class Constants {
     }
 
     public static final class Collector {
-        public static final double COLLECTOR_SLOW_PERCENT = 0.5;
-        public static final double COLLECTOR_FAST_PERCENT = 0.9;
-
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 0.05;
         public static final double PIVOT_LIMIT_AGITATE_POS         = 0.30;
@@ -161,7 +161,6 @@ public final class Constants {
 
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
 
-        public static final double AGITATOR_MOTOR_AUTON_PERCENT = 0.3; //Separate in case we want autos to be different
         public static final double AGITATOR_MOTOR_PERCENT = 0.3;
     }
 
@@ -169,16 +168,20 @@ public final class Constants {
         public static final double SHOOTER_AUTO_SECONDS = 2.5; //Change value
         public static final double SHOOTER_AUTON_FAR_RPM = 3450;
         public static final double SHOOTER_AUTON_CENTER_RPM = 3100;
-        public static final double SHOOTER_AUTON_NEAR_RPM = 3000;
     }
 
     public static final class Indexer {
-        public static final double INDEXER_REVERSE_TELEOP_SECONDS = 0.25;
-        public static final double INDEXER_REVERSE_PERCENT = -0.25;
-        public static final double INDEXER_REVERSE_AUTO_SECONDS = 0.25;
+        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.42; //Should change
+        public static final double TOP_INDEXER_MOTOR_PERCENT = 1.0; //Should change
 
-        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.7; //Should change
-        public static final double TOP_INDEXER_MOTOR_PERCENT = 0.7; //Should change
+        public static Command getForwardCommand() {
+            return new IndexerShoot();
+        }
+        public static Command getFullCommand() {
+            Command reverseCommand = new IndexerPercent(-0.75, 0.0).withTimeout(0.17).andThen(new IndexerPercent(-0.75, 1.0).withTimeout(0.07));
+            Command forwardCommand = new IndexerShoot();
+            return reverseCommand.andThen(forwardCommand);
+        }
     }
 
     public static final class MotorTemps {
