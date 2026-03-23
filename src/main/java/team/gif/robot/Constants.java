@@ -149,9 +149,6 @@ public final class Constants {
     }
 
     public static final class Collector {
-        public static final double COLLECTOR_SLOW_PERCENT = 0.5;
-        public static final double COLLECTOR_FAST_PERCENT = 0.9;
-
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 0.05;
         public static final double PIVOT_LIMIT_AGITATE_POS         = 0.30;
@@ -167,14 +164,9 @@ public final class Constants {
         public static final double SHOOTER_AUTO_SECONDS = 2.5; //Change value
         public static final double SHOOTER_AUTON_FAR_RPM = 3450;
         public static final double SHOOTER_AUTON_CENTER_RPM = 3100;
-        public static final double SHOOTER_AUTON_NEAR_RPM = 3000;
     }
 
     public static final class Indexer {
-        public static final double INDEXER_REVERSE_TELEOP_SECONDS = 0.25;
-        public static final double INDEXER_REVERSE_PERCENT = -0.25;
-        public static final double INDEXER_REVERSE_AUTO_SECONDS = 0.25;
-
         public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.42; //Should change
         public static final double TOP_INDEXER_MOTOR_PERCENT = 1.0; //Should change
     }
