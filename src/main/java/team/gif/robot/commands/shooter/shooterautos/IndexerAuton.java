@@ -17,6 +17,7 @@ public class IndexerAuton extends Command {
     public IndexerAuton(boolean runReverse) {
         super();
         addRequirements(Robot.indexer);
+        addRequirements(Robot.agitator);
         commandSequence = runReverse ? ShooterAuto.indexFullCommand : ShooterAuto.indexForwardCommand;
     }
 
