@@ -10,6 +10,9 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.robot.commands.shooter.IndexerPercent;
+import team.gif.robot.commands.shooter.IndexerShoot;
 import team.gif.robot.subsystems.drivers.swerve.utilities.SwerveConstants;
 
 /**
@@ -169,6 +172,10 @@ public final class Constants {
     public static final class Indexer {
         public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.42; //Should change
         public static final double TOP_INDEXER_MOTOR_PERCENT = 1.0; //Should change
+
+        public static final Command reverseCommand = new IndexerPercent(-0.75, 0.0).withTimeout(0.17).andThen(new IndexerPercent(-0.75, 1.0).withTimeout(0.07));
+        public static final Command forwardCommand = new IndexerShoot();
+        public static final Command fullCommand = reverseCommand.andThen(forwardCommand);
     }
 
     public static final class MotorTemps {

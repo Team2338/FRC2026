@@ -15,7 +15,6 @@ import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.shooter.IndexerReverse;
-import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.ToggleShooterManualMode;
 
@@ -115,10 +114,10 @@ public class OI {
 
         dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
-        dLBump.whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Passing fuel from neutral zone to our alliance zone
+        dLBump.whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(Constants.Indexer.fullCommand)); // Passing fuel from neutral zone to our alliance zone
 
         dRTrigger.whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
-        dLTrigger.whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Short shot to use if cameras break
+        dLTrigger.whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(Constants.Indexer.fullCommand)); // Short shot to use if cameras break
 
 //        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Long shot to use  if cameras break
 //        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Short shot to use if cameras break

@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.shooter.ShooterAuto;
 
 public class IndexerAuton extends Command {
 
@@ -18,7 +17,7 @@ public class IndexerAuton extends Command {
         super();
         addRequirements(Robot.indexer);
         addRequirements(Robot.agitator);
-        commandSequence = runReverse ? ShooterAuto.indexFullCommand : ShooterAuto.indexForwardCommand;
+        commandSequence = runReverse ? Constants.Indexer.fullCommand : Constants.Indexer.forwardCommand;
     }
 
     // Called when the command is initially scheduled.

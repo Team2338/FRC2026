@@ -2,14 +2,11 @@ package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.ShotCalculator;
 
 public class ShooterAuto extends Command {
-    public static final Command indexReverseCommand = new IndexerPercent(-0.75, 0.0).withTimeout(0.17).andThen(new IndexerPercent(-0.75, 1.0).withTimeout(0.07));
-    public static final Command indexForwardCommand = new IndexerShoot();
-    public static final Command indexFullCommand = indexReverseCommand.andThen(indexForwardCommand);
-
     private boolean readyToIndex;
     private double rpmOffset = 0;
     private boolean sequenceScheduled;
@@ -50,7 +47,7 @@ public class ShooterAuto extends Command {
         // only want to run this if shooter is ready, bot is aligned, and it hasn't been run already
         // i.e. only schedule the index sequence once
         if (!sequenceScheduled && readyToIndex) {
-            CommandScheduler.getInstance().schedule(indexFullCommand);
+            CommandScheduler.getInstance().schedule(Constants.Indexer.fullCommand);
             sequenceScheduled = true;
         }
     }
@@ -65,7 +62,7 @@ public class ShooterAuto extends Command {
     @Override
     public void end(boolean interrupted) {
         Robot.shooter.stopMotors();
-        indexFullCommand.cancel();
+        Constants.Indexer.fullCommand.cancel();
     }
 
     /**
