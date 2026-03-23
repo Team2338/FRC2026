@@ -14,9 +14,7 @@ import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
-import team.gif.robot.commands.shooter.IndexerPercent;
 import team.gif.robot.commands.shooter.IndexerReverse;
-import team.gif.robot.commands.shooter.IndexerShoot;
 import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.ShooterRPM;
 
