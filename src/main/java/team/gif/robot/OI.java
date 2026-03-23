@@ -2,7 +2,6 @@ package team.gif.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -16,8 +15,6 @@ import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.shooter.IndexerReverse;
-import team.gif.robot.commands.shooter.IndexerShoot;
-import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.ToggleShooterManualMode;
 
