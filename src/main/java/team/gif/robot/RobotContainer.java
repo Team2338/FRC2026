@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
-import team.gif.robot.commands.agitator.AgitatorAutonPercent;
+import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonCenterShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
@@ -36,7 +36,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorAutonPercent()));
+        NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorPercent()));
         NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
         NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5));
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());

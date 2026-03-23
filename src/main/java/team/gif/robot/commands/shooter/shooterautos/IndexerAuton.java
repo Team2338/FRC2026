@@ -11,7 +11,7 @@ public class IndexerAuton extends Command {
     Command commandSequence;
 
     /**
-     * Full sequence to run indexer and agitator
+     * Full sequence to run indexer and agitator wheels during autonomous
      * @param runReverse set to true to initially run bottom indexer backward
      */
     public IndexerAuton(boolean runReverse) {
@@ -30,7 +30,7 @@ public class IndexerAuton extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_AUTON_PERCENT);
+        Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_PERCENT);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
