@@ -58,6 +58,7 @@ public class ShooterAuto extends Command {
     public void end(boolean interrupted) {
         Robot.shooter.stopMotors();
         indexFullCommand.cancel();
+        sequenceScheduled = false;
     }
 
     /**
