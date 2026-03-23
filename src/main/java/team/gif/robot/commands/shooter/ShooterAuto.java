@@ -11,6 +11,7 @@ public class ShooterAuto extends Command {
     private double rpmOffset = 0;
     private boolean sequenceScheduled;
     private boolean manualMode = false;
+    private Command indexerCommand;
 
     /**
      * Revs shooter and shoots fuel (i.e. runs indexer motors) when shooter reaches minimum RPM.<br>
@@ -20,7 +21,6 @@ public class ShooterAuto extends Command {
     public ShooterAuto() {
         super();
         addRequirements(Robot.shooter);
-        addRequirements(Robot.indexer);
     }
 
     // Called when the command is initially scheduled.
@@ -28,17 +28,14 @@ public class ShooterAuto extends Command {
     public void initialize() {
         readyToIndex = false;
         sequenceScheduled = false;
+        indexerCommand = Constants.Indexer.getFullCommand();
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        if (manualMode) {
-            Robot.shooter.runShooter(3500); // in manual mode, this button acts as the long shot
-            readyToIndex = true; //set this to index immediately
-        } else {
-            Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
-        }
+
+        Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
 
         if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 3)) {
             readyToIndex = true;
@@ -47,7 +44,7 @@ public class ShooterAuto extends Command {
         // only want to run this if shooter is ready, bot is aligned, and it hasn't been run already
         // i.e. only schedule the index sequence once
         if (!sequenceScheduled && readyToIndex) {
-            CommandScheduler.getInstance().schedule(Constants.Indexer.fullCommand);
+            CommandScheduler.getInstance().schedule(indexerCommand);
             sequenceScheduled = true;
         }
     }
@@ -61,8 +58,8 @@ public class ShooterAuto extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.stopMotors();
-        Constants.Indexer.fullCommand.cancel();
+        CommandScheduler.getInstance().schedule(new ShooterRPM(3300).withTimeout(0.5));
+        indexerCommand.cancel();
     }
 
     /**

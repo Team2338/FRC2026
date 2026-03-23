@@ -17,7 +17,7 @@ public class IndexerAuton extends Command {
         super();
         addRequirements(Robot.indexer);
         addRequirements(Robot.agitator);
-        commandSequence = runReverse ? Constants.Indexer.fullCommand : Constants.Indexer.forwardCommand;
+        commandSequence = runReverse ? Constants.Indexer.getFullCommand() : Constants.Indexer.getForwardCommand();
     }
 
     // Called when the command is initially scheduled.

@@ -71,10 +71,10 @@ public class Indexer extends SubsystemBase {
         TalonFXConfiguration bottomIndexerConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
         TalonFXConfiguration topIndexerConfig = new TalonFXConfiguration();
 
-        bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-        topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         topIndexerConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
         bottomIndexerMotor.getConfigurator().apply(bottomIndexerConfig);
