@@ -13,6 +13,7 @@ public class ShooterAuto extends Command {
     private boolean readyToIndex;
     private double rpmOffset = 0;
     private boolean sequenceScheduled;
+    private boolean manualMode = false;
 
     /**
      * Revs shooter and shoots fuel (i.e. runs indexer motors) when shooter reaches minimum RPM.<br>
@@ -35,7 +36,12 @@ public class ShooterAuto extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
+        if (manualMode) {
+            Robot.shooter.runShooter(3500); // in manual mode, this button acts as the long shot
+            readyToIndex = true; //set this to index immediately
+        } else {
+            Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
+        }
 
         if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 3)) {
             readyToIndex = true;
@@ -83,5 +89,21 @@ public class ShooterAuto extends Command {
      */
     public double getRPMOffset() {
         return rpmOffset;
+    }
+
+    /**
+     * Sets manual mode to true/false
+     * @param mode true when in manual mode
+     */
+    public void setManualMode(boolean mode) {
+        manualMode = mode;
+    }
+
+    /**
+     * Gets the current shooter manual mode
+     * @return true if manual mode is enabled
+     */
+    public boolean getManualMode() {
+        return manualMode;
     }
 }

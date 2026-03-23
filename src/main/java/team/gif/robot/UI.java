@@ -95,6 +95,7 @@ public class UI {
         SmartDashboard.putString("Shift",Robot.matchShift);
         SmartDashboard.putString("Rot Offset", String.format("%11.0f", AutonShoot.hubCommand.getRotationOffset() * -1));
         SmartDashboard.putString("RPM Offset", String.format("%11.0f", AutonShoot.shootCommand.getRPMOffset()));
+        SmartDashboard.putBoolean("Manual", AutonShoot.shootCommand.getManualMode());
         updateTemps();
     }
 
