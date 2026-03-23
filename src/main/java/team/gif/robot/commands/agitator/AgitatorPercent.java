@@ -8,7 +8,7 @@ public class AgitatorPercent extends Command {
     private double agitatorSpeed;
 
     /**
-     * Runs the agitator wheels to pull fuel in at a default percentage, never self ends, stops the agitator wheels when done
+     * Runs the agitator wheels to pull fuel in at a default percentage, never self exits, stops the agitator wheels when done
      */
     public AgitatorPercent() {
         super();

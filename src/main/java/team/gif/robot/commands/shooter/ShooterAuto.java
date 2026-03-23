@@ -15,7 +15,9 @@ public class ShooterAuto extends Command {
     private boolean sequenceScheduled;
 
     /**
-     * Runs shooter at RPM based distance to hub
+     * Revs shooter and shoots fuel (i.e. runs indexer motors) when shooter reaches minimum RPM.<br>
+     * Robot must be within angle tolerance of seeing the hub.<br>
+     * Never self exists, stops all shooter and both indexer wheels when done.
      */
     public ShooterAuto() {
         super();
@@ -33,7 +35,6 @@ public class ShooterAuto extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-
         Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
 
         if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 3)) {
@@ -41,6 +42,7 @@ public class ShooterAuto extends Command {
         }
 
         // only want to run this if shooter is ready, bot is aligned, and it hasn't been run already
+        // i.e. only schedule the index sequence once
         if (!sequenceScheduled && readyToIndex) {
             CommandScheduler.getInstance().schedule(indexFullCommand);
             sequenceScheduled = true;

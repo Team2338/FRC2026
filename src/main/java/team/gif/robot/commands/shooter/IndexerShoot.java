@@ -5,7 +5,7 @@ import team.gif.robot.Robot;
 
 public class IndexerShoot extends Command {
     /**
-     * Runs both indexer motors at percents designed for shooting, never ends
+     * Runs both indexer motors at percents designed for shooting, never self exits, stops both indexer motors when done
      */
     public IndexerShoot() {
         super();

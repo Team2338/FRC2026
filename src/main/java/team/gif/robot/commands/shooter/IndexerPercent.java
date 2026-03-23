@@ -8,7 +8,7 @@ public class IndexerPercent extends Command {
     double topIndexerMotorPercent;
 
     /**
-     * Runs both indexer motors at given percents, never ends
+     * Runs both indexer motors at provided percents, never self exits, stops indexer motors when done
      * @param topPercent percent to run top indexer (positive pulls fuel in)
      * @param bottomPercent percent to run the bottom indexer (positive collects)
      */

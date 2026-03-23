@@ -7,7 +7,7 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
-import team.gif.robot.commands.shooter.shooterautos.AutonShooterRPM;
+import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
 
 public class AutonCenterShoot extends ParallelDeadlineGroup {
@@ -20,7 +20,7 @@ public class AutonCenterShoot extends ParallelDeadlineGroup {
     public AutonCenterShoot() {
         super(new WaitCommand(4.0)); // max amount of time to run
         addCommands(
-                new AutonShooterRPM(Constants.Shooter.SHOOTER_AUTON_CENTER_RPM),
+                new ShooterRPM(Constants.Shooter.SHOOTER_AUTON_CENTER_RPM),
                 new WaitCommand(0.5).andThen(new CollectorAutoPivotDown(0.5).alongWith(new CollectorPercent(0.9).withTimeout(0.5)).andThen(new IndexerAuton(false))),
                 new InstantCommand(() -> Robot.swerveDrive.stopModules()) // prevent the robot from shaking
         );

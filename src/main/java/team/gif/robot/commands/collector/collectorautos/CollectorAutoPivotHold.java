@@ -5,7 +5,10 @@ import team.gif.robot.Robot;
 
 public class CollectorAutoPivotHold extends Command {
 
-
+    /**
+     * Holds the collector down at a very small power. <br>
+     * Utilized during autonomous to keep collector down while collecting fuel.
+     */
     public CollectorAutoPivotHold() {
         super();
         addRequirements(Robot.pivotMotor);

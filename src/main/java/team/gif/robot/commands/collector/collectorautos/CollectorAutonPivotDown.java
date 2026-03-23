@@ -5,12 +5,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-/**
- * Moves the collector down at a very high rate of speed
- * Used at the beginning of autonomous to deploy the collector fast
- */
 public class CollectorAutonPivotDown extends Command {
-
+    /**
+     * Moves the collector down at a very high rate of speed. Slows the speed down when close to
+     * being fully deployed. Re-enables the default command for holding the collector fully deployed.
+     * Used at the beginning of autonomous to deploy the collector fast.
+     */
     public CollectorAutonPivotDown() {
         super();
         addRequirements(Robot.pivotMotor);
@@ -19,7 +19,6 @@ public class CollectorAutonPivotDown extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println(Timer.getFPGATimestamp() + "something");
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled

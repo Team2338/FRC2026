@@ -14,7 +14,7 @@ public class AutonShoot extends ParallelCommandGroup {
     /**
      * This is the entire sequence to shoot, includes option to also agitate the collector
      *
-     * @param agitate True if sequence should also agitate, false if agitation is done by aux controller
+     * @param agitate True if sequence should also agitate (e.g. during autonomous), false if agitation is done externally (e.g. during teleop by aux controller)
      */
     public AutonShoot(boolean agitate) {
         if (agitate) {
