@@ -145,12 +145,12 @@ public class OI {
         aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)
         aB.onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
 
-        aDPadUp.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(25)));
-        aDPadLeft.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(1)));
-        aDPadRight.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(-1)));
-        aDPadDown.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(-25)));
+        aDPadUp.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(25)).ignoringDisable(true));
+        aDPadLeft.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(1)).ignoringDisable(true));
+        aDPadRight.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(-1)).ignoringDisable(true));
+        aDPadDown.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(-25)).ignoringDisable(true));
 
-        aStart.and(aBack).toggleOnTrue(new ToggleShooterManualMode());
+        aStart.and(aBack).toggleOnTrue(new ToggleShooterManualMode().ignoringDisable(true));
     }
 
     public void setRumble(boolean doRumble){
