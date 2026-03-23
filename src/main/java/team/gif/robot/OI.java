@@ -117,10 +117,10 @@ public class OI {
         dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
         dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        dRBump.onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
-        dRBump.onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
-        dLBump.whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
-        dLBump.onFalse(new ShooterRPM(4000).withTimeout(0.5));
+        dRBump.and(dLBump.negate()).onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
+        dRBump.and(dLBump.negate()).onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
+        dLBump.and(dRBump.negate()).whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
+        dLBump.and(dRBump.negate()).onFalse(new ShooterRPM(4000).withTimeout(0.5));
 
         dRTrigger.and(manualMode).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(Constants.Indexer.getFullCommand()));
         dRTrigger.and(manualMode).onFalse(new ShooterRPM(3500).withTimeout(0.5)); //Keep shooter running after command
@@ -131,7 +131,7 @@ public class OI {
 //        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Long shot to use  if cameras break
 //        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Short shot to use if cameras break
 //        dDPadRight.and(dStart.negate()).whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Passing fuel from neutral zone to our alliance zone
-        dDPadLeft.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
+        dLBump.and(dRBump).whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
 
         dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
 
