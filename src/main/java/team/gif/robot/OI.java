@@ -134,6 +134,7 @@ public class OI {
         dLBump.and(dRBump).whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
 
         dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
+        dBack.and(dB).onTrue(new InstantCommand(Robot::cancelAutonomousCommand));
 
         //Aux Controls
         aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));

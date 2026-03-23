@@ -229,6 +229,9 @@ public class Robot extends TimedRobot {
         autonomousCommand = robotContainer.getAutonomousCommand();
         CommandScheduler.getInstance().schedule(autonomousCommand);
     }
+    public static void cancelAutonomousCommand() {
+        autonomousCommand.cancel();
+    }
 
     /**
      * Checks if the current match time is in the specified interval.
