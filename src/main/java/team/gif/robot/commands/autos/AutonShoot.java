@@ -23,7 +23,7 @@ public class AutonShoot extends ParallelCommandGroup {
                     new HubAutoAlign(),
                     new CollectorPercent(0.9),
                     new AgitatorPercent(),
-                    new WaitCommand(0.85).andThen(new CollectorAutoAgitate())
+                    new WaitCommand(1.25).andThen(new CollectorAutoAgitate())
             );
         } else {
             addCommands(
