@@ -10,7 +10,7 @@ public class ShooterAuto extends Command {
     private boolean readyToIndex;
     private double rpmOffset = 0;
     private boolean sequenceScheduled;
-    private boolean manualMode = false;
+    private boolean manualMode = false; // not directly used here but related to Auto shooting
     private Command indexerCommand;
 
     /**
@@ -34,7 +34,6 @@ public class ShooterAuto extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-
         Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
 
         if (Robot.shooter.getShooterReady() && (ShotCalculator.angleToHubError().getDegrees() <= 3)) {
