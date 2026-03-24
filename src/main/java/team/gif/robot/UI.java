@@ -40,6 +40,8 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
         SmartDashboard.putNumber("Auto Collector/PID/Collect Reference", 0);
         SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
+        SmartDashboard.putNumber("Shooter/Reference", 3000);
+
 
         delayChooser.setDefaultOption("0", 0.0);
         delayChooser.addOption("1", 1.0);

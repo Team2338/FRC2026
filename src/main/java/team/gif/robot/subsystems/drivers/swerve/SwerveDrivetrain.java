@@ -284,7 +284,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         } else {
             // Pose present. Start running Heuristic
-            var estStdDevs = VecBuilder.fill(0.7, 0.7, 9999999);
+            var estStdDevs = VecBuilder.fill(0.7, 0.7, 2.0);
             int numTags = 0;
             double avgDist = 0;
 
