@@ -48,10 +48,10 @@ public final class Constants {
             COEFFICIENT_OF_FRICTION = 1; //TODO: find
             WHEEL_DIAMETER_INCHES = 4.0;
 
-            FRONT_LEFT_OFFSET = 108.017578125;
-            FRONT_RIGHT_OFFSET = -73.212890625;
+            FRONT_LEFT_OFFSET = 105.1171875;
+            FRONT_RIGHT_OFFSET = -74.267578125;
             REAR_LEFT_OFFSET = 129.111328125;
-            REAR_RIGHT_OFFSET = -105.029296875;
+            REAR_RIGHT_OFFSET = -105.908203125;
 
             FL_DRIVE_INVERTED = false;
             FR_DRIVE_INVERTED = false;

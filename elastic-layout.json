@@ -175,7 +175,7 @@
             }
           },
           {
-            "title": "Manual",
+            "title": "Standard",
             "x": 512.0,
             "y": 0.0,
             "width": 128.0,
@@ -185,8 +185,8 @@
               "topic": "/SmartDashboard/Manual",
               "period": 0.06,
               "data_type": "boolean",
-              "true_color": 4283215696,
-              "false_color": 4294198070,
+              "true_color": 4294198070,
+              "false_color": 4283215696,
               "true_icon": "None",
               "false_icon": "None"
             }
