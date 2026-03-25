@@ -87,7 +87,7 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Collector Speed", Robot.collectMotor.getCollectSpeed());
         SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());
         SmartDashboard.putNumber("Collector/PID/Pivot Speed", Robot.pivotMotor.getPivotSpeed());
-        SmartDashboard.putString("Collector/Collect Pos", String.format("%11.2f", Robot.pivotMotor.getPosition()));
+        SmartDashboard.putString("Collector/Collect Pos", String.format("%11.4f", Robot.pivotMotor.getPosition()));
         SmartDashboard.putString("Collector/Collect AbsPos", String.format("%11.4f", Robot.pivotMotor.getAbsEncoderPos()));
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
