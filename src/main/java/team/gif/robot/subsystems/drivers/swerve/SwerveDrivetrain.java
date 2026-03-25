@@ -133,7 +133,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         resetDriveEncoders();
 
-        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, getAllianceRotation(), getPosition(), new Pose2d(0, 0, rotation));
+        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, getAllianceRotation(), getPosition(), new Pose2d(0, 0, getAllianceRotation()));
 
         drivePace = team.gif.lib.drivePace.COAST_FR;
 
