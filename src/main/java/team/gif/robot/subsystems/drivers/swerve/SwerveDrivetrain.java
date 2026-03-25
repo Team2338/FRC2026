@@ -133,13 +133,7 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         resetDriveEncoders();
 
-        Rotation2d rotation = Robot.pigeon.getRotation2d();
-
-        if(checkRedAlliance()) {
-            rotation = rotation.rotateBy(oneEighty);
-        }
-
-        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, rotation, getPosition(), new Pose2d(0, 0, rotation));
+        poseEstimator = new SwerveDrivePoseEstimator(constants.DRIVE_KINEMATICS, getAllianceRotation(), getPosition(), new Pose2d(0, 0, rotation));
 
         drivePace = team.gif.lib.drivePace.COAST_FR;
 
@@ -153,16 +147,8 @@ public class SwerveDrivetrain extends SubsystemBase {
     @Override
     public void periodic() {
 
-        isRedAlliance = checkRedAlliance();
-
-        Rotation2d rotation = Robot.pigeon.getRotation2d();
-
-        if(isRedAlliance) {
-            rotation = rotation.rotateBy(oneEighty);
-        }
-
         poseEstimator.update(
-            rotation,
+            getAllianceRotation(),
             getPosition()
         );
 
@@ -334,7 +320,7 @@ public class SwerveDrivetrain extends SubsystemBase {
      * @param pose the pose to reset to
      */
     public void resetOdometry(Pose2d pose) {
-        poseEstimator.resetPosition(Robot.pigeon.getRotation2d(), new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()}, pose);
+        poseEstimator.resetPosition(getAllianceRotation(), new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()}, pose);
     }
 
     /**
@@ -446,8 +432,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
 
     /**
-     * Get the current pose of the robot
-     *
+     * Get the current pose of the robot with 0deg always facing the red alliance wall
      * @return The current pose of the robot (Pose2D)
      */
     public Pose2d getPose() {
@@ -523,16 +508,24 @@ public class SwerveDrivetrain extends SubsystemBase {
     }
 
     private boolean checkRedAlliance() {
+        //This state should never happen unless we are not connected.
+        //It is set to red because that is what we are set up for in the shop.
         if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
             return true;
-        } else if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-            return false;
-        } else {
-            return true;
-            //This state should never happen unless we are not connected.
-            //It is set to red because that is what we are set up for in the shop.
+        } else return DriverStation.getAlliance().isEmpty() || DriverStation.getAlliance().get() != DriverStation.Alliance.Blue;
+
+    }
+
+    private Rotation2d getAllianceRotation() {
+        isRedAlliance = checkRedAlliance();
+
+        Rotation2d rotation = Robot.pigeon.getRotation2d();
+
+        if(isRedAlliance) {
+            rotation = rotation.rotateBy(oneEighty);
         }
 
+        return rotation;
     }
 
     private void configModules() {
@@ -631,13 +624,7 @@ public class SwerveDrivetrain extends SubsystemBase {
                 this::setModuleChassisSpeeds,
                 constants.AUTO_DRIVE_CONTROLLER,
                 ppConfig,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
-                    if( alliance.isPresent() ){
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
+                this::checkRedAlliance,
                 this
         );
     }
