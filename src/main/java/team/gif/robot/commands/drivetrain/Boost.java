@@ -1,24 +1,20 @@
-package team.gif.robot.commands.collector.collectorautos;
+package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.lib.drivePace;
 import team.gif.robot.Robot;
 
-public class CollectorAutoCollectRPM extends Command {
-    double rpm = 0;
+public class Boost extends Command {
 
-    /**
-     * Currently not in use
-     */
-    public CollectorAutoCollectRPM() {
+    public Boost() {
         super();
-        addRequirements(Robot.collectMotor); // uncomment
+        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        rpm = 3500; //If needed change value
-        Robot.collectMotor.runCollector(rpm);
+        Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -34,6 +30,6 @@ public class CollectorAutoCollectRPM extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collectMotor.stopMotor();
+        Robot.swerveDrive.setDrivePace(drivePace.COAST_FR);
     }
 }

@@ -1,20 +1,18 @@
-package team.gif.robot.commands.agitator;
+package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import team.gif.robot.Constants;
-import team.gif.robot.Robot;
+import team.gif.robot.commands.autos.AutonShoot;
 
-public class AgitatorAutonPercent extends Command {
+public class ToggleShooterManualMode extends Command {
 
-    public AgitatorAutonPercent() {
+    public ToggleShooterManualMode() {
         super();
-        addRequirements(Robot.agitator);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_AUTON_PERCENT);
+        AutonShoot.shootCommand.setManualMode(true);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -30,6 +28,6 @@ public class AgitatorAutonPercent extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.agitator.stopMotor();
+        AutonShoot.shootCommand.setManualMode(false);
     }
 }

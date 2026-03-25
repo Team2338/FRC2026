@@ -8,7 +8,7 @@ public class ReverseCollectorPercent extends Command {
     double percent = 0;
 
     /**
-     * Runs the collector in reverse at provided percentage, never ends
+     * Runs the collector in reverse at provided percentage, never self exits. Stops the collector motor when done.
      *
      * @param perc percentage to run collector. Value is 0 to 1. Positive value ejects fuel.
      */
@@ -36,5 +36,7 @@ public class ReverseCollectorPercent extends Command {
 
     // Called when the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {Robot.collectMotor.stopMotor();}
+    public void end(boolean interrupted) {
+        Robot.collectMotor.stopMotor();
+    }
 }

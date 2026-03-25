@@ -1,29 +1,29 @@
-package team.gif.robot.commands.collector.collectorautos;
+package team.gif.robot.commands.collector;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotHold;
 
-public class CollectorAutonPivotDown extends Command {
+public class CollectorTeleopPivotDown extends Command {
     /**
      * Moves the collector down at a very high rate of speed. Slows the speed down when close to
      * being fully deployed. Re-enables the default command for holding the collector fully deployed.
      * Used at the beginning of autonomous to deploy the collector fast.
      */
-    public CollectorAutonPivotDown() {
+    public CollectorTeleopPivotDown() {
         super();
         addRequirements(Robot.pivotMotor);
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-    }
+    public void initialize() { }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.pivotMotor.runPivotPercent(1.0);
+        Robot.pivotMotor.runPivotPercent(0.8);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -35,6 +35,6 @@ public class CollectorAutonPivotDown extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.pivotMotor.setDefaultCommand(new CollectorAutoPivotHold());
+        Robot.pivotMotor.stopMotor();
     }
 }

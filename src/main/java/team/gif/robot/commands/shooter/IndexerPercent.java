@@ -8,11 +8,11 @@ public class IndexerPercent extends Command {
     double topIndexerMotorPercent;
 
     /**
-     * Runs both indexer motors at given percents, never ends
+     * Runs both indexer motors at provided percents, never self exits, stops indexer motors when done
      * @param topPercent percent to run top indexer (positive pulls fuel in)
      * @param bottomPercent percent to run the bottom indexer (positive collects)
      */
-    public IndexerPercent(double topPercent, double bottomPercent) {
+    public IndexerPercent(double bottomPercent, double topPercent) {
         super();
         addRequirements(Robot.indexer);
         bottomIndexerMotorPercent = bottomPercent;
@@ -26,7 +26,7 @@ public class IndexerPercent extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.indexer.runPercent(topIndexerMotorPercent, bottomIndexerMotorPercent);
+        Robot.indexer.runPercent(bottomIndexerMotorPercent, topIndexerMotorPercent);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

@@ -29,6 +29,11 @@ public class Indexer extends SubsystemBase {
         topIndexerMotor.set(topIndexerMotorPercent);
     }
 
+    public void runForShooting() {
+        bottomIndexerMotor.set(Constants.Indexer.BOTTOM_INDEXER_MOTOR_PERCENT);
+        topIndexerMotor.set(Constants.Indexer.TOP_INDEXER_MOTOR_PERCENT);
+    }
+
     public double getTopIndexerSpeed() {
         return topIndexerMotor.getVelocity().getValueAsDouble();
     }
@@ -66,7 +71,7 @@ public class Indexer extends SubsystemBase {
         TalonFXConfiguration bottomIndexerConfig = new TalonFXConfiguration(); //Factory defaults are applied to new config object
         TalonFXConfiguration topIndexerConfig = new TalonFXConfiguration();
 
-        bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        bottomIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         bottomIndexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
         topIndexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;

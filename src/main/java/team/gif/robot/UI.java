@@ -40,6 +40,8 @@ public class UI {
         SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
         SmartDashboard.putNumber("Auto Collector/PID/Collect Reference", 0);
         SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
+        SmartDashboard.putNumber("Shooter/Reference", 3000);
+
 
         delayChooser.setDefaultOption("0", 0.0);
         delayChooser.addOption("1", 1.0);
@@ -80,11 +82,12 @@ public class UI {
         SmartDashboard.putNumber("PID/Shooter Output 2", Robot.shooter.getMiddleMotorOutput());
         SmartDashboard.putNumber("PID/Shooter Output 3", Robot.shooter.getRightMotorOutput());
         SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getBottomIndexerSpeed());
+        SmartDashboard.putNumber("Indexer/Speed2", Robot.indexer.getTopIndexerSpeed());
         SmartDashboard.putNumber("Collector/PID/Collector Output", Robot.collectMotor.getCollectOutput());
         SmartDashboard.putNumber("Collector/PID/Collector Speed", Robot.collectMotor.getCollectSpeed());
         SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());
         SmartDashboard.putNumber("Collector/PID/Pivot Speed", Robot.pivotMotor.getPivotSpeed());
-        SmartDashboard.putString("Collector/Collect Pos", String.format("%11.2f", Robot.pivotMotor.getPosition()));
+        SmartDashboard.putString("Collector/Collect Pos", String.format("%11.4f", Robot.pivotMotor.getPosition()));
         SmartDashboard.putString("Collector/Collect AbsPos", String.format("%11.4f", Robot.pivotMotor.getAbsEncoderPos()));
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
@@ -94,6 +97,7 @@ public class UI {
         SmartDashboard.putString("Shift",Robot.matchShift);
         SmartDashboard.putString("Rot Offset", String.format("%11.0f", AutonShoot.hubCommand.getRotationOffset() * -1));
         SmartDashboard.putString("RPM Offset", String.format("%11.0f", AutonShoot.shootCommand.getRPMOffset()));
+        SmartDashboard.putBoolean("Manual", AutonShoot.shootCommand.getManualMode());
         updateTemps();
     }
 

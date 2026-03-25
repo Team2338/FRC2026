@@ -21,7 +21,7 @@ public class IndexerReverse extends Command {
     }
 
     /**
-     * Runs the bottom indexer at a provided percent, never ends
+     * Runs the bottom indexer at a provided percent, never self exits, stops both indexer motors when done
      */
     public IndexerReverse(double percent) {
         super();

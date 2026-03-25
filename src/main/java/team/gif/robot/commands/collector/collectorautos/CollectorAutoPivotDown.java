@@ -40,7 +40,7 @@ public class CollectorAutoPivotDown extends Command {
         double percent;
 
         // use a ratio of the % distance remaining
-        percent = 0.6 * (Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS - Robot.pivotMotor.getPosition())/Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
+        percent = 0.7 * (Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS - Robot.pivotMotor.getPosition())/Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS;
 
         // set a minimum value to move the pivot motor
         percent = Math.max(percent,0.2);

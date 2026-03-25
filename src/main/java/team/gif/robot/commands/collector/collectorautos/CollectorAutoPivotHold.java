@@ -5,7 +5,10 @@ import team.gif.robot.Robot;
 
 public class CollectorAutoPivotHold extends Command {
 
-
+    /**
+     * Holds the collector down at a very small power. <br>
+     * Utilized during autonomous to keep collector down while collecting fuel.
+     */
     public CollectorAutoPivotHold() {
         super();
         addRequirements(Robot.pivotMotor);
@@ -18,7 +21,7 @@ public class CollectorAutoPivotHold extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.pivotMotor.runPivotPercent(0.03);
+        Robot.pivotMotor.runPivotPercent(0.04);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

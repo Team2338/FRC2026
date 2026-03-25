@@ -34,7 +34,7 @@ public class CollectorAutoAgitate extends Command {
 
         // Cycle 1
         if(counter == (int)(0.0 * 50)) {
-            Robot.pivotMotor.runPivotPercent(-0.7);
+            Robot.pivotMotor.runPivotPercent(-0.5);
         }
         if(counter == (int)(0.3 * 50)) {
             Robot.pivotMotor.stopMotor();

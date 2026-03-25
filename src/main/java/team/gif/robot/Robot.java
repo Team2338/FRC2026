@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -96,6 +97,9 @@ public class Robot extends TimedRobot {
 
         winAutoShiftTwoShiftFour = false;
 //        SignalLogger.start();
+
+        PortForwarder.add(5800, "10.23.38.50", 5800);
+        PortForwarder.add(1182, "10.23.38.50", 1182);
     }
 
     /**
@@ -228,6 +232,9 @@ public class Robot extends TimedRobot {
     public static void runAutonomousCommand() {
         autonomousCommand = robotContainer.getAutonomousCommand();
         CommandScheduler.getInstance().schedule(autonomousCommand);
+    }
+    public static void cancelAutonomousCommand() {
+        autonomousCommand.cancel();
     }
 
     /**

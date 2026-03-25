@@ -8,6 +8,10 @@ public class CollectorPivot extends Command {
 
     double percent;
 
+    /**
+     * Default command which constantly monitors the Aux joystick to move the colletor up and down
+     * manually. Applies a small amount of power if the colletor is (close to being) fully deployed.
+     */
     public CollectorPivot() {
         super();
         addRequirements(Robot.pivotMotor);
@@ -28,7 +32,7 @@ public class CollectorPivot extends Command {
         percent =  Math.min(percent, 0.3); // use a max value when going down/out
         if ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.85) && percent >= 0){
             // apply small motor power to keep collector against the hard stop
-            percent = Math.max(percent, 0.02);
+            percent = Math.max(percent, 0.04);
         }
         Robot.pivotMotor.runPivotPercent(percent);
     }

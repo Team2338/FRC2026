@@ -116,12 +116,6 @@
           "data": {
             "name": "OC-autonshoot"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "L-Rev-RampShot-Reverse End"
-          }
         }
       ]
     }

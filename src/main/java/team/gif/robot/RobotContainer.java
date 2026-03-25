@@ -13,14 +13,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
-import team.gif.robot.commands.agitator.AgitatorAutonPercent;
+import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonCenterShoot;
-import team.gif.robot.commands.autos.AutonShootNear;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonShoot;
-import team.gif.robot.commands.autos.AutonInitialShoot;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
+import team.gif.robot.commands.shooter.ShooterRPM;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -38,15 +37,13 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorAutonPercent()));
-        NamedCommands.registerCommand("Hold Collector Down", new CollectorAutoPivotDown());
+        NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorPercent()));
         NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
-        NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot());
-        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5));
-        NamedCommands.registerCommand("OC-autonshoot-near", new AutonShootNear());
+        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5).andThen(new ShooterRPM(4000).withTimeout(0.25)));
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
         NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
 
+//        NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot()); // no longer used since bot no longer shoots first. Would need additional testing
 
         // Configure the trigger bindings
         configureBindings();
