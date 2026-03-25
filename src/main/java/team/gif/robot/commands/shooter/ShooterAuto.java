@@ -36,7 +36,6 @@ public class ShooterAuto extends Command {
     public void execute() {
         Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
 
-        System.out.println(ShotCalculator.angleToHubError().getDegrees());
         if (Robot.shooter.getShooterReady() && (Math.abs(ShotCalculator.angleToHubError().getDegrees()) <= 3)) {
             readyToIndex = true;
         }
