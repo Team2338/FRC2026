@@ -3,7 +3,6 @@ package team.gif.robot.commands.collector;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
-import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotHold;
 
 public class CollectorTeleopPivotDown extends Command {
     /**
