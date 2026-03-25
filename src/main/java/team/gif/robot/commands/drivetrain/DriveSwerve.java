@@ -23,10 +23,16 @@ public class DriveSwerve extends Command {
 
     @Override
     public void execute() {
-        if (!Robot.isCompetition && Robot.diagnostics.anyMotorTempHot()) {
-            Robot.swerveDrive.stopDrive();
-            System.out.println(Timer.getFPGATimestamp() + " Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
-            return;
+        if (Robot.diagnostics.anyMotorTempHot()) {
+            if (Robot.isCompetition) {
+                // For competitions, just print to console that motors are hot, but allow full functionality
+                System.out.println("Motors are running hot.");
+            } else {
+                // For shop work, disable driving ability
+                Robot.swerveDrive.stopDrive();
+                System.out.println(Timer.getFPGATimestamp() + " Driving has been disabled. There is a motor which exceeds the safe temperature threshold.");
+                return;
+            }
         }
 
         double forwardSign;
