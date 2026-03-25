@@ -1,28 +1,25 @@
-package team.gif.robot.commands.collector.collectorautos;
+package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.lib.drivePace;
 import team.gif.robot.Robot;
 
-public class CollectorAutoPivotHold extends Command {
+public class Boost extends Command {
 
-    /**
-     * Holds the collector down at a very small power. <br>
-     * Utilized during autonomous to keep collector down while collecting fuel.
-     */
-    public CollectorAutoPivotHold() {
+    public Boost() {
         super();
-        addRequirements(Robot.pivotMotor);
+        //addRequirements(Robot.climber); // uncomment
     }
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR);
+    }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {
-        Robot.pivotMotor.runPivotPercent(0.04);
-    }
+    public void execute() {}
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
@@ -33,6 +30,6 @@ public class CollectorAutoPivotHold extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.pivotMotor.runPivotPercent(0);
+        Robot.swerveDrive.setDrivePace(drivePace.COAST_FR);
     }
 }

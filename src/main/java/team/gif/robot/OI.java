@@ -10,6 +10,7 @@ import team.gif.lib.drivePace;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
+import team.gif.robot.commands.collector.CollectorTeleopPivotDown;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
@@ -154,7 +155,7 @@ public class OI {
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Standard fuel eject from collector
         aRTrigger.whileTrue(new CollectorPercent(0.9).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
 
-        aX.onTrue(new CollectorAutoPivotDown()); //Rotates collector out
+        aX.onTrue(new CollectorTeleopPivotDown()); //Rotates collector out
         aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)
         aB.onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
 
