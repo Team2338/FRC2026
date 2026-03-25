@@ -113,8 +113,10 @@ public class OI {
 
         dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
-        dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
-        dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        dStart.and(dDPadRight).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(90)).ignoringDisable(true));
+        dStart.and(dDPadLeft).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(270)).ignoringDisable(true));
+//        dStart.and(dDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
+//        dStart.and(dDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
         dRBump.and(dLBump.negate()).onTrue(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.BOOST_FR)));
         dRBump.and(dLBump.negate()).onFalse(new InstantCommand(() ->  Robot.swerveDrive.setDrivePace(drivePace.COAST_FR)));
@@ -143,8 +145,10 @@ public class OI {
         //Aux Controls
         aStart.and(aDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         aStart.and(aDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
-        aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
-        aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
+        aStart.and(aDPadRight).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(90)).ignoringDisable(true));
+        aStart.and(aDPadLeft).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(270)).ignoringDisable(true));
+//        aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
+//        aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
         aLBump.onTrue(new InstantCommand(() -> {
             AutonShoot.hubCommand.resetRotationOffset();
@@ -159,10 +163,10 @@ public class OI {
         aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)
         aB.onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
 
-        aDPadUp.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(25)).ignoringDisable(true));
-        aDPadLeft.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(1)).ignoringDisable(true));
-        aDPadRight.onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(-1)).ignoringDisable(true));
-        aDPadDown.onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(-25)).ignoringDisable(true));
+        aDPadUp.and(aStart.negate()).onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(25)).ignoringDisable(true));
+        aDPadLeft.and(aStart.negate()).onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(1)).ignoringDisable(true));
+        aDPadRight.and(aStart.negate()).onTrue(new InstantCommand(() -> AutonShoot.hubCommand.adjustRotationOffset(-1)).ignoringDisable(true));
+        aDPadDown.and(aStart.negate()).onTrue(new InstantCommand(() -> AutonShoot.shootCommand.adjustRPMOffset(-25)).ignoringDisable(true));
 
         aStart.and(aBack).toggleOnTrue(new ToggleShooterManualMode().ignoringDisable(true));
     }
