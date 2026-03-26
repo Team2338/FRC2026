@@ -102,19 +102,17 @@ public class UI {
     }
 
     public void updateTemps(){
-        if(!Robot.isCompetition) {
-            SmartDashboard.putBoolean("MotorTemps/Agitator", Robot.agitator.isOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Bottom Indexer", Robot.indexer.isBottomIndexerMotorOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Top Indexer", Robot.indexer.isTopIndexerMotorOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Left Shooter", Robot.shooter.isLeftMotorOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Middle Shooter", Robot.shooter.isMiddleMotorOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Right Shooter", Robot.shooter.isRightMotorOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Pivot", Robot.pivotMotor.isOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Collector", Robot.collectMotor.isOverTemp());
-            SmartDashboard.putBoolean("MotorTemps/Swerve Module FR", Robot.swerveDrive.fR.isDriveMotorHot());
-            SmartDashboard.putBoolean("MotorTemps/Swerve Module FL", Robot.swerveDrive.fL.isDriveMotorHot());
-            SmartDashboard.putBoolean("MotorTemps/Swerve Module RL", Robot.swerveDrive.rL.isDriveMotorHot());
-            SmartDashboard.putBoolean("MotorTemps/Swerve Module RR", Robot.swerveDrive.rR.isDriveMotorHot());
-        }
+        SmartDashboard.putBoolean("MotorTemps/Agitator", Robot.agitator.isOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Bottom Indexer", Robot.indexer.isBottomIndexerMotorOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Top Indexer", Robot.indexer.isTopIndexerMotorOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Left Shooter", Robot.shooter.isLeftMotorOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Middle Shooter", Robot.shooter.isMiddleMotorOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Right Shooter", Robot.shooter.isRightMotorOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Pivot", Robot.pivotMotor.isOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Collector", Robot.collectMotor.isOverTemp());
+        SmartDashboard.putBoolean("MotorTemps/Swerve Module FR", Robot.swerveDrive.fR.isDriveMotorHot());
+        SmartDashboard.putBoolean("MotorTemps/Swerve Module FL", Robot.swerveDrive.fL.isDriveMotorHot());
+        SmartDashboard.putBoolean("MotorTemps/Swerve Module RL", Robot.swerveDrive.rL.isDriveMotorHot());
+        SmartDashboard.putBoolean("MotorTemps/Swerve Module RR", Robot.swerveDrive.rR.isDriveMotorHot());
     }
 }
