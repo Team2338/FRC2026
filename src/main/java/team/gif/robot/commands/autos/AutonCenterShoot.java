@@ -22,7 +22,7 @@ public class AutonCenterShoot extends ParallelDeadlineGroup {
         super(new WaitCommand(4.0)); // max amount of time to run
         addCommands(
                 new ShooterRPM(Constants.Shooter.SHOOTER_AUTON_CENTER_RPM),
-                new WaitCommand(0.5).andThen(new CollectorAutoPivotDown(0.5).alongWith(new CollectorPercent(0.9).withTimeout(0.5)).andThen(new IndexerAuton(false))),
+                new WaitCommand(0.5).andThen(new CollectorAutoPivotDown(0.5).alongWith(new CollectorPercent(0.8).withTimeout(0.5)).andThen(new IndexerAuton(false))),
                 new InstantCommand(() -> Robot.swerveDrive.stopModules()) // prevent the robot from shaking
         );
     }
