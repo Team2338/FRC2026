@@ -139,6 +139,8 @@ public class Robot extends TimedRobot {
     public void autonomousInit() {
         autonomousCommand = robotContainer.getAutonomousCommand();
         chosenDelay = ui.delayChooser.getSelected();
+
+        // run scheduler immediately if no delay is selected
         if (chosenDelay.getValue() == 0) {
             if (autonomousCommand != null) {
                 commandScheduler.schedule(autonomousCommand);
@@ -156,6 +158,7 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
+        // if delay was invoked, need to start autonomous after delay completes
         if (autoSchedulerOnHold && (elapsedTime.get() > chosenDelay.getValue())) {
             if (autonomousCommand != null) {
                 commandScheduler.schedule(autonomousCommand);
