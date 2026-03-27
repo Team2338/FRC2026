@@ -3,10 +3,11 @@ package team.gif.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.lib.delay;
 import team.gif.robot.commands.autos.AutonShoot;
 
 public class UI {
-    public SendableChooser<Double> delayChooser = new SendableChooser<>();
+    public SendableChooser<delay> delayChooser = new SendableChooser<>();
     /**
      *  Widgets (e.g. gyro, text, True/False flags),
      *  buttons (e.g. SmartDashboard.putData("Reset", new ResetHeading()); ),
@@ -43,27 +44,27 @@ public class UI {
         SmartDashboard.putNumber("Shooter/Reference", 3000);
 
 
-        delayChooser.setDefaultOption("0", 0.0);
-        delayChooser.addOption("1", 1.0);
-        delayChooser.addOption("2", 2.0);
-        delayChooser.addOption("3", 3.0);
-        delayChooser.addOption("4", 4.0);
-        delayChooser.addOption("5", 5.0);
-        delayChooser.addOption("6", 6.0);
-        delayChooser.addOption("7", 7.0);
-        delayChooser.addOption("8", 8.0);
-        delayChooser.addOption("9", 9.0);
-        delayChooser.addOption("10", 10.0);
-        delayChooser.addOption("11", 11.0);
-        delayChooser.addOption("12", 12.0);
-        delayChooser.addOption("13", 13.0);
-        delayChooser.addOption("14", 14.0);
-        delayChooser.addOption("15", 15.0);
-        delayChooser.addOption("16", 16.0);
-        delayChooser.addOption("17", 17.0);
-        delayChooser.addOption("18", 18.0);
-        delayChooser.addOption("19", 19.0);
-        delayChooser.addOption("20", 20.0);
+        delayChooser.setDefaultOption("0", delay.DELAY_0);
+        delayChooser.addOption("1", delay.DELAY_1);
+        delayChooser.addOption("2", delay.DELAY_2);
+        delayChooser.addOption("3", delay.DELAY_3);
+        delayChooser.addOption("4", delay.DELAY_4);
+        delayChooser.addOption("5", delay.DELAY_5);
+        delayChooser.addOption("6", delay.DELAY_6);
+        delayChooser.addOption("7", delay.DELAY_7);
+        delayChooser.addOption("8", delay.DELAY_8);
+        delayChooser.addOption("9", delay.DELAY_9);
+        delayChooser.addOption("10", delay.DELAY_10);
+        delayChooser.addOption("11", delay.DELAY_11);
+        delayChooser.addOption("12", delay.DELAY_12);
+        delayChooser.addOption("13", delay.DELAY_13);
+        delayChooser.addOption("14", delay.DELAY_14);
+        delayChooser.addOption("15", delay.DELAY_15);
+        delayChooser.addOption("16", delay.DELAY_16);
+        delayChooser.addOption("17", delay.DELAY_17);
+        delayChooser.addOption("18", delay.DELAY_18);
+        delayChooser.addOption("19", delay.DELAY_19);
+        delayChooser.addOption("20", delay.DELAY_20);
         SmartDashboard.putData("Delay Chooser", delayChooser);
     }
 
