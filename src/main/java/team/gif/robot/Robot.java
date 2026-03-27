@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     public static PivotMotor pivotMotor;
 
     private static delay chosenDelay;
-    private final Timer elapsedTime = new Timer();
+    private final Timer elapsedTime;
     private boolean autoSchedulerOnHold;
     public static boolean isCompetition = false;
 
@@ -96,6 +96,8 @@ public class Robot extends TimedRobot {
         diagnostics = new Diagnostics();
         ui = new UI();
         pigeon.addToShuffleboard("Heading");
+
+        elapsedTime = new Timer();
 
         winAutoShiftTwoShiftFour = false;
 //        SignalLogger.start();
