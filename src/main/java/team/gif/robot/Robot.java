@@ -66,6 +66,9 @@ public class Robot extends TimedRobot {
     public static double shiftTime = 0;
     public static  boolean winAutoShiftTwoShiftFour;
 
+    public DataLog logger;
+    private StringLogEntry stringLog;
+
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -104,6 +107,9 @@ public class Robot extends TimedRobot {
 
         PortForwarder.add(5800, "10.23.38.50", 5800);
         PortForwarder.add(1182, "10.23.38.50", 1182);
+        DataLogManager.start();
+        logger = DataLogManager.getLog();
+        stringLog = new StringLogEntry(logger, "/2338/MatchTime");
     }
 
     /**
@@ -122,6 +128,8 @@ public class Robot extends TimedRobot {
         commandScheduler.run();
 
         ui.update();
+        stringLog.append("Match Time:" + Timer.getMatchTime());
+        stringLog.append("FPGA Time: " + Timer.getFPGATimestamp());
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
