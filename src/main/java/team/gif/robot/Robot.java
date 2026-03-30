@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import team.gif.lib.delay;
 import team.gif.robot.commands.collector.CollectorPivot;
 import team.gif.robot.commands.drivetrain.DriveSwerve;
 import team.gif.robot.subsystems.Agitator;
@@ -52,8 +53,9 @@ public class Robot extends TimedRobot {
     public static CollectMotor collectMotor;
     public static PivotMotor pivotMotor;
 
-    private double delay;
-    private final Timer delayTimer = new Timer();
+    private static delay chosenDelay;
+    private final Timer elapsedTime;
+    private boolean autoSchedulerOnHold;
     public static boolean isCompetition = true;
 
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
@@ -63,6 +65,9 @@ public class Robot extends TimedRobot {
     public static String matchShift = "N/A";
     public static double shiftTime = 0;
     public static  boolean winAutoShiftTwoShiftFour;
+
+    public DataLog logger;
+    private StringLogEntry stringLog;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -95,11 +100,16 @@ public class Robot extends TimedRobot {
         ui = new UI();
         pigeon.addToShuffleboard("Heading");
 
+        elapsedTime = new Timer();
+
         winAutoShiftTwoShiftFour = false;
 //        SignalLogger.start();
 
         PortForwarder.add(5800, "10.23.38.50", 5800);
         PortForwarder.add(1182, "10.23.38.50", 1182);
+        DataLogManager.start();
+        logger = DataLogManager.getLog();
+        stringLog = new StringLogEntry(logger, "/2338/MatchTime");
     }
 
     /**
@@ -118,6 +128,8 @@ public class Robot extends TimedRobot {
         commandScheduler.run();
 
         ui.update();
+        stringLog.append("Match Time:" + Timer.getMatchTime());
+        stringLog.append("FPGA Time: " + Timer.getFPGATimestamp());
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
@@ -134,12 +146,18 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         autonomousCommand = robotContainer.getAutonomousCommand();
-        delay = ui.delayChooser.getSelected();
-        if(delay == 0.0 && autonomousCommand != null) {
-            commandScheduler.schedule(autonomousCommand);
-        } else if(delay != 0.0 && autonomousCommand != null) {
-            delayTimer.reset();
-            delayTimer.start();
+        chosenDelay = ui.delayChooser.getSelected();
+
+        // run scheduler immediately if no delay is selected
+        if (chosenDelay.getValue() == 0) {
+            if (autonomousCommand != null) {
+                commandScheduler.schedule(autonomousCommand);
+            }
+            autoSchedulerOnHold = false;
+        } else {
+            elapsedTime.reset();
+            elapsedTime.start();
+            autoSchedulerOnHold = true;
         }
 
         matchShift = "Go Rock!";
@@ -148,10 +166,14 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        if(delay > delayTimer.get() && autonomousCommand != null) {
-            commandScheduler.schedule(autonomousCommand);
+        // if delay was invoked, need to start autonomous after delay completes
+        if (autoSchedulerOnHold && (elapsedTime.get() > chosenDelay.getValue())) {
+            if (autonomousCommand != null) {
+                commandScheduler.schedule(autonomousCommand);
+            }
+            autoSchedulerOnHold = false;
+            elapsedTime.stop();
         }
-        delayTimer.stop();
 
         if (!isCompetition && diagnostics.anyMotorTempHot()) {
             autonomousCommand.cancel();
