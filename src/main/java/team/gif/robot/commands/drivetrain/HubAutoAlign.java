@@ -1,8 +1,10 @@
 package team.gif.robot.commands.drivetrain;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
+import org.opencv.core.RotatedRect;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.ShotCalculator;
@@ -12,6 +14,7 @@ public class HubAutoAlign extends Command {
     private final SlewRateLimiter strafeLimiter;
     private final SlewRateLimiter turnLimiter;
     private double rotOffset = 0;
+    private boolean xStance = false;
 
     public HubAutoAlign() {
         this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
@@ -63,8 +66,14 @@ public class HubAutoAlign extends Command {
 
              rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
 
-            // the robot starts facing the driver station so for this year negating y and x
-            Robot.swerveDrive.drive(forward, strafe, rot);
+        System.out.println(rotError);
+             if(xStance && Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
+                 System.out.println("locking");
+                 Robot.swerveDrive.xStance();
+             } else {
+                // the robot starts facing the driver station so for this year negating y and x
+                Robot.swerveDrive.drive(forward, strafe, rot);
+             }
     }
 
     @Override
@@ -92,5 +101,9 @@ public class HubAutoAlign extends Command {
 
     public double getRotationOffset() {
         return rotOffset;
+    }
+
+    public void setXStance(boolean xStance) {
+        this.xStance = xStance;
     }
 }

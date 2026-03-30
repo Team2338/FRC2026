@@ -108,7 +108,9 @@ public class OI {
          */
 
         //Driver Controls
-        dLStickBtn.and(dRStickBtn).whileTrue(new RepeatCommand(new InstantCommand(Robot.swerveDrive::xStance, Robot.swerveDrive))); //Swerve X Stance to not get pushed around;
+        dLStickBtn.and(dRStickBtn).and(dRTrigger.negate()).whileTrue(new RepeatCommand(new InstantCommand(Robot.swerveDrive::xStance, Robot.swerveDrive))); //Swerve X Stance to not get pushed around;
+        dLStickBtn.and(dRStickBtn).and(dRTrigger).onTrue(new InstantCommand(() -> AutonShoot.hubCommand.setXStance(true))); //Swerve X Stance to not get pushed around;
+        dLStickBtn.and(dRStickBtn).and(dRTrigger).onFalse(new InstantCommand(() -> AutonShoot.hubCommand.setXStance(false))); //Swerve X Stance to not get pushed around;
 
         dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
