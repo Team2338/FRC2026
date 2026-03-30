@@ -158,7 +158,7 @@ public class OI {
         aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Standard fuel eject from collector
-        aRTrigger.whileTrue(new CollectorPercent(0.6).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
+        aRTrigger.whileTrue(new CollectorPercent(1).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
 
         aX.onTrue(new CollectorTeleopPivotDown()); //Rotates collector out
         aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)
