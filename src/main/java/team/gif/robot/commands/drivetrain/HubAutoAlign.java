@@ -104,6 +104,7 @@ public class HubAutoAlign extends Command {
     }
 
     public void setXStance(boolean xStance) {
+        System.out.println("XStance: " + xStance);
         this.xStance = xStance;
     }
 }

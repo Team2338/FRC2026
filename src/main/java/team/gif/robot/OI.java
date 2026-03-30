@@ -127,7 +127,8 @@ public class OI {
 
         dRTrigger.and(manualMode).whileTrue(new ShooterRPM(3325).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
         dRTrigger.and(manualMode).onFalse(new ShooterRPM(3325).withTimeout(0.25)); //Keep shooter running after command
-        dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
+        dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false).alongWith(new InstantCommand(() -> AutonShoot.hubCommand.setXStance(true)))); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
+//        dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
         dRTrigger.and(manualMode.negate()).onFalse(new ShooterRPM(3500).withTimeout(0.25)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
 
         dLTrigger.whileTrue(new ShooterRPM(3130).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand())); // Short shot to use if cameras break
