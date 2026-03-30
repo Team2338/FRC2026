@@ -113,6 +113,7 @@ public class Robot extends TimedRobot {
         DataLogManager.start();
         logger = DataLogManager.getLog();
         stringLog = new StringLogEntry(logger, "/2338/MatchTime");
+        DriverStation.startDataLog(logger, true);
     }
 
     /**
