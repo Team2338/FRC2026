@@ -5,6 +5,12 @@ import team.gif.robot.commands.autos.AutonShoot;
 
 public class ToggleShooterManualMode extends Command {
 
+    /**
+     * Enables manual mode in initialize() and disables manual mode in end() <br>
+     * Useful in OI to toggle on the state of manual mode. <br>
+     * isFinished returns false, otherwise when initially toggled, it will immediately end and
+     * then call end() which will disable manual mode
+     */
     public ToggleShooterManualMode() {
         super();
     }
