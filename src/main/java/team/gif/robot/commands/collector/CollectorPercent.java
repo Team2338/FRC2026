@@ -25,13 +25,13 @@ public class CollectorPercent extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {
-        Robot.collectMotor.runCollectorPercent(-percent);
-    }
+    public void initialize() {}
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {}
+    public void execute() {
+        Robot.collectMotor.runCollectorPercent(-percent);
+    }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override

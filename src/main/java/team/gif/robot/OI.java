@@ -143,6 +143,10 @@ public class OI {
         dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
         dBack.and(dB).onTrue(new InstantCommand(Robot::cancelAutonomousCommand));
 
+        // for driver only controls
+        dX.and(dBack.negate()).whileTrue(new CollectorPercent(1).alongWith(new AgitatorPercent())); //Standard Collect
+        dB.and(dBack.negate()).onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
+        // For shot calibration
         dA.whileTrue(new ShooterDashboard().alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
 
         //Aux Controls
