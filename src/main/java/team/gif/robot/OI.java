@@ -143,6 +143,7 @@ public class OI {
         dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
         dBack.and(dB).onTrue(new InstantCommand(Robot::cancelAutonomousCommand));
 
+        dX.and(dBack.negate()).whileTrue(new CollectorPercent(1).alongWith(new AgitatorPercent())); //Standard Collect
         dA.whileTrue(new ShooterDashboard().alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
 
         //Aux Controls
