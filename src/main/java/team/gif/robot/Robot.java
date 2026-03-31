@@ -5,6 +5,9 @@
 package team.gif.robot;
 
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.StringLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -56,7 +59,7 @@ public class Robot extends TimedRobot {
     private static delay chosenDelay;
     private final Timer elapsedTime;
     private boolean autoSchedulerOnHold;
-    public static boolean isCompetition = true;
+    public static boolean isCompetition = false;
 
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
@@ -110,6 +113,7 @@ public class Robot extends TimedRobot {
         DataLogManager.start();
         logger = DataLogManager.getLog();
         stringLog = new StringLogEntry(logger, "/2338/MatchTime");
+        DriverStation.startDataLog(logger, true);
     }
 
     /**

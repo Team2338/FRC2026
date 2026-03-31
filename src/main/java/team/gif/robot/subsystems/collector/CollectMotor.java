@@ -6,9 +6,11 @@ package team.gif.robot.subsystems.collector;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
@@ -29,12 +31,18 @@ import static edu.wpi.first.units.Units.Volts;
 public class CollectMotor extends SubsystemBase {
 
     private final TalonFX collectorMotor;
+    private final TalonFX collectorMotor2;
     private TalonFXConfiguration config;
     public VelocityVoltage velocityVoltage;
     private DutyCycleOut dutyCycleOut;
 
     public CollectMotor() {
         collectorMotor = new TalonFX(RobotMap.Collector.COLLECT_MOTOR_ID);
+        collectorMotor2 = new TalonFX(RobotMap.Collector.COLLECTOR_MOTOR_2_ID);
+
+        Follower follower = new Follower(collectorMotor.getDeviceID(), MotorAlignmentValue.Opposed);
+
+        collectorMotor2.setControl(follower);
 
         setConfig();
 
