@@ -4,7 +4,6 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import org.opencv.core.RotatedRect;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.ShotCalculator;
