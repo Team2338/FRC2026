@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     private static delay chosenDelay;
     private final Timer elapsedTime;
     private boolean autoSchedulerOnHold;
-    public static boolean isCompetition = true;
+    public static boolean isCompetition = false;
 
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
