@@ -67,7 +67,7 @@ public class HubAutoAlign extends Command {
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
         // Auto rotate to hub
-        targetState = new TrapezoidProfile.State(ShotCalculator.angleToHub().getRadians(), 0);
+        targetState = new TrapezoidProfile.State(ShotCalculator.angleToHubOptimzed().getRadians(), 0);
         double rot = motionProfile.calculate(robotPose.getRotation().getRadians(), targetState);
 
         // the robot starts facing the driver station so for this year negating y and x
