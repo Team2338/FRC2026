@@ -31,6 +31,8 @@ public class ShooterAuto extends Command {
         readyToIndex = false;
         sequenceScheduled = false;
         indexerCommand = Constants.Indexer.getFullCommand();
+        Robot.swerveDrive.resetPigeonToVision(true);
+
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -41,6 +43,7 @@ public class ShooterAuto extends Command {
         if (Robot.shooter.getShooterReady() && (Math.abs(ShotCalculator.angleToHubError().getDegrees()) <= 3)) {
             readyToIndex = true;
         }
+
 
         // only want to run this if shooter is ready, bot is aligned, and it hasn't been run already
         // i.e. only schedule the index sequence once
@@ -63,6 +66,7 @@ public class ShooterAuto extends Command {
         indexerCommand.cancel();
         sequenceScheduled = false;
         hubCommand.setXStance(false);
+        Robot.swerveDrive.resetPigeonToVision(false);
     }
 
     /**

@@ -97,6 +97,7 @@ public class SwerveDrivetrain extends SubsystemBase {
     private static AprilTagFieldLayout tagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
     private Matrix<N3, N1> photonCurrStdDevs;
     private Rotation2d oneEighty = Rotation2d.fromDegrees(180);
+    private boolean resetHeadingToVision = false;
 
     private boolean isRedAlliance = false;
     
@@ -180,6 +181,15 @@ public class SwerveDrivetrain extends SubsystemBase {
                             est -> {
                                 // Change our trust in the measurement based on the tags we can see
                                 var estStdDevs = getEstimationStdDevs();
+
+                                if (Math.abs(Robot.pigeon.getYawRate()) < Units.degreesToRadians(1)
+                                        && result.getTargets().toArray().length >= 2
+                                        && est.estimatedPose.getRotation().toRotation2d().getDegrees() - getAllianceRotation().getDegrees() <= 5
+                                        && resetHeadingToVision
+                                ) {
+                                    Robot.pigeon.resetPigeonPosition(est.estimatedPose.getRotation().toRotation2d().getDegrees());
+                                    resetHeadingToVision = false;
+                                }
 
                                 if (debugMode) {
                                     estPublisher.set(est.estimatedPose.toPose2d());
@@ -314,6 +324,9 @@ public class SwerveDrivetrain extends SubsystemBase {
         return photonCurrStdDevs;
     }
 
+    public void resetPigeonToVision(boolean reset) {
+        resetHeadingToVision = reset;
+    }
     /**
      * Reset the odometry to a given pose
      *
