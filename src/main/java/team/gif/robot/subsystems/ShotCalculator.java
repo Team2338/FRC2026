@@ -55,6 +55,8 @@ public class ShotCalculator {
         distanceMap.put(Units.feetToMeters(8.5 + measurementOffset), 3400.0);
         distanceMap.put(Units.feetToMeters(8.5 + measurementOffset), 3400.0);
         distanceMap.put(Units.feetToMeters(9 + measurementOffset), 3475.0);
+        distanceMap.put(Units.feetToMeters(9.75 + measurementOffset), 3550.0);
+        distanceMap.put(Units.feetToMeters(11.27 + measurementOffset), 4050.0);
     }
 
     /**
