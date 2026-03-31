@@ -182,12 +182,18 @@ public class SwerveDrivetrain extends SubsystemBase {
                                 // Change our trust in the measurement based on the tags we can see
                                 var estStdDevs = getEstimationStdDevs();
 
-                                if (Math.abs(Robot.pigeon.getYawRate()) < Units.degreesToRadians(1)
-                                        && result.getTargets().toArray().length >= 2
-                                        && est.estimatedPose.getRotation().toRotation2d().getDegrees() - getAllianceRotation().getDegrees() <= 5
-                                        && resetHeadingToVision
+                                if (resetHeadingToVision
+                                        && Math.abs(Robot.pigeon.getYawRate()) < 1 // rotaional velocity < 1 degree/sec
+                                        && result.getTargets().toArray().length >= 2 // bot sees a minimum of 2 April tags
+                                        && est.estimatedPose.getRotation().toRotation2d().getDegrees() - getAllianceRotation().getDegrees() <= 30
                                 ) {
-                                    Robot.pigeon.resetPigeonPosition(est.estimatedPose.getRotation().toRotation2d().getDegrees());
+                                    Rotation2d visionRoation = est.estimatedPose.getRotation().toRotation2d();
+                                    if (isRedAlliance) {
+                                        visionRoation = visionRoation.minus(oneEighty);
+                                    }
+
+                                    System.out.println("Resetting pigeon " + Robot.pigeon.get360Heading() + " vision degree " + visionRoation.getDegrees());
+                                    Robot.pigeon.resetPigeonPosition(visionRoation.getDegrees());
                                     resetHeadingToVision = false;
                                 }
 

@@ -66,9 +66,7 @@ public class HubAutoAlign extends Command {
 
              rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
 
-        System.out.println(rotError);
              if(xStance && Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
-                 System.out.println("locking");
                  Robot.swerveDrive.xStance();
              } else {
                 // the robot starts facing the driver station so for this year negating y and x
