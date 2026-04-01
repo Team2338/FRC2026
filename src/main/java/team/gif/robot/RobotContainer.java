@@ -37,9 +37,9 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        NamedCommands.registerCommand("Collector Run", new CollectorPercent(0.8).alongWith(new AgitatorPercent()));
+        NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorPercent()));
         NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
-        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5).andThen(new ShooterRPM(4000).withTimeout(0.25)));
+        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.8).andThen(new ShooterRPM(4000).withTimeout(0.25)));
         NamedCommands.registerCommand("OC-autonshoot-final", new AutonShoot(true));
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
         NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
