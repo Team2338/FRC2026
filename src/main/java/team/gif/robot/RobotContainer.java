@@ -63,10 +63,12 @@ public class RobotContainer {
         names.add("Left-FuelSafe-NeutralMid");
         names.add("Right-FuelSafe-NeutralMid");
         names.add("Center");
-        names.add("Right-NeutralMid-HubNear");
-        names.add("Left-NeutralMid-HubNear");
+        names.add("Left-FuelSafe-NeutralFar");
+        names.add("Right-FuelSafe-NeutralFar");
         names.add("Left-FuelCross-HubNear");
         names.add("Right-FuelCross-HubNear");
+        names.add("Right-NeutralMid-HubNear");
+        names.add("Left-NeutralMid-HubNear");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
 
