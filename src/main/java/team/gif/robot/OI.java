@@ -144,7 +144,7 @@ public class OI {
         dBack.and(dB).onTrue(new InstantCommand(Robot::cancelAutonomousCommand));
 
         // for driver only controls
-        dX.and(dBack.negate()).whileTrue(new CollectorPercent(1).alongWith(new AgitatorPercent())); //Standard Collect
+        dX.and(dBack.negate()).whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect
         dB.and(dBack.negate()).onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
         // For shot calibration
         dA.whileTrue(new ShooterDashboard().alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
@@ -164,7 +164,7 @@ public class OI {
         aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Standard fuel eject from collector
-        aRTrigger.whileTrue(new CollectorPercent(1).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
+        aRTrigger.whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
 
         aX.onTrue(new CollectorTeleopPivotDown()); //Rotates collector out
         aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)
