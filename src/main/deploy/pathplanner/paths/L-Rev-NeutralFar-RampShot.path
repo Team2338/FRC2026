@@ -3,35 +3,35 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.252,
-        "y": 7.595
+        "x": 7.22949152542373,
+        "y": 4.217426810477658
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.7428594978825585,
-        "y": 7.595
+        "x": 5.189013867488444,
+        "y": 5.703867488443759
       },
       "isLocked": false,
-      "linkedName": "Left-Trench-Entrance-Rearfacing"
+      "linkedName": "ForwrdHubFar"
     },
     {
       "anchor": {
-        "x": 2.900456490727533,
-        "y": 7.41845934379458
+        "x": 2.5,
+        "y": 5.685
       },
       "prevControl": {
-        "x": 4.1884999999999994,
-        "y": 7.663
+        "x": 4.1916068642745685,
+        "y": 5.627169643989753
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ShooterTrench"
+      "linkedName": "ReverseEnd"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8560885608856085,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.248927038626609,
+      "rotationDegrees": -45.0
     }
   ],
   "constraintZones": [],
@@ -47,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -63.43494882292214
+    "rotation": -37.99949322937491
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 3.5,
-    "rotation": 0.0
+    "velocity": 0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }
