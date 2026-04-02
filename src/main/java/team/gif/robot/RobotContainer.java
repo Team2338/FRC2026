@@ -62,6 +62,8 @@ public class RobotContainer {
         ArrayList<String> names = new ArrayList<>();
         names.add("Left-FuelSafe-NeutralMid");
         names.add("Right-FuelSafe-NeutralMid");
+        names.add("Left-FuelSafeLong-NeutralMid");
+        names.add("Right-FuelSafeLong-NeutralMid");
         names.add("Center");
         names.add("Left-FuelSafe-NeutralFar");
         names.add("Right-FuelSafe-NeutralFar");
