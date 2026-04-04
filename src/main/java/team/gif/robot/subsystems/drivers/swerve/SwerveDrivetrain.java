@@ -172,6 +172,13 @@ public class SwerveDrivetrain extends SubsystemBase {
                     visionEst = estimator.estimateCoprocMultiTagPose(result);
                     if (visionEst.isEmpty()) {
                         visionEst = estimator.estimateLowestAmbiguityPose(result);
+
+                        if (visionEst.isPresent()) {
+
+                        PhotonTrackedTarget target = visionEst.get().targetsUsed.get(0);
+
+                        Robot.visionLog.append("Using Single Target Pose Estimate with Ambiguity of " + target.poseAmbiguity);
+                        }
                     }
 
                     updateEstimationStdDevs(visionEst, result.getTargets(), estimator);

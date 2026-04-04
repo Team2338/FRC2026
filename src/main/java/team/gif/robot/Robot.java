@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
 
     public DataLog logger;
     private StringLogEntry stringLog;
+    public static StringLogEntry visionLog;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -113,6 +114,7 @@ public class Robot extends TimedRobot {
         DataLogManager.start();
         logger = DataLogManager.getLog();
         stringLog = new StringLogEntry(logger, "/2338/MatchTime");
+        visionLog = new StringLogEntry(logger, "/2338/SingleTagVision");
         DriverStation.startDataLog(logger, true);
     }
 
