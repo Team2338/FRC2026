@@ -92,7 +92,6 @@ public class Robot extends TimedRobot {
         swerveDrive.enableDebugMode();
 
         swerveDrive.addPhotonCamera("left-cam", Constants.Vision.LEFT_CAMERA_POSITION);
-//        swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
         swerveDrive.addPhotonCamera("side-cam", Constants.Vision.SIDE_CAMERA_POSITION);
         robotContainer = new RobotContainer();
 
@@ -195,6 +194,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
+
 //        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
 //            swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
 //        }
