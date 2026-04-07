@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 6.199814550641939,
-        "y": 4.183794579172611
+        "y": 4.691
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.173937232524963,
-        "y": 5.982268188302426
+        "y": 6.489473609129817
       },
       "isLocked": false,
       "linkedName": "ForwardHubMiddle"

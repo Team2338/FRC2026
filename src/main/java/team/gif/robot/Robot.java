@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
     private static delay chosenDelay;
     private final Timer elapsedTime;
     private boolean autoSchedulerOnHold;
-    public static boolean isCompetition = false;
+    public static boolean isCompetition = true;
 
     private final CommandScheduler commandScheduler = CommandScheduler.getInstance();
     public static final boolean enableSwerveDebug = true;
@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
 
     public DataLog logger;
     private StringLogEntry stringLog;
+    public static StringLogEntry visionLog;
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -89,8 +90,8 @@ public class Robot extends TimedRobot {
         swerveConfig = new SwerveConfiguration(new RobotMap.Mk5Map(), new Constants.Mk5Constants(), TalonFXDriveMotor::new, TalonFXTurnMotor::new, CANCoderEncoder::new);
         swerveDrive = new SwerveDrive(swerveConfig);
         swerveDrive.enableDebugMode();
+
         swerveDrive.addPhotonCamera("left-cam", Constants.Vision.LEFT_CAMERA_POSITION);
-        swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
         swerveDrive.addPhotonCamera("side-cam", Constants.Vision.SIDE_CAMERA_POSITION);
         robotContainer = new RobotContainer();
 
@@ -113,6 +114,7 @@ public class Robot extends TimedRobot {
         DataLogManager.start();
         logger = DataLogManager.getLog();
         stringLog = new StringLogEntry(logger, "/2338/MatchTime");
+        visionLog = new StringLogEntry(logger, "/2338/SingleTagVision");
         DriverStation.startDataLog(logger, true);
     }
 
@@ -149,6 +151,10 @@ public class Robot extends TimedRobot {
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit() {
+//        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+//            swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
+//        }
+
         autonomousCommand = robotContainer.getAutonomousCommand();
         chosenDelay = ui.delayChooser.getSelected();
 
@@ -188,6 +194,12 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
+
+//        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
+//            swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
+//        }
+
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove

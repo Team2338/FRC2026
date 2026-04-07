@@ -37,7 +37,7 @@
             "title": "Auto Chooser",
             "x": 0.0,
             "y": 256.0,
-            "width": 256.0,
+            "width": 384.0,
             "height": 128.0,
             "type": "ComboBox Chooser",
             "properties": {
@@ -265,10 +265,10 @@
           },
           {
             "title": "Command Scheduler",
-            "x": 384.0,
-            "y": 128.0,
+            "x": 0.0,
+            "y": 0.0,
             "width": 256.0,
-            "height": 384.0,
+            "height": 512.0,
             "type": "Scheduler",
             "properties": {
               "topic": "/SmartDashboard/Command Scheduler",
@@ -303,10 +303,10 @@
           },
           {
             "title": "photonvision_Port_1185_Input_MJPEG_Server",
-            "x": 0.0,
-            "y": 256.0,
-            "width": 256.0,
-            "height": 256.0,
+            "x": 384.0,
+            "y": 128.0,
+            "width": 384.0,
+            "height": 384.0,
             "type": "Camera Stream",
             "properties": {
               "topic": "/CameraPublisher/photonvision_Port_1185_Input_MJPEG_Server",
