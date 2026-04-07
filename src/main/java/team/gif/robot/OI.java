@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import team.gif.lib.drivePace;
+import team.gif.robot.commands.agitator.AgitatorEject;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
@@ -14,7 +15,7 @@ import team.gif.robot.commands.collector.CollectorTeleopPivotDown;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
-import team.gif.robot.commands.shooter.IndexerReverse;
+import team.gif.robot.commands.shooter.IndexerEject;
 import team.gif.robot.commands.shooter.ShooterDashboard;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.ToggleShooterManualMode;
@@ -108,7 +109,9 @@ public class OI {
          */
 
         //Driver Controls
-        dLStickBtn.and(dRStickBtn).whileTrue(new RepeatCommand(new InstantCommand(Robot.swerveDrive::xStance, Robot.swerveDrive))); //Swerve X Stance to not get pushed around;
+        dLStickBtn.and(dRStickBtn).and(dRTrigger.negate()).whileTrue(new RepeatCommand(new InstantCommand(Robot.swerveDrive::xStance, Robot.swerveDrive))); //Swerve X Stance to not get pushed around;
+        dLStickBtn.and(dRStickBtn).and(dRTrigger).onTrue(new InstantCommand(() -> AutonShoot.hubCommand.setXStance(true))); //Swerve X Stance to not get pushed around;
+        dLStickBtn.and(dRStickBtn).and(dRTrigger).onFalse(new InstantCommand(() -> AutonShoot.hubCommand.setXStance(false))); //Swerve X Stance to not get pushed around;
 
         dStart.and(dDPadUp).onTrue(new InstantCommand(Robot.pigeon::resetPigeonPosition).ignoringDisable(true));
         dStart.and(dDPadDown).onTrue(new InstantCommand(() -> Robot.pigeon.resetPigeonPosition(180)).ignoringDisable(true));
@@ -123,9 +126,13 @@ public class OI {
         dLBump.and(dRBump.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
         dLBump.and(dRBump.negate()).onFalse(new ShooterRPM(3500).withTimeout(0.5));
 
+        dLBump.and(dRBump).whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Fuel eject from collector
+
+
         dRTrigger.and(manualMode).whileTrue(new ShooterRPM(3325).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
         dRTrigger.and(manualMode).onFalse(new ShooterRPM(3325).withTimeout(0.25)); //Keep shooter running after command
-        dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
+        dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false).alongWith(new InstantCommand(() -> AutonShoot.hubCommand.setXStance(true)))); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
+//        dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
         dRTrigger.and(manualMode.negate()).onFalse(new ShooterRPM(3500).withTimeout(0.25)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
 
         dLTrigger.whileTrue(new ShooterRPM(3130).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand())); // Short shot to use if cameras break
@@ -134,11 +141,14 @@ public class OI {
 //        dDPadUp.and(dStart.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Long shot to use  if cameras break
 //        dDPadDown.and(dStart.negate()).whileTrue(new ShooterRPM(3300).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Short shot to use if cameras break
 //        dDPadRight.and(dStart.negate()).whileTrue(new ShooterRPM(4000).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.9)).alongWith(ShooterAuto.indexFullCommand)); // Passing fuel from neutral zone to our alliance zone
-        dLBump.and(dRBump).whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Fuel eject from collector
 
         dBack.and(dX).onTrue(new InstantCommand(Robot::runAutonomousCommand));
         dBack.and(dB).onTrue(new InstantCommand(Robot::cancelAutonomousCommand));
 
+        // for driver only controls
+        dX.and(dBack.negate()).whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect
+        dB.and(dBack.negate()).onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
+        // For shot calibration
         dA.whileTrue(new ShooterDashboard().alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
 
         //Aux Controls
@@ -149,14 +159,16 @@ public class OI {
 //        aStart.and(aDPadRight).onTrue(new InstantCommand(Robot.pivotMotor::zeroEncoder).ignoringDisable(true));
 //        aStart.and(aDPadLeft).onTrue(new InstantCommand(Robot.pivotMotor::deployedEncoder).ignoringDisable(true));
 
-        aLBump.onTrue(new InstantCommand(() -> {
+        aY.onTrue(new InstantCommand(() -> {
             AutonShoot.hubCommand.resetRotationOffset();
             AutonShoot.shootCommand.resetRPMOffset();
         }).ignoringDisable(true));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
-        aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerReverse(0.75)).alongWith(new AgitatorPercent(-0.3))); //Standard fuel eject from collector
-        aRTrigger.whileTrue(new CollectorPercent(0.6).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
+        aLBump.whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new ReverseCollectorPercent(1.0)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
+
+        aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Standard fuel eject from collector
+        aRTrigger.whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
 
         aX.onTrue(new CollectorTeleopPivotDown()); //Rotates collector out
         aA.onTrue(new CollectorAgitateOnce()); //Lifts collector only once (for agitation)

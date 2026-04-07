@@ -20,12 +20,13 @@ public class CollectorRPM extends Command {
     @Override
     public void initialize() {
         rpm = SmartDashboard.getNumber("Collector/PID/Collect Reference", 0);
-        Robot.collectMotor.runCollector(rpm);
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
-    public void execute() {}
+    public void execute() {
+        Robot.collectMotor.runCollector(rpm);
+    }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override

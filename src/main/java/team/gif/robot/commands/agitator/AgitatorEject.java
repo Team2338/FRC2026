@@ -4,16 +4,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class AgitatorPercent extends Command {
+public class AgitatorEject extends Command {
     private double agitatorSpeed;
+    private double counter;
 
     /**
      * Runs the agitator wheels to pull fuel in at a default percentage, never self exits, stops the agitator wheels when done
      */
-    public AgitatorPercent() {
+    public AgitatorEject() {
         super();
         addRequirements(Robot.agitator);
         agitatorSpeed = Constants.Collector.AGITATOR_MOTOR_PERCENT;
+        counter = 0;
     }
 
     /**
@@ -23,7 +25,7 @@ public class AgitatorPercent extends Command {
      *
      * @param percent percent of power to run the agitator wheels
      */
-    public AgitatorPercent(double percent) {
+    public AgitatorEject(double percent) {
         super();
         addRequirements(Robot.agitator);
         agitatorSpeed = percent;
@@ -31,12 +33,19 @@ public class AgitatorPercent extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+        counter = 0;
+    }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.agitator.setPercent(agitatorSpeed);
+        if (Math.floor(counter / 25) % 2 == 1) {
+            Robot.agitator.setPercent(agitatorSpeed);
+        } else {
+            Robot.agitator.setPercent(-agitatorSpeed);
+        }
+        counter++;
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

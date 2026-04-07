@@ -1,21 +1,15 @@
-package team.gif.robot.commands.collector;
+package team.gif.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Robot;
 
-public class ReverseCollectorPercent extends Command {
-
-    double percent = 0;
-
+public class IndexerEject extends Command {
     /**
-     * Runs the collector in reverse at provided percentage, never self exits. Stops the collector motor when done.
-     *
-     * @param perc percentage to run collector. Value is 0 to 1. Positive value ejects fuel.
+     * Runs the bottom and top indexer for ejecting fuel, never self exits, stops both indexer motors when done
      */
-    public ReverseCollectorPercent(double perc) {
+    public IndexerEject() {
         super();
-        addRequirements(Robot.collectMotor);
-        percent = perc;
+        addRequirements(Robot.indexer);
     }
 
     // Called when the command is initially scheduled.
@@ -25,7 +19,7 @@ public class ReverseCollectorPercent extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.collectMotor.runCollectorPercent(percent);
+        Robot.indexer.runPercent(-0.75, -0.1);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -37,6 +31,6 @@ public class ReverseCollectorPercent extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.collectMotor.stopMotor();
+        Robot.indexer.stopMotors();
     }
 }

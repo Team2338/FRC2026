@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 6.199814550641939,
-        "y": 4.691
+        "x": 7.22949152542373,
+        "y": 4.217426810477658
       },
       "prevControl": {
-        "x": 6.171145762711864,
-        "y": 6.788444067796604
+        "x": 7.22949152542373,
+        "y": 7.51462249614792
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ForwardHubMiddle"
+      "linkedName": "ForwrdHubFar"
     }
   ],
   "rotationTargets": [
@@ -52,7 +52,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,

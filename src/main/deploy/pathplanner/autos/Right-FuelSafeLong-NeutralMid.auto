@@ -15,13 +15,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Fwd-Start-FuelMid"
+                        "pathName": "R-Fwd-Start-FuelMidLong"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Rev-FuelMid-TrenchShot"
+                        "pathName": "R-Rev-FuelMidLong-TrenchShot"
                       }
                     },
                     {

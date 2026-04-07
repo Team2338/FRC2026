@@ -4,24 +4,24 @@
     {
       "anchor": {
         "x": 6.199814550641939,
-        "y": 4.183794579172611
+        "y": 4.691
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.242263848613857,
-        "y": 6.207211115834076
+        "x": 6.173937232524963,
+        "y": 6.489473609129817
       },
       "isLocked": false,
       "linkedName": "ForwardHubMiddle"
     },
     {
       "anchor": {
-        "x": 3.14,
-        "y": 5.684679029957205
+        "x": 2.5,
+        "y": 5.685
       },
       "prevControl": {
-        "x": 4.831606864274569,
-        "y": 5.6268486739469585
+        "x": 4.1916068642745685,
+        "y": 5.627169643989753
       },
       "nextControl": null,
       "isLocked": false,
@@ -38,8 +38,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -47.0
+    "rotation": -37.99949322937491
   },
   "reversed": false,
   "folder": null,
@@ -55,5 +55,5 @@
     "velocity": 0,
     "rotation": -90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

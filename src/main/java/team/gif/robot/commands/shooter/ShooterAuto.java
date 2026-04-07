@@ -6,6 +6,8 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.ShotCalculator;
 
+import static team.gif.robot.commands.autos.AutonShoot.hubCommand;
+
 public class ShooterAuto extends Command {
     private boolean readyToIndex;
     private double rpmOffset = 0;
@@ -60,6 +62,7 @@ public class ShooterAuto extends Command {
         Robot.shooter.stopMotors(); // added because teleop would start with shooter motor running
         indexerCommand.cancel();
         sequenceScheduled = false;
+        hubCommand.setXStance(false);
     }
 
     /**

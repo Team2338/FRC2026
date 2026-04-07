@@ -37,9 +37,9 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        NamedCommands.registerCommand("Collector Run", new CollectorPercent(0.8).alongWith(new AgitatorPercent()));
+        NamedCommands.registerCommand("Collector Run", new CollectorPercent(1.0).alongWith(new AgitatorPercent()));
         NamedCommands.registerCommand("Collector Down", new CollectorAutoPivotDown());
-        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(3.5).andThen(new ShooterRPM(4000).withTimeout(0.25)));
+        NamedCommands.registerCommand("OC-autonshoot", new AutonShoot(true).withTimeout(4.5).andThen(new ShooterRPM(4000).withTimeout(0.25)));
         NamedCommands.registerCommand("OC-autonshoot-final", new AutonShoot(true));
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
         NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
@@ -62,11 +62,15 @@ public class RobotContainer {
         ArrayList<String> names = new ArrayList<>();
         names.add("Left-FuelSafe-NeutralMid");
         names.add("Right-FuelSafe-NeutralMid");
+        names.add("Left-FuelSafeLong-NeutralMid");
+        names.add("Right-FuelSafeLong-NeutralMid");
         names.add("Center");
-        names.add("Right-NeutralMid-HubNear");
-        names.add("Left-NeutralMid-HubNear");
+        names.add("Left-FuelSafe-NeutralFar");
+        names.add("Right-FuelSafe-NeutralFar");
         names.add("Left-FuelCross-HubNear");
         names.add("Right-FuelCross-HubNear");
+        names.add("Right-NeutralMid-HubNear");
+        names.add("Left-NeutralMid-HubNear");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
 

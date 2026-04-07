@@ -15,19 +15,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Fwd-Start-FuelMid"
+                        "pathName": "L-Fwd-Start-FuelMidLong"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Rev-FuelMid-TrenchShot"
+                        "pathName": "L-Rev-FuelMidLong-TrenchShot"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Enter-Trench"
+                        "pathName": "L-Enter-Trench"
                       }
                     }
                   ]
@@ -78,19 +78,19 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Exit-Trench"
+                        "pathName": "L-Exit-Trench"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Fwd-TrenchShot-NeutralMid"
+                        "pathName": "L-Fwd-TrenchShot-NeutralMid"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Rev-NeutralMid-RampShot"
+                        "pathName": "L-Rev-NeutralMid-RampShot"
                       }
                     }
                   ]

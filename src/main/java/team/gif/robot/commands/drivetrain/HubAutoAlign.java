@@ -13,6 +13,7 @@ public class HubAutoAlign extends Command {
     private final SlewRateLimiter forwardLimiter;
     private final SlewRateLimiter strafeLimiter;
     private double rotOffset = 0;
+    private boolean xStance = false;
 
     private TrapezoidProfile.Constraints motionProfileConstraints;
     private TrapezoidProfile.State targetState;
@@ -70,8 +71,12 @@ public class HubAutoAlign extends Command {
         targetState = new TrapezoidProfile.State(ShotCalculator.angleToHubOptimzed().getRadians(), 0);
         double rot = motionProfile.calculate(robotPose.getRotation().getRadians(), targetState);
 
-        // the robot starts facing the driver station so for this year negating y and x
-        Robot.swerveDrive.drive(forward, strafe, rot);
+         }
+            Robot.swerveDrive.drive(forward, strafe, rot);
+            // the robot starts facing the driver station so for this year negating y and x
+         } else {
+             Robot.swerveDrive.xStance();
+         if(xStance && Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
     }
 
     @Override
@@ -99,5 +104,9 @@ public class HubAutoAlign extends Command {
 
     public double getRotationOffset() {
         return rotOffset;
+    }
+
+    public void setXStance(boolean xStance) {
+        this.xStance = xStance;
     }
 }

@@ -84,13 +84,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Fwd-TrenchShot-NeutralMid"
+                        "pathName": "R-Fwd-TrenchShot-NeutralFar"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Rev-NeutralMid-RampShot"
+                        "pathName": "R-Rev-NeutralFar-RampShot"
                       }
                     }
                   ]
