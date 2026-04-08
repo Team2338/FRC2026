@@ -167,6 +167,8 @@ public final class Constants {
         public static final double SHOOTER_AUTO_SECONDS = 2.5; //Change value
         public static final double SHOOTER_AUTON_FAR_RPM = 3450;
         public static final double SHOOTER_AUTON_CENTER_RPM = 3100;
+        public static final double SHOOTER_AUTON_STOP_Y = 3.12; //Change Value
+        public static final double SHOOTER_AUTON_STOP_PITCH = 1; //Change Value
     }
 
     public static final class Indexer {
