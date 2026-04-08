@@ -73,6 +73,16 @@ public class ShotCalculator {
         }
     }
 
+    private static double distanceToPass(){
+         if (DriverStation.getAlliance().isPresent()) {
+             Translation2d passLine = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? Constants.Field.PASS_LINE_BLUE_TRANSLATION : Constants.Field.PASS_LINE_RED_TRANSLATION;
+             Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
+             return robot.getDistance(passLine);
+         }else {
+            return -1;
+         }
+    }
+
     /**
      * This uses the pose estimate to the calculate the distance to the hub,
      * then it uses that distance to interpolate the ideal shooter speed from the
@@ -81,6 +91,10 @@ public class ShotCalculator {
      */
     public static double getShotRPM() {
         return distanceMap.get(distanceToHub());
+    }
+
+    public static double getPassRPM(){
+        return distanceMap.get(distanceToPass());
     }
 
     /**
