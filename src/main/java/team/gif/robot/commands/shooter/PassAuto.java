@@ -6,23 +6,17 @@ import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 import team.gif.robot.subsystems.ShotCalculator;
 
-import static team.gif.robot.commands.autos.AutonShoot.hubCommand;
-
-public class ShooterAuto extends Command {
+public class PassAuto extends Command {
     private boolean readyToIndex;
     private double rpmOffset = 0;
     private boolean sequenceScheduled;
     private boolean manualMode = false; // not directly used here but related to Auto shooting
     private Command indexerCommand;
 
-    /**
-     * Revs shooter and shoots fuel (i.e. runs indexer motors) when shooter reaches minimum RPM.<br>
-     * Robot must be within angle tolerance of seeing the hub.<br>
-     * Never self exists, stops all shooter and both indexer wheels when done.
-     */
-    public  ShooterAuto() {
+    public PassAuto() {
         super();
         addRequirements(Robot.shooter);
+
     }
 
     // Called when the command is initially scheduled.
@@ -36,18 +30,17 @@ public class ShooterAuto extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.shooter.runShooter(ShotCalculator.getShotRPM() + rpmOffset);
+        Robot.shooter.runShooter(ShotCalculator.getPassRPM() + rpmOffset);
 
-        if (Robot.shooter.getShooterReady() && (Math.abs(ShotCalculator.angleToHubError().getDegrees()) <= 3)) {
+        if (Robot.shooter.getShooterReady()) {
             readyToIndex = true;
         }
 
-        // only want to run this if shooter is ready, bot is aligned, and it hasn't been run already
-        // i.e. only schedule the index sequence once
         if (!sequenceScheduled && readyToIndex) {
             CommandScheduler.getInstance().schedule(indexerCommand);
             sequenceScheduled = true;
         }
+        
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -62,11 +55,11 @@ public class ShooterAuto extends Command {
         Robot.shooter.stopMotors(); // added because teleop would start with shooter motor running
         indexerCommand.cancel();
         sequenceScheduled = false;
-        hubCommand.setXStance(false);
     }
 
     /**
      * Adjusts the offset to the calculated required RPM
+     *
      * @param rpm - desired change in rpm
      */
     public void adjustRPMOffset(double rpm) {
@@ -82,6 +75,7 @@ public class ShooterAuto extends Command {
 
     /**
      * Returns the rpm offset
+     *
      * @return offset in rpm
      */
     public double getRPMOffset() {
@@ -90,6 +84,7 @@ public class ShooterAuto extends Command {
 
     /**
      * Sets manual mode to true/false
+     *
      * @param mode true when in manual mode
      */
     public void setManualMode(boolean mode) {
@@ -98,9 +93,11 @@ public class ShooterAuto extends Command {
 
     /**
      * Gets the current shooter manual mode
+     *
      * @return true if manual mode is enabled
      */
     public boolean getManualMode() {
         return manualMode;
     }
+
 }
