@@ -3,7 +3,9 @@ package team.gif.robot.commands.drivetrain;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -27,6 +29,7 @@ public class HubAutoAlign extends Command {
         motionProfileConstraints = new TrapezoidProfile.Constraints(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND, Robot.swerveConfig.constants.MAX_ANGULAR_ACCEL_RADIANS_PER_SECOND_SQUARED);
 
         motionProfile = new ProfiledPIDController(Constants.Mk5Constants.HUB_ALIGN_P, 0, 0, motionProfileConstraints);
+        motionProfile.enableContinuousInput(0, Math.PI * 2);
     }
 
     @Override
@@ -68,15 +71,18 @@ public class HubAutoAlign extends Command {
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
         // Auto rotate to hub
+        double rotError = ShotCalculator.angleToHubError().getRadians() + Units.degreesToRadians(rotOffset);
+
+        // Auto rotate to hub
         targetState = new TrapezoidProfile.State(ShotCalculator.angleToHubOptimzed().getRadians(), 0);
         double rot = motionProfile.calculate(robotPose.getRotation().getRadians(), targetState);
 
-         }
-            Robot.swerveDrive.drive(forward, strafe, rot);
+        if(xStance && Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
+            Robot.swerveDrive.xStance();
+        } else {
             // the robot starts facing the driver station so for this year negating y and x
-         } else {
-             Robot.swerveDrive.xStance();
-         if(xStance && Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
+            Robot.swerveDrive.drive(forward, strafe, rot);
+        }
     }
 
     @Override
