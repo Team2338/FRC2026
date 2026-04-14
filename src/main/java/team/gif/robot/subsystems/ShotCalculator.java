@@ -88,7 +88,7 @@ public class ShotCalculator {
      * heading the robot needs to have to point toward the hub
      * @return The ideal rotation of the robot as a `Rotation2d`
      */
-    private static Rotation2d angleToHub() {
+    public static Rotation2d angleToHub() {
         Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
         Translation2d hub = Constants.Field.HUB_RED_TRANSLATION;
 
@@ -97,6 +97,15 @@ public class ShotCalculator {
         }
 
         return hub.minus(robot).getAngle();
+    }
+
+    /**
+     * Determines the shorest path to point at the hub (should always be less than 180)
+     * @return Angle to hub
+     */
+    public static Rotation2d angleToHubOptimzed() {
+        Rotation2d currentRotation = Robot.swerveDrive.getPose().getRotation();
+        return optimizeAngle(angleToHub(), currentRotation);
     }
 
     /**
