@@ -126,12 +126,10 @@ public class OI {
 
         dLBump.and(dRBump.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
         dLBump.and(dRBump.negate()).onFalse(new ShooterRPM(3500).withTimeout(0.5));
-
         dLBump.and(dRBump).whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Fuel eject from collector
 
 
         dRTrigger.and(manualMode).whileTrue(new ShooterRPM(3325).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
-        dRTrigger.and(manualMode.negate()).whileTrue(new PassAuto());
         dRTrigger.and(manualMode).onFalse(new ShooterRPM(3325).withTimeout(0.25)); //Keep shooter running after command
         dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false).alongWith(new InstantCommand(() -> AutonShoot.hubCommand.setXStance(true)))); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
 //        dRTrigger.and(manualMode.negate()).whileTrue(new AutonShoot(false)); //Full sequence to align, rev shooter, and index (also manual long shot if cameras break)
@@ -167,7 +165,8 @@ public class OI {
         }).ignoringDisable(true));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
-        aLBump.whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new ReverseCollectorPercent(1.0)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
+        aLBump.and(manualMode).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new ReverseCollectorPercent(1.0)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
+        aLBump.and(manualMode.negate()).whileTrue(new PassAuto());
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Standard fuel eject from collector
         aRTrigger.whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
