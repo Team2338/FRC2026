@@ -31,6 +31,8 @@ public class PassAuto extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
+        Robot.collectMotor.runCollectorPercent(0.8);
+        Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_PERCENT);
         Robot.shooter.runShooter(ShotCalculator.getPassRPM() + AutonShoot.shootCommand.getRPMOffset());
 
         if (Robot.shooter.getShooterReady()) {
