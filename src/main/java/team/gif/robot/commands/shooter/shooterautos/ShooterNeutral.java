@@ -7,6 +7,7 @@ import team.gif.robot.Robot;
 public class ShooterNeutral extends Command {
 
     private boolean inNeutral = false;
+    private boolean isBeached = false;
 
     public ShooterNeutral() {
         super();
@@ -16,7 +17,8 @@ public class ShooterNeutral extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        inNeutral = Robot.swerveDrive.getPoseY() < Constants.Shooter.SHOOTER_AUTON_STOP_Y && Robot.pigeon.getRoll() < Constants.Shooter.SHOOTER_AUTON_STOP_PITCH;
+        inNeutral = Robot.swerveDrive.getPoseY() < Constants.Shooter.SHOOTER_AUTON_STOP_Y;
+        isBeached = Robot.pigeon.getRoll() < Constants.Shooter.SHOOTER_AUTON_STOP_PITCH;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -26,7 +28,7 @@ public class ShooterNeutral extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return !inNeutral;
+        return !inNeutral && !isBeached;
     }
 
     // Called when the command ends or is interrupted.
