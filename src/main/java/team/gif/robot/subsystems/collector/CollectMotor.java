@@ -33,7 +33,6 @@ public class CollectMotor extends SubsystemBase {
     private final TalonFX collectorMotor;
     private final TalonFX collectorMotor2;
     private TalonFXConfiguration config;
-    public VelocityVoltage velocityVoltage;
     private DutyCycleOut dutyCycleOut;
 
     public CollectMotor() {
@@ -46,36 +45,12 @@ public class CollectMotor extends SubsystemBase {
 
         setConfig();
 
-        velocityVoltage = new VelocityVoltage(0).withSlot(0);
         dutyCycleOut = new DutyCycleOut(0);
-    }
-
-
-    @Override
-    public void periodic() {
-        double netP = SmartDashboard.getNumber("Collector/PID/Collect P", 0);
-        double netI = SmartDashboard.getNumber("Collector/PID/Collect I", 0);
-        double netD = SmartDashboard.getNumber("Collector/PID/Collect D", 0);
-
-        double currP = config.Slot0.kP;
-        double currI = config.Slot0.kI;
-        double currD = config.Slot0.kD;
-
-        if(netP != currP || netI != currI || netD != currD) {
-            config.Slot0.kP = netP;
-            config.Slot0.kI = netI;
-            config.Slot0.kD = netD;
-            setConfig(config);
-        }
     }
 
     public void runCollectorPercent(double percent){
         dutyCycleOut.withOutput(percent).withEnableFOC(false);
         collectorMotor.setControl(dutyCycleOut);
-    }
-
-    public void runCollector(double rpm) {
-        collectorMotor.setControl(velocityVoltage.withVelocity(-rpm/60));
     }
 
     public double getCollectOutput() {
@@ -98,9 +73,6 @@ public class CollectMotor extends SubsystemBase {
 
     public void setConfig() {
         config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
-        config.Slot0.kP = 0;
-        config.Slot0.kI = 0;
-        config.Slot0.kD = 0;
         config.Slot0.kS = 0.12695;
         config.Slot0.kV = 0.11474;
         config.Slot0.kA = 0.0058193;
