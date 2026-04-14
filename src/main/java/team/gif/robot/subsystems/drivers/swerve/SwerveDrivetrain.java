@@ -61,6 +61,7 @@ import static edu.wpi.first.units.Units.Volts;
 
 
 public class SwerveDrivetrain extends SubsystemBase {
+    //region Variables
     private final SwerveMap deviceMap;
     private final SwerveConstants constants;
     private final DriveMotorFactory driveMotorFactory;
@@ -114,7 +115,7 @@ public class SwerveDrivetrain extends SubsystemBase {
             .getStructTopic("EstimatedVisionPose", Pose2d.struct).publish();
     private static final StructPublisher<ChassisSpeeds> chassisSpeedsStructPublisher = NetworkTableInstance.getDefault()
             .getStructTopic("ChassisSpeeds", ChassisSpeeds.struct).publish();
-
+    //endregion
 
     /**
      * Constructs a SwerveDrivetrain with the specified configuration
@@ -207,6 +208,7 @@ public class SwerveDrivetrain extends SubsystemBase {
         }
     }
 
+    //region Vision
     /**
      * Set the limelight enabled status
      * @param enabled - enable limelight vision updates
@@ -321,6 +323,9 @@ public class SwerveDrivetrain extends SubsystemBase {
         return photonCurrStdDevs;
     }
 
+    //endregion
+
+    //region Odometry
     /**
      * Reset the odometry to a given pose
      *
@@ -349,6 +354,28 @@ public class SwerveDrivetrain extends SubsystemBase {
         return speed;
     }
 
+
+    /**
+     * Get the current pose of the robot with 0deg always facing the red alliance wall
+     * @return The current pose of the robot (Pose2D)
+     */
+    public Pose2d getPose() {
+        return poseEstimator.getEstimatedPosition();
+    }
+
+    /**
+     * Get the current position of each of the swerve modules
+     *
+     * @return An array in form fL -> fR -> rL -> rR of each of the module positions
+     */
+    public SwerveModulePosition[] getPosition() {
+
+        return new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()};
+    }
+
+    //endregion
+
+    //region Drive
     /**
      * Drive the bot with given params - always field relative
      *
@@ -387,7 +414,7 @@ public class SwerveDrivetrain extends SubsystemBase {
      * @param desiredStates SwerveModuleState array of desired states for each of the modules
      * @implNote Only for use in the SwerveDrivetrain class and by pathplanner, for any general use {@link SwerveDrivetrain#drive(double x, double y, double rot)}
      */
-     public void setModuleStates(SwerveModuleState[] desiredStates) {
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 desiredStates, drivePace.getValue()
         );
@@ -426,6 +453,9 @@ public class SwerveDrivetrain extends SubsystemBase {
         }
     }
 
+
+
+
     /**
      * This set moves all the modules to 90 degrees. It turns the modules inward to prevent the robot from moving
      */
@@ -436,14 +466,6 @@ public class SwerveDrivetrain extends SubsystemBase {
         rL.setDesiredState(state90, true);
         rR.setDesiredState(state90, false);
 
-    }
-
-    /**
-     * Get the current pose of the robot with 0deg always facing the red alliance wall
-     * @return The current pose of the robot (Pose2D)
-     */
-    public Pose2d getPose() {
-        return poseEstimator.getEstimatedPosition();
     }
 
     /**
@@ -463,16 +485,10 @@ public class SwerveDrivetrain extends SubsystemBase {
 
         setModuleStates(states);
     }
+    //endregion
 
-    /**
-     * Get the current position of each of the swerve modules
-     *
-     * @return An array in form fL -> fR -> rL -> rR of each of the module positions
-     */
-    public SwerveModulePosition[] getPosition() {
+    //region Utility
 
-        return new SwerveModulePosition[]{fL.getPosition(), fR.getPosition(), rL.getPosition(), rR.getPosition()};
-    }
 
     /**
      * Reset the drive encoders
@@ -502,13 +518,6 @@ public class SwerveDrivetrain extends SubsystemBase {
         return drivePace;
     }
 
-    public double getPoseX() {
-        return getPose().getX();
-    }
-
-    public double getPoseY() {
-        return getPose().getY();
-    }
 
     public SwerveConstants getConstants() {
         return constants;
@@ -535,106 +544,6 @@ public class SwerveDrivetrain extends SubsystemBase {
         return rotation;
     }
 
-    private void configModules() {
-
-        fLDriveMotor = driveMotorFactory.create(deviceMap.FRONT_LEFT_DRIVE_MOTOR_ID, constants);
-        fRDriveMotor = driveMotorFactory.create(deviceMap.FRONT_RIGHT_DRIVE_MOTOR_ID, constants);
-        rLDriveMotor = driveMotorFactory.create(deviceMap.REAR_LEFT_DRIVE_MOTOR_ID, constants);
-        rRDriveMotor = driveMotorFactory.create(deviceMap.REAR_RIGHT_DRIVE_MOTOR_ID, constants);
-
-        fLTurnMotor = turnMotorFactory.create(deviceMap.FRONT_LEFT_TURNING_MOTOR_ID);
-        fRTurnMotor = turnMotorFactory.create(deviceMap.FRONT_RIGHT_TURNING_MOTOR_ID);
-        rLTurnMotor = turnMotorFactory.create(deviceMap.REAR_LEFT_TURNING_MOTOR_ID);
-        rRTurnMotor = turnMotorFactory.create(deviceMap.REAR_RIGHT_TURNING_MOTOR_ID);
-
-        // In case the turn motor is a TalonSRX that has the encoder connected to the data port
-        if(encoderFactory == null && fLTurnMotor instanceof TalonSRXTurnMotorEncoder) {
-            fLEncoder = (Encoder) fLTurnMotor;
-            fREncoder = (Encoder) fRTurnMotor;
-            rLEncoder = (Encoder) rLTurnMotor;
-            rREncoder = (Encoder) rRTurnMotor;
-        } else {
-            assert encoderFactory != null;
-            fLEncoder = encoderFactory.create(deviceMap.FRONT_LEFT_ENCODER_ID);
-            fREncoder = encoderFactory.create(deviceMap.FRONT_RIGHT_ENCODER_ID);
-            rLEncoder = encoderFactory.create(deviceMap.REAR_LEFT_ENCODER_ID);
-            rREncoder = encoderFactory.create(deviceMap.REAR_RIGHT_ENCODER_ID);
-        }
-
-
-        fL = new SwerveModule(
-                fLDriveMotor,
-                fLTurnMotor,
-                fLEncoder,
-                constants.FL_TURN_INVERTED,
-                constants.FL_DRIVE_INVERTED,
-                constants.FRONT_LEFT_OFFSET,
-                constants.FL_DRIVE_FF,
-                constants.FL_FF,
-                constants.FL_P,
-                constants.MAX_DRIVE_TEMP
-        );
-
-        fR = new SwerveModule (
-                fRDriveMotor,
-                fRTurnMotor,
-                fREncoder,
-                constants.FR_TURN_INVERTED,
-                constants.FR_DRIVE_INVERTED,
-                constants.FRONT_RIGHT_OFFSET,
-                constants.FR_DRIVE_FF,
-                constants.FR_FF,
-                constants.FR_P,
-                constants.MAX_DRIVE_TEMP
-                );
-
-        rL = new SwerveModule (
-                rLDriveMotor,
-                rLTurnMotor,
-                rLEncoder,
-                constants.RL_TURN_INVERTED,
-                constants.RL_DRIVE_INVERTED,
-                constants.REAR_LEFT_OFFSET,
-                constants.RL_DRIVE_FF,
-                constants.RL_FF,
-                constants.RL_P,
-                constants.MAX_DRIVE_TEMP
-        );
-
-        rR = new SwerveModule (
-                rRDriveMotor,
-                rRTurnMotor,
-                rREncoder,
-                constants.RR_TURN_INVERTED,
-                constants.RR_DRIVE_INVERTED,
-                constants.REAR_RIGHT_OFFSET,
-                constants.RR_DRIVE_FF,
-                constants.RR_FF,
-                constants.RR_P,
-                constants.MAX_DRIVE_TEMP
-        );
-    }
-
-    private void configPathPlanner() {
-        RobotConfig ppConfig;
-        try{
-            ppConfig = RobotConfig.fromGUISettings();
-        } catch (Exception e) {
-            ModuleConfig moduleConfig = constants.PATHPLANNER_MODULE_CONFIG;
-            ppConfig = new RobotConfig(constants.MASS_KG, constants.MOI_KGM2, moduleConfig, constants.TRACK_WIDTH_METERS);
-        }
-
-        AutoBuilder.configure(
-                this::getPose,
-                this::resetOdometry,
-                this::getRobotRelativeSpeed,
-                this::setModuleChassisSpeeds,
-                constants.AUTO_DRIVE_CONTROLLER,
-                ppConfig,
-                this::checkRedAlliance,
-                this
-        );
-    }
 
     public double fLDriveTemp() { return fLDriveMotor.getTemp(); }
     public double fRDriveTemp() { return fRDriveMotor.getTemp(); }
@@ -744,6 +653,113 @@ public class SwerveDrivetrain extends SubsystemBase {
         SmartDashboard.putNumber("Swerve/RR Rot Output", fLTurnMotor.getOutput());
     }
 
+    //endregion
+
+    //region Configuration
+    private void configModules() {
+
+        fLDriveMotor = driveMotorFactory.create(deviceMap.FRONT_LEFT_DRIVE_MOTOR_ID, constants);
+        fRDriveMotor = driveMotorFactory.create(deviceMap.FRONT_RIGHT_DRIVE_MOTOR_ID, constants);
+        rLDriveMotor = driveMotorFactory.create(deviceMap.REAR_LEFT_DRIVE_MOTOR_ID, constants);
+        rRDriveMotor = driveMotorFactory.create(deviceMap.REAR_RIGHT_DRIVE_MOTOR_ID, constants);
+
+        fLTurnMotor = turnMotorFactory.create(deviceMap.FRONT_LEFT_TURNING_MOTOR_ID);
+        fRTurnMotor = turnMotorFactory.create(deviceMap.FRONT_RIGHT_TURNING_MOTOR_ID);
+        rLTurnMotor = turnMotorFactory.create(deviceMap.REAR_LEFT_TURNING_MOTOR_ID);
+        rRTurnMotor = turnMotorFactory.create(deviceMap.REAR_RIGHT_TURNING_MOTOR_ID);
+
+        // In case the turn motor is a TalonSRX that has the encoder connected to the data port
+        if(encoderFactory == null && fLTurnMotor instanceof TalonSRXTurnMotorEncoder) {
+            fLEncoder = (Encoder) fLTurnMotor;
+            fREncoder = (Encoder) fRTurnMotor;
+            rLEncoder = (Encoder) rLTurnMotor;
+            rREncoder = (Encoder) rRTurnMotor;
+        } else {
+            assert encoderFactory != null;
+            fLEncoder = encoderFactory.create(deviceMap.FRONT_LEFT_ENCODER_ID);
+            fREncoder = encoderFactory.create(deviceMap.FRONT_RIGHT_ENCODER_ID);
+            rLEncoder = encoderFactory.create(deviceMap.REAR_LEFT_ENCODER_ID);
+            rREncoder = encoderFactory.create(deviceMap.REAR_RIGHT_ENCODER_ID);
+        }
+
+
+        fL = new SwerveModule(
+                fLDriveMotor,
+                fLTurnMotor,
+                fLEncoder,
+                constants.FL_TURN_INVERTED,
+                constants.FL_DRIVE_INVERTED,
+                constants.FRONT_LEFT_OFFSET,
+                constants.FL_DRIVE_FF,
+                constants.FL_FF,
+                constants.FL_P,
+                constants.MAX_DRIVE_TEMP
+        );
+
+        fR = new SwerveModule (
+                fRDriveMotor,
+                fRTurnMotor,
+                fREncoder,
+                constants.FR_TURN_INVERTED,
+                constants.FR_DRIVE_INVERTED,
+                constants.FRONT_RIGHT_OFFSET,
+                constants.FR_DRIVE_FF,
+                constants.FR_FF,
+                constants.FR_P,
+                constants.MAX_DRIVE_TEMP
+                );
+
+        rL = new SwerveModule (
+                rLDriveMotor,
+                rLTurnMotor,
+                rLEncoder,
+                constants.RL_TURN_INVERTED,
+                constants.RL_DRIVE_INVERTED,
+                constants.REAR_LEFT_OFFSET,
+                constants.RL_DRIVE_FF,
+                constants.RL_FF,
+                constants.RL_P,
+                constants.MAX_DRIVE_TEMP
+        );
+
+        rR = new SwerveModule (
+                rRDriveMotor,
+                rRTurnMotor,
+                rREncoder,
+                constants.RR_TURN_INVERTED,
+                constants.RR_DRIVE_INVERTED,
+                constants.REAR_RIGHT_OFFSET,
+                constants.RR_DRIVE_FF,
+                constants.RR_FF,
+                constants.RR_P,
+                constants.MAX_DRIVE_TEMP
+        );
+    }
+
+    private void configPathPlanner() {
+        RobotConfig ppConfig;
+        try{
+            ppConfig = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            ModuleConfig moduleConfig = constants.PATHPLANNER_MODULE_CONFIG;
+            ppConfig = new RobotConfig(constants.MASS_KG, constants.MOI_KGM2, moduleConfig, constants.TRACK_WIDTH_METERS);
+        }
+
+        AutoBuilder.configure(
+                this::getPose,
+                this::resetOdometry,
+                this::getRobotRelativeSpeed,
+                this::setModuleChassisSpeeds,
+                constants.AUTO_DRIVE_CONTROLLER,
+                ppConfig,
+                this::checkRedAlliance,
+                this
+        );
+    }
+    //endregion
+
+    //region SysId
+
     public SysIdRoutine getSysIdRoutine(String motors) {
         MutVoltage voltMut = Volts.mutable(0);
 
@@ -839,4 +855,6 @@ public class SwerveDrivetrain extends SubsystemBase {
     public Command sysIdDynamic(String motor, SysIdRoutine.Direction direction) {
         return getSysIdRoutine(motor).dynamic(direction);
     }
+
+    //endregion
 }
