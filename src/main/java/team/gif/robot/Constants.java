@@ -29,6 +29,13 @@ public final class Constants {
     public static final class Field {
         public static final Translation2d HUB_BLUE_TRANSLATION = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
         public static final Translation2d HUB_RED_TRANSLATION = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+        public static final Translation2d HUB_ZONE_BLUE_MIN = new Translation2d(Units.inchesToMeters(205.57), Units.inchesToMeters(135.34));
+        public static final Translation2d HUB_ZONE_BLUE_MAX = new Translation2d(Units.inchesToMeters(230.57), Units.inchesToMeters(182.34));
+        public static final Translation2d HUB_ZONE_RED_MIN = new Translation2d(Units.inchesToMeters(445.61), Units.inchesToMeters(135.34));
+        public static final Translation2d HUB_ZONE_RED_MAX = new Translation2d(Units.inchesToMeters(470.61), Units.inchesToMeters(182.34));
+
+        public static final double TOP_FENCE_ZONE_Y = Units.inchesToMeters(292.7);
+        public static final double BOTTOM_FENCE_ZONE_Y = Units.inchesToMeters(25);
     }
 
     public static final class Vision {
@@ -40,6 +47,7 @@ public final class Constants {
     //These constants should be referenced via Robot.swerveDrive.getConstants();
     public static final class Mk5Constants extends SwerveConstants {
         public static final double HUB_ALIGN_P = 3; //Used in HubAutoAlign to point toward the hub
+        public static final double FENCE_ALIGN_P = 1;
 
         @Override
         protected void setConfiguration() {
@@ -161,6 +169,9 @@ public final class Constants {
         public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
 
         public static final double AGITATOR_MOTOR_PERCENT = 0.3;
+
+        public static final double FENCE_COLLECT_ANGLE = 30.0;
+        public static final double HUB_COLLECT_ANGLE = 120.0;
     }
 
     public static final class Shooter {

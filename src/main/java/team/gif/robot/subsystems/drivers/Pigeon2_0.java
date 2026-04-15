@@ -73,6 +73,16 @@ public class Pigeon2_0 extends SubsystemBase {
     }
 
     /**
+     * Returns heading values between -180 and 180
+     * Does this by using the IEEEremainder function which
+     * splits the remainder in half and returns anything greater than
+     * half as negative.
+     */
+    public double get180Heading() {
+        return Math.IEEEremainder(getHeading(), 360.0d);
+    }
+
+    /**
      * Returns Rotation2d object using heading from the pigeon
      */
     public Rotation2d getRotation2d() {
