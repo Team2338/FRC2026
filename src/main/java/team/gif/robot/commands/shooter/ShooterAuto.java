@@ -20,7 +20,7 @@ public class ShooterAuto extends Command {
      * Robot must be within angle tolerance of seeing the hub.<br>
      * Never self exists, stops all shooter and both indexer wheels when done.
      */
-    public  ShooterAuto() {
+    public ShooterAuto() {
         super();
         addRequirements(Robot.shooter);
     }

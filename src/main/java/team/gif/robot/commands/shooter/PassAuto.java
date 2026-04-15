@@ -17,7 +17,6 @@ public class PassAuto extends Command {
     public PassAuto() {
         super();
         addRequirements(Robot.shooter);
-
     }
 
     // Called when the command is initially scheduled.
@@ -37,7 +36,6 @@ public class PassAuto extends Command {
         System.out.println(speed + " " + readyToIndex + " " + sequenceScheduled);
         Robot.shooter.runShooter(speed);
 
-
         if (Robot.shooter.getShooterReady()) {
             readyToIndex = true;
         }
@@ -46,7 +44,6 @@ public class PassAuto extends Command {
             CommandScheduler.getInstance().schedule(indexerCommand);
             sequenceScheduled = true;
         }
-        
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
@@ -64,5 +61,4 @@ public class PassAuto extends Command {
         indexerCommand.cancel();
         sequenceScheduled = false;
     }
-
 }

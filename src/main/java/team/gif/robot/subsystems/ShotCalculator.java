@@ -59,8 +59,8 @@ public class ShotCalculator {
         distanceMap.put(Units.feetToMeters(9.75 + measurementOffset), 3550.0);
         distanceMap.put(Units.feetToMeters(11.27 + measurementOffset), 4050.0);
 
-        passMap.put(Units.feetToMeters(17.0) - Constants.Field.PASS_LINE_BLUE_X, 3200.0);
-        passMap.put(Units.feetToMeters(28.0) - Constants.Field.PASS_LINE_BLUE_X, 5000.0);
+        passMap.put(Units.feetToMeters(17.0) - Constants.Field.PASS_LOCATION_BLUE_X_METERS, 3200.0);
+        passMap.put(Units.feetToMeters(28.0) - Constants.Field.PASS_LOCATION_BLUE_X_METERS, 5000.0);
 
     }
 
@@ -80,7 +80,7 @@ public class ShotCalculator {
 
     private static double distanceToPass(){
          if (DriverStation.getAlliance().isPresent()) {
-             double passline = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue? Constants.Field.PASS_LINE_BLUE_X : Constants.Field.PASS_LINE_RED_X;
+             double passline = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue? Constants.Field.PASS_LOCATION_BLUE_X_METERS : Constants.Field.PASS_LOCATINO_RED_X_METERS;
              double robot = Robot.swerveDrive.getPose().getX();
              return Math.abs(passline - robot);
          }else {
