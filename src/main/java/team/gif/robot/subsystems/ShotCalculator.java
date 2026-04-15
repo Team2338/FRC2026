@@ -10,6 +10,7 @@ import team.gif.robot.Robot;
 
 public class ShotCalculator {
     private final static InterpolatingDoubleTreeMap distanceMap = new InterpolatingDoubleTreeMap();
+    private final static InterpolatingDoubleTreeMap passMap = new InterpolatingDoubleTreeMap();
 
     static {
 //        distanceMap.put(Units.feetToMeters(15.0 + 0.75), 3750.0);
@@ -57,6 +58,10 @@ public class ShotCalculator {
         distanceMap.put(Units.feetToMeters(9 + measurementOffset), 3475.0);
         distanceMap.put(Units.feetToMeters(9.75 + measurementOffset), 3550.0);
         distanceMap.put(Units.feetToMeters(11.27 + measurementOffset), 4050.0);
+
+        passMap.put(Units.feetToMeters(17.0) - Constants.Field.PASS_LOCATION_BLUE_X_METERS, 3200.0);
+        passMap.put(Units.feetToMeters(28.0) - Constants.Field.PASS_LOCATION_BLUE_X_METERS, 5000.0);
+
     }
 
     /**
@@ -73,6 +78,16 @@ public class ShotCalculator {
         }
     }
 
+    private static double distanceToPass(){
+         if (DriverStation.getAlliance().isPresent()) {
+             double passline = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue? Constants.Field.PASS_LOCATION_BLUE_X_METERS : Constants.Field.PASS_LOCATINO_RED_X_METERS;
+             double robot = Robot.swerveDrive.getPose().getX();
+             return Math.abs(passline - robot);
+         }else {
+            return -1;
+         }
+    }
+
     /**
      * This uses the pose estimate to the calculate the distance to the hub,
      * then it uses that distance to interpolate the ideal shooter speed from the
@@ -81,6 +96,10 @@ public class ShotCalculator {
      */
     public static double getShotRPM() {
         return distanceMap.get(distanceToHub());
+    }
+
+    public static double getPassRPM(){
+        return passMap.get(distanceToPass());
     }
 
     /**

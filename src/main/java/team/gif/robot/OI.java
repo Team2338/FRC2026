@@ -16,6 +16,7 @@ import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.shooter.IndexerEject;
+import team.gif.robot.commands.shooter.PassAuto;
 import team.gif.robot.commands.shooter.ShooterDashboard;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.ToggleShooterManualMode;
@@ -125,7 +126,6 @@ public class OI {
 
         dLBump.and(dRBump.negate()).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
         dLBump.and(dRBump.negate()).onFalse(new ShooterRPM(3500).withTimeout(0.5));
-
         dLBump.and(dRBump).whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Fuel eject from collector
 
 
@@ -165,7 +165,8 @@ public class OI {
         }).ignoringDisable(true));
         aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
-        aLBump.whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new ReverseCollectorPercent(1.0)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
+        aLBump.and(manualMode).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new ReverseCollectorPercent(1.0)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
+        aLBump.and(manualMode.negate()).whileTrue(new PassAuto());
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Standard fuel eject from collector
         aRTrigger.whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
