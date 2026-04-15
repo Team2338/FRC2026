@@ -32,7 +32,7 @@ public class CollectorPivot extends Command {
         percent =  Math.min(percent, 0.3); // use a max value when going down/out
         if ((Robot.pivotMotor.getPosition() > Constants.Collector.PIVOT_DEPLOYED_ENCODER_POS * 0.85) && percent >= 0){
             // apply small motor power to keep collector against the hard stop
-            percent = Math.max(percent, 0.04);
+            percent = Math.max(percent, Constants.Collector.PIVOT_DOWN_HOLD_PERCENT);
         }
         Robot.pivotMotor.runPivotPercent(percent);
     }
