@@ -10,6 +10,7 @@ import team.gif.robot.Robot;
 
 public class ShotCalculator {
     private final static InterpolatingDoubleTreeMap distanceMap = new InterpolatingDoubleTreeMap();
+    private final static InterpolatingDoubleTreeMap passMap = new InterpolatingDoubleTreeMap();
 
     static {
 //        distanceMap.put(Units.feetToMeters(15.0 + 0.75), 3750.0);
@@ -57,6 +58,10 @@ public class ShotCalculator {
         distanceMap.put(Units.feetToMeters(9 + measurementOffset), 3475.0);
         distanceMap.put(Units.feetToMeters(9.75 + measurementOffset), 3550.0);
         distanceMap.put(Units.feetToMeters(11.27 + measurementOffset), 4050.0);
+
+        passMap.put(Units.feetToMeters(17.0) - Constants.Field.PASS_LINE_BLUE_X, 3200.0);
+        passMap.put(Units.feetToMeters(28.0) - Constants.Field.PASS_LINE_BLUE_X, 5000.0);
+
     }
 
     /**
@@ -94,7 +99,7 @@ public class ShotCalculator {
     }
 
     public static double getPassRPM(){
-        return distanceMap.get(distanceToPass());
+        return passMap.get(distanceToPass());
     }
 
     /**

@@ -31,9 +31,12 @@ public class PassAuto extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.collectMotor.runCollectorPercent(0.8);
+        Robot.collectMotor.runCollectorPercent(1.0);
         Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_PERCENT);
-        Robot.shooter.runShooter(ShotCalculator.getPassRPM() + AutonShoot.shootCommand.getRPMOffset());
+        double speed = ShotCalculator.getPassRPM() + AutonShoot.shootCommand.getRPMOffset();
+        System.out.println(speed + " " + readyToIndex + " " + sequenceScheduled);
+        Robot.shooter.runShooter(speed);
+
 
         if (Robot.shooter.getShooterReady()) {
             readyToIndex = true;
@@ -55,7 +58,9 @@ public class PassAuto extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.shooter.stopMotors(); // added because teleop would start with shooter motor running
+        Robot.shooter.stopMotors();
+        Robot.agitator.stopMotor();
+        Robot.collectMotor.stopMotor();
         indexerCommand.cancel();
         sequenceScheduled = false;
     }

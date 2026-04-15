@@ -29,8 +29,8 @@ public final class Constants {
     public static final class Field {
         public static final Translation2d HUB_BLUE_TRANSLATION = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
         public static final Translation2d HUB_RED_TRANSLATION = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
-        public static final Double PASS_LINE_BLUE_X = 1.5;
-        public static final Double PASS_LINE_RED_X = 15.04;
+        public static final Double PASS_LINE_BLUE_X = 0.75;
+        public static final Double PASS_LINE_RED_X = 16.54 - PASS_LINE_BLUE_X;
     }
 
     public static final class Vision {

@@ -35,6 +35,7 @@ public class Shooter extends SubsystemBase {
     public double RPMSetpointHigher;
     private Debouncer shooterReadyDebouncer = new Debouncer(0.25);
     private boolean shooterReady = false;
+    private double setpoint = 0;
 
 
     /** Creates a new ExampleSubsystem. */
@@ -52,8 +53,8 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
 
-        RPMSetpointLower = ShotCalculator.getShotRPM() - 100;
-        RPMSetpointHigher = ShotCalculator.getShotRPM() + 100;
+        RPMSetpointLower = setpoint - 100;
+        RPMSetpointHigher = setpoint + 100;
 
         boolean isShooterReadyInstant =  (RPMSetpointLower <= getLeftMotorSpeed() && getLeftMotorSpeed() <= RPMSetpointHigher)
                 && (RPMSetpointLower <= getMiddleMotorSpeed() && getMiddleMotorSpeed() <= RPMSetpointHigher)
@@ -73,6 +74,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void runShooter(double rpm) {
+        setpoint = rpm;
         shooterLeftMotor.setControl(velocityVoltage.withVelocity(rpm/60));
         shooterMiddleMotor.setControl(velocityVoltage.withVelocity(rpm/60));
         shooterRightMotor.setControl(velocityVoltage.withVelocity(rpm/60));
@@ -115,6 +117,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void stopMotors() {
+        setpoint = 0;
         shooterLeftMotor.stopMotor();
         shooterMiddleMotor.stopMotor();
         shooterRightMotor.stopMotor();
