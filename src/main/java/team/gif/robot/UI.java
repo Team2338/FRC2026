@@ -18,30 +18,11 @@ public class UI {
      *  and save file as "YYYY elastic-layout.json"
      */
     public UI() {
-        SmartDashboard.putNumber("PID/P", 0.3);
-        SmartDashboard.putNumber("PID/I", 0);
-        SmartDashboard.putNumber("PID/D", 0);
-        SmartDashboard.putNumber("PID/Percent", 0);
-        SmartDashboard.putNumber("PID/Voltage", 0);
-        SmartDashboard.putString("PID/Default Command", "Driver Left joystick - percent control");
-        SmartDashboard.putString("PID/Percent BTN", "Driver Y");
-        SmartDashboard.putString("PID/Voltage BTN", "Driver X");
-        SmartDashboard.putString("PID/Reference BTN", "Driver A");
+//        SmartDashboard.putNumber("Shooter/P", 0.3);
+//        SmartDashboard.putNumber("Shooter/I", 0);
+//        SmartDashboard.putNumber("Shooter/D", 0);
+//        SmartDashboard.putNumber("Shooter/Reference", 3000);
         SmartDashboard.putData("Command Scheduler", CommandScheduler.getInstance());
-        SmartDashboard.putNumber("Collector/PID/Collect P", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect I", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect D", 0);
-//        SmartDashboard.putNumber("Collector/PID/Pivot P", 0);
-//        SmartDashboard.putNumber("Collector/PID/Pivot I", 0);
-//        SmartDashboard.putNumber("Collector/PID/Pivot D", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect Percent", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect Voltage", 0);
-        SmartDashboard.putNumber("Collector/PID/Collect Reference", 0);
-        SmartDashboard.putNumber("Collector/PID/Pivot Percent", 0);
-        SmartDashboard.putNumber("Collector/PID/Pivot Voltage", 0);
-        SmartDashboard.putNumber("Auto Collector/PID/Collect Reference", 0);
-        SmartDashboard.putNumber("Agitator/Agitator Percent", 0);
-        SmartDashboard.putNumber("Shooter/Reference", 3000);
 
 
         delayChooser.setDefaultOption("0", delay.DELAY_0);
@@ -75,21 +56,20 @@ public class UI {
      *     SmartDashboard.putString("Elevator", String.format("%11.2f", Elevator.getPosition());
      */
     public void update() {
-        SmartDashboard.putNumber("PID/Shooter 1 Speed", Robot.shooter.getLeftMotorSpeed());
-        SmartDashboard.putNumber("PID/Shooter 2 Speed", Robot.shooter.getMiddleMotorSpeed());
-        SmartDashboard.putNumber("PID/Shooter 3 Speed", Robot.shooter.getRightMotorSpeed());
-        SmartDashboard.putNumber("PID/Shooter Current", Robot.shooter.getLeftMotorCurrent());
-        SmartDashboard.putNumber("PID/Shooter Output", Robot.shooter.getLeftMotorOutput());
-        SmartDashboard.putNumber("PID/Shooter Output 2", Robot.shooter.getMiddleMotorOutput());
-        SmartDashboard.putNumber("PID/Shooter Output 3", Robot.shooter.getRightMotorOutput());
-        SmartDashboard.putNumber("Indexer/Speed", Robot.indexer.getBottomIndexerSpeed());
-        SmartDashboard.putNumber("Indexer/Speed2", Robot.indexer.getTopIndexerSpeed());
-        SmartDashboard.putNumber("Collector/PID/Collector Output", Robot.collectMotor.getCollectOutput());
-        SmartDashboard.putNumber("Collector/PID/Collector Speed", Robot.collectMotor.getCollectSpeed());
-        SmartDashboard.putNumber("Collector/PID/Pivot Output", Robot.pivotMotor.getPivotOutput());
-        SmartDashboard.putNumber("Collector/PID/Pivot Speed", Robot.pivotMotor.getPivotSpeed());
-        SmartDashboard.putString("Collector/Collect Pos", String.format("%11.4f", Robot.pivotMotor.getPosition()));
-        SmartDashboard.putString("Collector/Collect AbsPos", String.format("%11.4f", Robot.pivotMotor.getAbsEncoderPos()));
+        SmartDashboard.putNumber("Shooter/Shooter 1 Speed", Robot.shooter.getLeftMotorSpeed());
+        SmartDashboard.putNumber("Shooter/Shooter 2 Speed", Robot.shooter.getMiddleMotorSpeed());
+        SmartDashboard.putNumber("Shooter/Shooter 3 Speed", Robot.shooter.getRightMotorSpeed());
+        SmartDashboard.putNumber("Shooter/Shooter 1 Current", Robot.shooter.getLeftMotorCurrent());
+        SmartDashboard.putNumber("Shooter/Shooter 1 Output", Robot.shooter.getLeftMotorOutput());
+        SmartDashboard.putNumber("Shooter/Shooter 2 Output", Robot.shooter.getMiddleMotorOutput());
+        SmartDashboard.putNumber("Shooter/Shooter 3 Output", Robot.shooter.getRightMotorOutput());
+        SmartDashboard.putNumber("Indexer/Bottom Speed", Robot.indexer.getBottomIndexerSpeed());
+        SmartDashboard.putNumber("Indexer/Top Speed", Robot.indexer.getTopIndexerSpeed());
+        SmartDashboard.putNumber("Collector/Collector Output", Robot.collectMotor.getCollectOutput());
+        SmartDashboard.putNumber("Collector/Collector Speed", Robot.collectMotor.getCollectSpeed());
+        SmartDashboard.putNumber("Collector/Pivot Output", Robot.pivotMotor.getPivotOutput());
+        SmartDashboard.putNumber("Collector/Pivot Speed", Robot.pivotMotor.getPivotSpeed());
+        SmartDashboard.putString("Collector/Pivot Position", String.format("%11.4f", Robot.pivotMotor.getPosition()));
         SmartDashboard.putBoolean("Diagnostics/Motor Temp", Robot.diagnostics.anyMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
