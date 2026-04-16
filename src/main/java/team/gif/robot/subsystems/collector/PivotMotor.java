@@ -10,7 +10,6 @@ import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
 import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
-import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
 
 public class PivotMotor extends SubsystemBase {
 
