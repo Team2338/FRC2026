@@ -31,7 +31,7 @@ public class PivotMotor extends SubsystemBase {
         pivotMotor.set(percent);
     }
 
-    public double getPivotOutput() {
+    public double getPivotOutputPercent() {
         return pivotMotor.getMotorVoltage().getValueAsDouble() / 12;
     }
 

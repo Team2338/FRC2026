@@ -154,7 +154,7 @@ public final class Constants {
     }
 
     public static final class Collector {
-        public static final double PIVOT_DEPLOYED_ENCODER_POS         = 0.645; //0.635; //0.6208;
+        public static final double PIVOT_DEPLOYED_ENCODER_POS         = 0.648; //0.635; //0.6208;
         public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS    = PIVOT_DEPLOYED_ENCODER_POS - 0.585;//0.05;
         public static final double PIVOT_LIMIT_AGITATE_POS            = PIVOT_DEPLOYED_ENCODER_POS - 0.355; //0.28; // single action auto-pivot will not move between 0 and this value
         public static final double PIVOT_LIMIT_AUTO_AGITATE_START_POS = PIVOT_DEPLOYED_ENCODER_POS - 0.17; // auto-agiate will not start betwwen 0 and this value
