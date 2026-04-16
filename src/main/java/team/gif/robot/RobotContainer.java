@@ -65,6 +65,7 @@ public class RobotContainer {
         names.add("Left-FuelSafeLong-NeutralMid");
         names.add("Right-FuelSafeLong-NeutralMid");
         names.add("Center");
+        names.add("Left-FuelSafeLong-FuelSweep");
         names.add("Left-FuelSafe-NeutralFar");
         names.add("Right-FuelSafe-NeutralFar");
         names.add("Left-FuelCross-HubNear");
