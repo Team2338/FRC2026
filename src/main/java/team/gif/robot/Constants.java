@@ -154,14 +154,14 @@ public final class Constants {
     }
 
     public static final class Collector {
+        public static final double PIVOT_DEPLOYED_ENCODER_POS         = 0.645; //0.635; //0.6208;
+        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS    = PIVOT_DEPLOYED_ENCODER_POS - 0.585;//0.05;
+        public static final double PIVOT_LIMIT_AGITATE_POS            = PIVOT_DEPLOYED_ENCODER_POS - 0.355; //0.28; // single action auto-pivot will not move between 0 and this value
+        public static final double PIVOT_LIMIT_AUTO_AGITATE_START_POS = PIVOT_DEPLOYED_ENCODER_POS - 0.17; // auto-agiate will not start betwwen 0 and this value
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
-        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 0.05;
-        public static final double PIVOT_LIMIT_AGITATE_POS         = 0.28;
-        public static final double PIVOT_LIMIT_AUTO_AGITATE_START_POS = 0.535;
-        public static final double PIVOT_DEPLOYED_ENCODER_POS      = 0.635; //0.6208;
         public static final double PIVOT_DOWN_HOLD_PERCENT = 0.04;
 
-        public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
+        public static final double PIVOT_POSITION_TOLERANCE = 0.01; // Not used in practice but needs to be small
 
         public static final double AGITATOR_MOTOR_PERCENT = 0.3;
     }
