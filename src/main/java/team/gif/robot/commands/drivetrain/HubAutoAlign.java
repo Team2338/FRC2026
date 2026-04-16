@@ -16,6 +16,7 @@ public class HubAutoAlign extends Command {
     private final SlewRateLimiter strafeLimiter;
     private double rotOffset = 0;
     private boolean xStance = false;
+    private boolean isAligned = false;
 
     private TrapezoidProfile.Constraints motionProfileConstraints;
     private TrapezoidProfile.State targetState;
@@ -33,7 +34,10 @@ public class HubAutoAlign extends Command {
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        motionProfile.reset(Robot.swerveDrive.getPose().getRotation().getRadians());
+        isAligned = false;
+    }
 
     @Override
     public void execute() {
@@ -77,10 +81,19 @@ public class HubAutoAlign extends Command {
         targetState = new TrapezoidProfile.State(ShotCalculator.angleToHubOptimzed().getRadians(), 0);
         double rot = motionProfile.calculate(robotPose.getRotation().getRadians(), targetState);
 
-        if(xStance && Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
-            Robot.swerveDrive.xStance();
+        if (Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
+            // first time bot is aligned and in tolerance, stop motors only
+            // once so it doesn't toggle between xStance and 0 position
+            if (!isAligned) {
+                Robot.swerveDrive.stopDrive();
+                isAligned = true;
+            }
+            if (xStance) {
+                // hold the bot in the xStance position
+                Robot.swerveDrive.xStance();
+            }
         } else {
-            // the robot starts facing the driver station so for this year negating y and x
+            isAligned = false;
             Robot.swerveDrive.drive(forward, strafe, rot);
         }
     }
