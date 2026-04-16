@@ -5,7 +5,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -75,7 +75,7 @@ public class HubAutoAlign extends Command {
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
         // Auto rotate to hub
-        double rotError = ShotCalculator.angleToHubError().getRadians() + rotOffset;
+        double rotError = ShotCalculator.angleToHubError().getRadians() + Units.degreesToRadians(rotOffset);
 
         // Auto rotate to hub
         targetState = new TrapezoidProfile.State(ShotCalculator.angleToHubOptimzed().getRadians(), 0);
@@ -94,7 +94,6 @@ public class HubAutoAlign extends Command {
             }
         } else {
             isAligned = false;
-            System.out.println(Timer.getFPGATimestamp() + " rot val:" + rot);
             Robot.swerveDrive.drive(forward, strafe, rot);
         }
     }
