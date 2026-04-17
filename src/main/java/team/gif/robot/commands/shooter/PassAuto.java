@@ -33,7 +33,6 @@ public class PassAuto extends Command {
         Robot.collectMotor.runCollectorPercent(1.0);
         Robot.agitator.setPercent(Constants.Collector.AGITATOR_MOTOR_PERCENT);
         double speed = ShotCalculator.getPassRPM() + AutonShoot.shootCommand.getRPMOffset();
-        System.out.println(speed + " " + readyToIndex + " " + sequenceScheduled);
         Robot.shooter.runShooter(speed);
 
         if (Robot.shooter.getShooterReady()) {
