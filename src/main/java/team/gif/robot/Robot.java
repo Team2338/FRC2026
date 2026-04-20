@@ -211,6 +211,8 @@ public class Robot extends TimedRobot {
         }
         pivotMotor.setDefaultCommand(new CollectorPivot());
         winAutoShiftTwoShiftFour = false;
+
+        commandScheduler.schedule(new DriveSwerve());
     }
 
     /** This function is called periodically during operator control. */
