@@ -8,32 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.1960912981455065,
-        "y": 6.344550641940086
+        "x": 6.639728958630526,
+        "y": 6.38336661911555
       },
       "isLocked": false,
       "linkedName": "ForwrdHubFar"
     },
     {
       "anchor": {
-        "x": 5.53,
+        "x": 5.252,
         "y": 7.595
       },
       "prevControl": {
-        "x": 6.603908701854496,
-        "y": 7.595
+        "x": 6.523281027104137,
+        "y": 7.2890727532097
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left-Trench-Entrance-Sideways"
+      "linkedName": "Left-Trench-Entrance-Rearfacing"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.6098081023454264,
-      "rotationDegrees": -90.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
@@ -52,7 +47,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -60,8 +55,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
-    "rotation": -90.0
+    "velocity": 5.0,
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
