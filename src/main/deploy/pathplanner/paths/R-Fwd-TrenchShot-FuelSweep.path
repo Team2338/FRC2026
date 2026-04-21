@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.53,
-        "y": 0.475
+        "x": 5.529999999999999,
+        "y": 0.4684332191819248
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.529995853398238,
-        "y": 0.47212021071466237
+        "x": 6.529995853398237,
+        "y": 0.4655534298965872
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Right-Trench-Entrance-Sideways"
     },
     {
       "anchor": {
@@ -49,15 +49,15 @@
     {
       "anchor": {
         "x": 2.5,
-        "y": 2.385
+        "y": 2.31
       },
       "prevControl": {
         "x": 3.499990857683619,
-        "y": 2.3892760436363574
+        "y": 2.3142760436363576
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "R-Rev-RampShot-Reverse End"
     }
   ],
   "rotationTargets": [
