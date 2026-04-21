@@ -23,8 +23,8 @@ public class DriveSwerve extends Command {
 
     @Override
     public void execute() {
-        double xPose = Robot.swerveDrive.getPoseX();
-        double yPose = Robot.swerveDrive.getPoseY();
+        double xPose = Robot.swerveDrive.getPose().getX();
+        double yPose = Robot.swerveDrive.getPose().getY();
         
         if (Robot.diagnostics.anyMotorTempHot()) {
             if (Robot.isCompetition) {
