@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.850390015600623,
-        "y": 4.197722308892355
+        "x": 7.22949152542373,
+        "y": 4.217426810477658
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.8504707560575255,
-        "y": 5.814065620542115
+        "x": 7.1960912981455065,
+        "y": 6.344550641940086
       },
       "isLocked": false,
-      "linkedName": "HubEnd"
+      "linkedName": "ForwrdHubFar"
     },
     {
       "anchor": {
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.67,
-      "rotationDegrees": -105.00000000000001
+      "waypointRelativePos": 0.6098081023454264,
+      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [
@@ -67,7 +67,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": -105.00000000000001
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }
