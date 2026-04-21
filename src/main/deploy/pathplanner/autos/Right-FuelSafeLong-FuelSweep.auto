@@ -13,15 +13,35 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "parallel",
                       "data": {
-                        "pathName": "R-Fwd-Start-FuelMidLong"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "R-Rev-FuelMidLong-TrenchShot"
+                        "commands": [
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "R-Fwd-Start-FuelMidLong"
+                                  }
+                                },
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "R-Rev-FuelMidLong-TrenchShot"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "DetectBeach"
+                            }
+                          }
+                        ]
                       }
                     },
                     {

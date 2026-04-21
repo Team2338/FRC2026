@@ -1,5 +1,6 @@
 package team.gif.robot.commands.drivetrain;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import team.gif.robot.Robot;
@@ -29,6 +30,7 @@ public class DetectBeach extends Command {
 
         if(Robot.pigeon.getRoll() > 5 || Robot.pigeon.getPitch() > 5) {
             beaching = true;
+            DriverStation.reportWarning("Beach detected in auto - Roll: " + Robot.pigeon.getRoll() + " Pitch: " + Robot.pigeon.getPitch(), false);
         }
     }
 

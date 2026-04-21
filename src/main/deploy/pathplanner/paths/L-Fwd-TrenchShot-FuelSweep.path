@@ -98,7 +98,14 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "DetectBeach",
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": 2.0349796376329783,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 5.0,
