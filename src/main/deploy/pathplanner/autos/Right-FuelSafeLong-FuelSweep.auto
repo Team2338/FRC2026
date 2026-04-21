@@ -13,7 +13,7 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "parallel",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {

@@ -30,6 +30,12 @@ public class DetectBeach extends Command {
 
         if(Robot.pigeon.getRoll() > 5 || Robot.pigeon.getPitch() > 5) {
             beaching = true;
+            System.out.println("******");
+            System.out.println("******");
+            System.out.println("******");
+            System.out.println("******");
+            System.out.println("******");
+            System.out.println("******");
             DriverStation.reportWarning("Beach detected in auto - Roll: " + Robot.pigeon.getRoll() + " Pitch: " + Robot.pigeon.getPitch(), false);
         }
     }
@@ -43,7 +49,9 @@ public class DetectBeach extends Command {
     // Called when the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        Robot.cancelAutonomousCommand();
-        CommandScheduler.getInstance().schedule(new StopModules());
+        if (beaching) {
+            Robot.cancelAutonomousCommand();
+            CommandScheduler.getInstance().schedule(new StopModules());
+        }
     }
 }

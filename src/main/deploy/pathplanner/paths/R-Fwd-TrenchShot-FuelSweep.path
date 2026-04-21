@@ -103,7 +103,12 @@
       "name": "DetectBeach",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": 2.1369550448960317,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "DetectBeach"
+        }
+      }
     }
   ],
   "globalConstraints": {
