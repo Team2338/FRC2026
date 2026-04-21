@@ -1,6 +1,7 @@
 package team.gif.robot.commands.collector.collectorautos;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
 public class CollectorAutoPivotHold extends Command {
@@ -21,7 +22,7 @@ public class CollectorAutoPivotHold extends Command {
     // Called every time the scheduler runs (~20ms) while the command is scheduled
     @Override
     public void execute() {
-        Robot.pivotMotor.runPivotPercent(0.04);
+        Robot.pivotMotor.runPivotPercent(Constants.Collector.PIVOT_DOWN_HOLD_PERCENT);
     }
 
     // Return true when the command should end, false if it should continue. Runs every ~20ms.

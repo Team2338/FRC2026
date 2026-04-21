@@ -156,6 +156,8 @@ public class Robot extends TimedRobot {
 //            swerveDrive.addPhotonCamera("right-cam", Constants.Vision.RIGHT_CAMERA_POSITION);
 //        }
 
+        pivotMotor.removeDefaultCommand(); // Need this for when we run multiple autos in the shop
+
         autonomousCommand = robotContainer.getAutonomousCommand();
         chosenDelay = ui.delayChooser.getSelected();
 
@@ -209,6 +211,8 @@ public class Robot extends TimedRobot {
         }
         pivotMotor.setDefaultCommand(new CollectorPivot());
         winAutoShiftTwoShiftFour = false;
+
+        commandScheduler.schedule(new DriveSwerve());
     }
 
     /** This function is called periodically during operator control. */

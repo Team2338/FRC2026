@@ -54,7 +54,7 @@
             "height": 128.0,
             "type": "Text Display",
             "properties": {
-              "topic": "/SmartDashboard/Collector/Collect Pos",
+              "topic": "/SmartDashboard/Collector/Pivot Position",
               "period": 0.06,
               "data_type": "string",
               "show_submit_button": false
