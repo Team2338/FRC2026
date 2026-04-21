@@ -13,15 +13,35 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "L-Fwd-Start-FuelMidLong"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "L-Rev-FuelMidLong-TrenchShot"
+                        "commands": [
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "L-Fwd-Start-FuelMidLong"
+                                  }
+                                },
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "L-Rev-FuelMidLong-TrenchShot"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "DetectBeach"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -76,15 +96,35 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "L-Exit-Trench"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "L-Fwd-TrenchShot-NeutralMid"
+                        "commands": [
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "L-Exit-Trench"
+                                  }
+                                },
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "L-Fwd-TrenchShot-NeutralMid"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "DetectBeach"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
