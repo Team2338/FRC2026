@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.14061340941512,
-        "y": 7.327888730385164
+        "x": 8.101797432239657,
+        "y": 7.32
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.913593203014905,
-        "y": 3.370064382674927
+        "x": 8.874777225839441,
+        "y": 3.3621756522897637
       },
       "isLocked": false,
-      "linkedName": "Right-Midline-Steal"
+      "linkedName": "StealPass-Left"
     },
     {
       "anchor": {
         "x": 8.101797432239657,
-        "y": 0.71
+        "y": 0.75
       },
       "prevControl": {
         "x": 8.349148375537663,
-        "y": 2.6270698195903828
+        "y": 2.667069819590383
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StealPass-Right"
     }
   ],
   "rotationTargets": [
@@ -51,7 +51,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 176.0
+    "rotation": -176.0
   },
   "reversed": false,
   "folder": null,

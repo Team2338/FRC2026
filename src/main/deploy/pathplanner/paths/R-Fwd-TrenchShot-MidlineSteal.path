@@ -4,7 +4,7 @@
     {
       "anchor": {
         "x": 5.529999999999999,
-        "y": 0.4684332191819248
+        "y": 0.475
       },
       "prevControl": null,
       "nextControl": {
@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.14061340941512,
-        "y": 7.327888730385164
+        "x": 8.101797432239657,
+        "y": 7.32
       },
       "prevControl": {
-        "x": 8.27,
-        "y": 4.597831669044222
+        "x": 8.231184022824536,
+        "y": 4.589942938659059
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right-Midline-Steal"
+      "linkedName": "StealPass-Left"
     }
   ],
   "rotationTargets": [

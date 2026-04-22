@@ -12,20 +12,20 @@
         "y": 4.707824347710236
       },
       "isLocked": false,
-      "linkedName": "Left-StealPass"
+      "linkedName": "StealPass-Right"
     },
     {
       "anchor": {
         "x": 8.101797432239657,
-        "y": 7.35
+        "y": 7.32
       },
       "prevControl": {
         "x": 8.349161068603292,
-        "y": 5.4329318181818165
+        "y": 5.402931818181817
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "StealPass-Left"
     }
   ],
   "rotationTargets": [

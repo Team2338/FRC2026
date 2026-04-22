@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 5.251558219173009,
-        "y": 0.4684332191819248
+        "y": 0.475
       },
       "prevControl": null,
       "nextControl": {
         "x": 4.54575342465246,
-        "y": 0.48345034246959695
+        "y": 0.4900171232876721
       },
       "isLocked": false,
       "linkedName": "Right-Trench-Entrance-Rearfacing"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 2.900456490727533,
-        "y": 0.644
+        "y": 0.652
       },
       "prevControl": {
         "x": 4.167640607244129,
-        "y": 0.35175321741836574
+        "y": 0.35975321741836574
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 63.43494882292214
+    "rotation": 65.225
   },
   "reversed": false,
   "folder": null,
