@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "L-Rev-Start-TrenchBack"
+            "pathName": "L-Rev-Start-TrenchShot"
           }
         },
         {
@@ -79,7 +79,7 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "L-Fwd-MidlineSteal"
+                                    "pathName": "L-Fwd-TrenchShot-MidlineSteal"
                                   }
                                 },
                                 {
@@ -136,7 +136,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "L-Fwd-MidlineReturn"
+                        "pathName": "L-Fwd-MidlineSteal-Return"
                       }
                     },
                     {
