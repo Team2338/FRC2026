@@ -24,9 +24,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "OC-autonshoot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Center Shoot Sequence"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              }
+            ]
           }
         },
         {

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.384090909090909,
-        "y": 7.475
+        "x": 5.252,
+        "y": 7.595
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.8749504069734675,
-        "y": 7.475
+        "x": 4.7428594978825585,
+        "y": 7.595
       },
       "isLocked": false,
       "linkedName": "Left-Trench-Entrance-Rearfacing"
