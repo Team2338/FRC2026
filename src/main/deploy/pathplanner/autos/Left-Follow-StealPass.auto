@@ -1,0 +1,101 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "L-Rev-Start-TrenchBack"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonCollectorDown"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OC-autonshoot"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "L-Fwd-TrenchBack-FuelMih"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "L-Fwd-MidlineSteal"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonCollectorDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collector Run"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "L-Fwd-MidlineReturn"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonCollectorDown"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collector Run"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

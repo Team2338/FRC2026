@@ -8,46 +8,46 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.8749504069734675,
-        "y": 7.475
+        "x": 9.57896590909091,
+        "y": 7.425943181818181
       },
       "isLocked": false,
       "linkedName": "Left-Trench-Entrance-Rearfacing"
     },
     {
       "anchor": {
-        "x": 2.900456490727533,
-        "y": 7.41845934379458
+        "x": 8.074170454545454,
+        "y": 0.44822727272727325
       },
       "prevControl": {
-        "x": 4.1884999999999994,
-        "y": 7.663
+        "x": 8.239079545454544,
+        "y": 3.3238295454545455
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ShooterTrench"
+      "linkedName": "Left-StealPass"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8560885608856085,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.8789308176100641,
+      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 5.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -63.43494882292214
+    "velocity": 0.0,
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
@@ -55,5 +55,5 @@
     "velocity": 3.5,
     "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
