@@ -23,13 +23,13 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "R-Fwd-Start-NeutralMid"
+                                    "pathName": "L-Fwd-Start-FuelMidLong"
                                   }
                                 },
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "R-Rev-NeutralMid-TrenchShot"
+                                    "pathName": "L-Rev-FuelMidLong-TrenchShot"
                                   }
                                 }
                               ]
@@ -47,7 +47,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Enter-Trench"
+                        "pathName": "L-Enter-Trench"
                       }
                     }
                   ]
@@ -106,13 +106,13 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "R-Exit-Trench"
+                                    "pathName": "L-Exit-Trench"
                                   }
                                 },
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "R-Fwd-TrenchShot-HubNear"
+                                    "pathName": "L-Fwd-TrenchShot-NeutralFar"
                                   }
                                 }
                               ]
@@ -130,7 +130,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Rev-HubNear-RampShot"
+                        "pathName": "L-Rev-TrenchShot-HubReturn"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "L-Enter-Trench"
                       }
                     }
                   ]

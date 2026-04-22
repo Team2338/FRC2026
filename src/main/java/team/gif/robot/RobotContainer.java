@@ -77,6 +77,7 @@ public class RobotContainer {
         names.add("Right-FuelCross-HubNear");
         names.add("Right-NeutralMid-HubNear");
         names.add("Left-NeutralMid-HubNear");
+        names.add("Left-FuelSafeLong-DoubleTrench");
         names.add("Left-Fwd-StealPass");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
