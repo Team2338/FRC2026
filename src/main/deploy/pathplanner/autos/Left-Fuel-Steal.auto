@@ -25,6 +25,12 @@
                 "data": {
                   "name": "Steal Shoot Sequence"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopSwerve"
+                }
               }
             ]
           }
@@ -88,9 +94,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "Auton Eject"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Auton Eject"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopSwerve"
+                }
+              }
+            ]
           }
         },
         {
@@ -113,9 +132,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "Auton Eject"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Auton Eject"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopSwerve"
+                }
+              }
+            ]
           }
         }
       ]

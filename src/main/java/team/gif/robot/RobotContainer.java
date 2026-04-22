@@ -4,6 +4,7 @@
 
 package team.gif.robot;
 
+import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,6 +27,7 @@ import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 import team.gif.robot.commands.drivetrain.DetectBeach;
+import team.gif.robot.commands.drivetrain.StopModules;
 import team.gif.robot.commands.shooter.IndexerEject;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
@@ -55,6 +57,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Steal Shoot Sequence", new AutonStealShoot());
         NamedCommands.registerCommand("DetectBeach", new DetectBeach());
         NamedCommands.registerCommand("Auton Eject", new AutonEject());
+        NamedCommands.registerCommand("StopSwerve", new StopModules());
 
 //        NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot()); // no longer used since bot no longer shoots first. Would need additional testing
 
@@ -86,7 +89,7 @@ public class RobotContainer {
         names.add("Right-NeutralMid-HubNear");
         names.add("Left-NeutralMid-HubNear");
         names.add("Left-FuelSafeLong-DoubleTrench");
-        names.add("Left-Fwd-StealPass");
+        names.add("Left-Fuel-Steal");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
 

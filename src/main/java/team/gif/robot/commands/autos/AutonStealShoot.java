@@ -3,9 +3,13 @@ package team.gif.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.Constants;
+import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.collector.CollectorPercent;
+import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
+import team.gif.robot.commands.drivetrain.HubAutoAlign;
 import team.gif.robot.commands.shooter.IndexerShoot;
+import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.ShooterRPM;
 import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
 
@@ -20,8 +24,9 @@ public class AutonStealShoot extends ParallelDeadlineGroup {
     public AutonStealShoot() {
         super(new WaitCommand(4.0)); // max amount of time to run
         addCommands(
-                new ShooterRPM(4000),
-                new WaitCommand(0.5).andThen(new CollectorAutoPivotDown(0.5).alongWith(new CollectorPercent(0.8).withTimeout(0.5)).andThen(new IndexerShoot()))
+                // can not use shooterAuto and HubAutoALign because the collector is in the way of the cameras
+                new ShooterRPM(3600),
+                new CollectorAutoPivotDown(0.5).alongWith(new CollectorPercent(0.8).withTimeout(0.5)).andThen(new IndexerShoot())
         );
     }
 }

@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.101797432239657,
-        "y": 0.5221540656205423
+        "y": 0.45
       },
       "prevControl": null,
       "nextControl": {
         "x": 8.874777225839441,
-        "y": 4.4799784133307785
+        "y": 4.407824347710236
       },
       "isLocked": false,
       "linkedName": "Left-StealPass"
