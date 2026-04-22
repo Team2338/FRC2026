@@ -10,18 +10,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
+import team.gif.robot.commands.agitator.AgitatorEject;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonCenterShoot;
 import team.gif.robot.commands.autos.AutonEject;
+import team.gif.robot.commands.autos.AutonStealShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
+import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 import team.gif.robot.commands.drivetrain.DetectBeach;
+import team.gif.robot.commands.shooter.IndexerEject;
 import team.gif.robot.commands.shooter.ShooterRPM;
+import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -45,8 +52,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("OC-autonshoot-final", new AutonShoot(true));
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
         NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
+        NamedCommands.registerCommand("Steal Shoot Sequence", new AutonStealShoot());
         NamedCommands.registerCommand("DetectBeach", new DetectBeach());
-        NamedCommands.registerCommand("AutonEject", new AutonEject());
+        NamedCommands.registerCommand("Auton Eject", new AutonEject());
 
 //        NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot()); // no longer used since bot no longer shoots first. Would need additional testing
 

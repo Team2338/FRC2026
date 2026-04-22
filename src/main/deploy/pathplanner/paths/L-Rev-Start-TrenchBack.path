@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.5,
-        "y": 7.475
+        "x": 2.900456490727533,
+        "y": 7.41845934379458
       },
       "prevControl": {
-        "x": 2.8166983743245395,
-        "y": 7.417595002236081
+        "x": 3.2171548650520725,
+        "y": 7.361054346030661
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TrenchBack"
+      "linkedName": "ShooterTrench"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -65.0
+    "rotation": -63.43494882292214
   },
   "reversed": false,
   "folder": null,
