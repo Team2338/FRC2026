@@ -691,6 +691,7 @@ public class SwerveDrivetrain extends SubsystemBase {
                 constants.FL_DRIVE_INVERTED,
                 constants.FRONT_LEFT_OFFSET,
                 constants.FL_DRIVE_FF,
+                constants.DRIVE_P,
                 constants.FL_FF,
                 constants.FL_P,
                 constants.MAX_DRIVE_TEMP
@@ -704,6 +705,7 @@ public class SwerveDrivetrain extends SubsystemBase {
                 constants.FR_DRIVE_INVERTED,
                 constants.FRONT_RIGHT_OFFSET,
                 constants.FR_DRIVE_FF,
+                constants.DRIVE_P,
                 constants.FR_FF,
                 constants.FR_P,
                 constants.MAX_DRIVE_TEMP
@@ -717,6 +719,7 @@ public class SwerveDrivetrain extends SubsystemBase {
                 constants.RL_DRIVE_INVERTED,
                 constants.REAR_LEFT_OFFSET,
                 constants.RL_DRIVE_FF,
+                constants.DRIVE_P,
                 constants.RL_FF,
                 constants.RL_P,
                 constants.MAX_DRIVE_TEMP
@@ -730,6 +733,7 @@ public class SwerveDrivetrain extends SubsystemBase {
                 constants.RR_DRIVE_INVERTED,
                 constants.REAR_RIGHT_OFFSET,
                 constants.RR_DRIVE_FF,
+                constants.DRIVE_P,
                 constants.RR_FF,
                 constants.RR_P,
                 constants.MAX_DRIVE_TEMP

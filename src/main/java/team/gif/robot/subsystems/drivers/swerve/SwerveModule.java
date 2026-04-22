@@ -18,6 +18,7 @@ public class SwerveModule {
     /* ----- PID Constants -----*/
     private final double P;
     private final SimpleMotorFeedforward driveFF;
+    private final double driveP;
     private final double turnFF;
 
     private final double turnOffset;
@@ -35,6 +36,7 @@ public class SwerveModule {
             boolean isDriveInverted,
             double turningOffset,
             SimpleMotorFeedforward driveFF,
+            double driveP,
             double turnFF,
             double P,
             double maxDriveTemp
@@ -50,6 +52,7 @@ public class SwerveModule {
 
         this.turnOffset = turningOffset;
         this.P = P;
+        this.driveP = driveP;
 
         this.driveFF = driveFF;
         this.turnFF = turnFF;
@@ -191,7 +194,8 @@ public class SwerveModule {
         targetAngle = stateOptimized.angle.getRadians();
         targetVelocity = stateOptimized.speedMetersPerSecond;
 
-        double driveOutput = driveFF.calculate(stateOptimized.speedMetersPerSecond);
+        double driveOutputFF = driveFF.calculate(stateOptimized.speedMetersPerSecond);
+        double driveOutput = driveOutputFF + (stateOptimized.speedMetersPerSecond - getDriveVelocity()) * driveP;
         final double error = getTurningHeading() - stateOptimized.angle.getRadians();
 
 
@@ -207,7 +211,8 @@ public class SwerveModule {
         state = optimizeState(state);
         targetAngle = state.angle.getRadians();
         targetVelocity = state.speedMetersPerSecond;
-        double driveOutput = driveFF.calculate(state.speedMetersPerSecond);
+        double driveOutputFF = driveFF.calculate(state.speedMetersPerSecond);
+        double driveOutput = driveOutputFF + (state.speedMetersPerSecond - getDriveVelocity() ) * driveP;
 
         double error = getTurningHeading() - state.angle.getRadians();
 
