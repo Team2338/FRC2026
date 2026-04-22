@@ -1,18 +1,10 @@
 package team.gif.robot.commands.autos;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import team.gif.robot.Constants;
-import team.gif.robot.Robot;
 import team.gif.robot.commands.agitator.AgitatorEject;
-import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
-import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.shooter.IndexerEject;
-import team.gif.robot.commands.shooter.ShooterRPM;
-import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
 
 public class AutonEject extends ParallelDeadlineGroup {
     /**

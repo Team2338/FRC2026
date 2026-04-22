@@ -4,33 +4,26 @@
 
 package team.gif.robot;
 
-import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
-import team.gif.robot.commands.agitator.AgitatorEject;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonCenterShoot;
 import team.gif.robot.commands.autos.AutonEject;
 import team.gif.robot.commands.autos.AutonStealShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
-import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
 import team.gif.robot.commands.drivetrain.DetectBeach;
 import team.gif.robot.commands.drivetrain.StopModules;
-import team.gif.robot.commands.shooter.IndexerEject;
 import team.gif.robot.commands.shooter.ShooterRPM;
-import team.gif.robot.commands.shooter.shooterautos.IndexerAuton;
 
 import java.util.ArrayList;
 import java.util.function.Function;

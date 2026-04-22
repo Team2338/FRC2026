@@ -12,7 +12,7 @@ public class CollectorAutoPivotDown extends Command {
      * Does not stop the collector. Lets the default command pull
      * the collector down the rest of the way.
      */
-    public  CollectorAutoPivotDown() {
+    public CollectorAutoPivotDown() {
         super();
         addRequirements(Robot.pivotMotor);
     }
