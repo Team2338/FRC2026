@@ -48,6 +48,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("DetectBeach", new DetectBeach());
         NamedCommands.registerCommand("AutonEject", new AutonEject());
 
+
 //        NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot()); // no longer used since bot no longer shoots first. Would need additional testing
 
         // Configure the trigger bindings

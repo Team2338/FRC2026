@@ -68,6 +68,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AutonEject"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
@@ -95,7 +101,7 @@
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "AutonEject"
           }
         }
       ]
