@@ -5,38 +5,44 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "L-Rev-Start-TrenchBack"
+          }
+        },
+        {
           "type": "deadline",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "wait",
                 "data": {
-                  "pathName": "L-Rev-Start-TrenchBack"
+                  "waitTime": 1.0
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonCollectorDown"
+                  "name": "Center Shoot Sequence"
                 }
               }
             ]
           }
         },
         {
-          "type": "race",
+          "type": "deadline",
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "wait",
                 "data": {
-                  "name": "Center Shoot Sequence"
+                  "waitTime": 1.0
                 }
               },
               {
-                "type": "wait",
+                "type": "named",
                 "data": {
-                  "waitTime": 1.5
+                  "name": "AutonCollectorDown"
                 }
               }
             ]
@@ -68,12 +74,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonCollectorDown"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "Collector Run"
                 }
               }
@@ -95,26 +95,8 @@
                 "data": {
                   "pathName": "L-Fwd-MidlineReturn"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonCollectorDown"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Collector Run"
-                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonEject"
           }
         }
       ]

@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.1472727272727266,
-        "y": 7.456863636363637
+        "x": 3.560328102710413,
+        "y": 7.560784593437946
       },
       "isLocked": false,
       "linkedName": "TrenchBack"
@@ -20,8 +20,8 @@
         "y": 7.595
       },
       "prevControl": {
-        "x": 4.004875,
-        "y": 7.576863636363637
+        "x": 4.064935805991441,
+        "y": 7.625477888730385
       },
       "nextControl": null,
       "isLocked": false,

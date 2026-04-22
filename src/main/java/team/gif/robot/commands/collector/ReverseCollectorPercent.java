@@ -12,6 +12,12 @@ public class ReverseCollectorPercent extends Command {
      *
      * @param perc percentage to run collector. Value is 0 to 1. Positive value ejects fuel.
      */
+    public ReverseCollectorPercent() {
+        super();
+        addRequirements(Robot.collectMotor);
+        percent = 1.0;
+    }
+
     public ReverseCollectorPercent(double perc) {
         super();
         addRequirements(Robot.collectMotor);

@@ -2,6 +2,7 @@ package team.gif.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
@@ -24,7 +25,8 @@ public class AutonEject extends ParallelDeadlineGroup {
     public AutonEject() {
         super(new WaitCommand(3.0)); // max amount of time to run
         addCommands(
-                new ReverseCollectorPercent(1.0),
+                new PrintCommand("THIS IS CRAZY!!!!!!"),
+                new ReverseCollectorPercent(),
                 new IndexerEject(),
                 new AgitatorEject()
         );
