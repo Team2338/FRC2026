@@ -73,9 +73,22 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "race",
                             "data": {
-                              "pathName": "L-Fwd-MidlineSteal"
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "L-Fwd-MidlineSteal"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "DetectBeach"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
@@ -117,9 +130,22 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "race",
                 "data": {
-                  "pathName": "L-Fwd-MidlineReturn"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "L-Fwd-MidlineReturn"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "DetectBeach"
+                      }
+                    }
+                  ]
                 }
               },
               {
