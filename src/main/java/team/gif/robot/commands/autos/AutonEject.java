@@ -17,7 +17,7 @@ public class AutonEject extends ParallelDeadlineGroup {
     public AutonEject() {
         super(new WaitCommand(3.0)); // max amount of time to run
         addCommands(
-                new ReverseCollectorPercent(),
+                new ReverseCollectorPercent(1.0),
                 new IndexerEject(),
                 new AgitatorEject()
         );
