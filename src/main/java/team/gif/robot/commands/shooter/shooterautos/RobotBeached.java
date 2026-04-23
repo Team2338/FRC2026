@@ -16,7 +16,7 @@ public class RobotBeached extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        isBeached = Robot.pigeon.getRoll() < Constants.Shooter.SHOOTER_AUTON_STOP_PITCH;
+        isBeached = Robot.pigeon.getPitch() < Constants.Shooter.SHOOTER_AUTON_STOP_PITCH;
     }
 
     // Called every time the scheduler runs (~20ms) while the command is scheduled
@@ -26,7 +26,7 @@ public class RobotBeached extends Command {
     // Return true when the command should end, false if it should continue. Runs every ~20ms.
     @Override
     public boolean isFinished() {
-        return !isBeached;
+        return isBeached;
     }
 
     // Called when the command ends or is interrupted.

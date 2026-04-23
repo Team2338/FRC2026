@@ -9,7 +9,7 @@ import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
 import team.gif.robot.commands.drivetrain.HubAutoAlign;
 import team.gif.robot.commands.shooter.ShooterAuto;
 import team.gif.robot.commands.shooter.shooterautos.RobotBeached;
-import team.gif.robot.commands.shooter.shooterautos.ShooterNeutral;
+import team.gif.robot.commands.shooter.shooterautos.RobotInNeutral;
 
 public class AutonShoot extends ParallelCommandGroup {
     public static HubAutoAlign hubCommand = new HubAutoAlign();
@@ -28,7 +28,7 @@ public class AutonShoot extends ParallelCommandGroup {
                     new CollectorPercent(0.8),
                     new AgitatorPercent(),
                     new WaitCommand(1.25).andThen(new CollectorAutoAgitate()),
-                    new ShooterNeutral(),
+                    new RobotInNeutral(),
                     new RobotBeached()
                     )
             );

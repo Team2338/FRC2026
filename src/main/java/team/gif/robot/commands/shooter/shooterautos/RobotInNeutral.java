@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class ShooterNeutral extends Command {
+public class RobotInNeutral extends Command {
 
     private boolean inNeutral = false;
-    public ShooterNeutral() {
+    public RobotInNeutral() {
         super();
         //addRequirements(Robot.climber); // uncomment
     }
