@@ -29,6 +29,8 @@ public final class Constants {
     public static final class Field {
         public static final Translation2d HUB_BLUE_TRANSLATION = new Translation2d(Units.inchesToMeters(182.11), Units.inchesToMeters(158.84));
         public static final Translation2d HUB_RED_TRANSLATION = new Translation2d(Units.inchesToMeters((651.22 - 182.11)), Units.inchesToMeters(158.84));
+        public static final Double PASS_LOCATION_BLUE_X_METERS = 0.75;
+        public static final Double PASS_LOCATINO_RED_X_METERS = 16.54 - PASS_LOCATION_BLUE_X_METERS;
     }
 
     public static final class Vision {
@@ -71,6 +73,8 @@ public final class Constants {
             FR_DRIVE_FF = new SimpleMotorFeedforward(0.1645, 2.3928, 0.074191); //TODO: Tune
             RL_DRIVE_FF = new SimpleMotorFeedforward(0.10265, 2.3955, 0.22997); //TODO: Tune
             RR_DRIVE_FF = new SimpleMotorFeedforward(0.13952, 2.4217, 0.137); //TODO: Tune
+
+            DRIVE_P = 2;
 
             AUTO_P_FORWARD = 10; //TODO: Tune
             AUTO_P_ROTATION = 2.5; //TODO: Tune
@@ -152,13 +156,14 @@ public final class Constants {
     }
 
     public static final class Collector {
+        public static final double PIVOT_DEPLOYED_ENCODER_POS         = 0.648; //0.635; //0.6208;
+        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS    = PIVOT_DEPLOYED_ENCODER_POS - 0.585;//0.05;
+        public static final double PIVOT_LIMIT_AGITATE_POS            = PIVOT_DEPLOYED_ENCODER_POS - 0.355; //0.28; // single action auto-pivot will not move between 0 and this value
+        public static final double PIVOT_LIMIT_AUTO_AGITATE_START_POS = PIVOT_DEPLOYED_ENCODER_POS - 0.17; // auto-agiate will not start betwwen 0 and this value
         public static final double PIVOT_PERCENT_MULTIPLIER = 0.70;
-        public static final double PIVOT_SOFT_LIMIT_UP_ENCODER_POS = 0.05;
-        public static final double PIVOT_LIMIT_AGITATE_POS         = 0.30;
-        public static final double PIVOT_LIMIT_AUTO_AGITATE_START_POS = 0.55;
-        public static final double PIVOT_DEPLOYED_ENCODER_POS      = 0.650; //0.6208;
+        public static final double PIVOT_DOWN_HOLD_PERCENT = 0.04;
 
-        public static final double PIVOT_POSITION_TOLERANCE = 0.5; //Change value
+        public static final double PIVOT_POSITION_TOLERANCE = 0.01; // Not used in practice but needs to be small
 
         public static final double AGITATOR_MOTOR_PERCENT = 0.3;
     }
@@ -172,8 +177,8 @@ public final class Constants {
     }
 
     public static final class Indexer {
-        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.65; // 0.588; //Should change
-        public static final double TOP_INDEXER_MOTOR_PERCENT = 1.0; //Should change
+        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.10; // 0.588; //Should change
+        public static final double TOP_INDEXER_MOTOR_PERCENT = 0.90; //Should change
 
         public static Command getForwardCommand() {
             return new IndexerShoot();

@@ -23,13 +23,13 @@
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "R-Fwd-Start-NeutralMid"
+                                    "pathName": "R-Fwd-Start-FuelMidLong"
                                   }
                                 },
                                 {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "R-Rev-NeutralMid-TrenchShot"
+                                    "pathName": "R-Rev-FuelMidLong-TrenchShot"
                                   }
                                 }
                               ]
@@ -96,41 +96,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "sequential",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "R-Exit-Trench"
-                                  }
-                                },
-                                {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "R-Fwd-TrenchShot-HubNear"
-                                  }
-                                }
-                              ]
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "DetectBeach"
-                            }
-                          }
-                        ]
+                        "pathName": "R-Exit-Trench"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "R-Rev-HubNear-RampShot"
+                        "pathName": "R-Fwd-TrenchShot-FuelSweep"
                       }
                     }
                   ]

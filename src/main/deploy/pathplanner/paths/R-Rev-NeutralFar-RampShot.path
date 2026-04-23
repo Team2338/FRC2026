@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 6.1079044684129435,
-        "y": 1.8796610169491514
+        "y": 1.8796610169491512
       },
       "isLocked": false,
       "linkedName": "Right Neutral Far"
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.17688959240205793,
+      "waypointRelativePos": 0.25,
       "rotationDegrees": 45.0
     }
   ],
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 37.99999
+    "rotation": 38.0
   },
   "reversed": false,
   "folder": null,

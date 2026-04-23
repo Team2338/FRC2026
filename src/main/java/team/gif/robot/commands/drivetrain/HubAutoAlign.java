@@ -1,7 +1,10 @@
 package team.gif.robot.commands.drivetrain;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
@@ -11,22 +14,35 @@ import team.gif.robot.subsystems.ShotCalculator;
 public class HubAutoAlign extends Command {
     private final SlewRateLimiter forwardLimiter;
     private final SlewRateLimiter strafeLimiter;
-    private final SlewRateLimiter turnLimiter;
     private double rotOffset = 0;
     private boolean xStance = false;
+    private boolean isAligned = false;
+
+    private TrapezoidProfile.Constraints motionProfileConstraints;
+    private TrapezoidProfile.State targetState;
+    private ProfiledPIDController motionProfile;
 
     public HubAutoAlign() {
         this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
         this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND);
         addRequirements(Robot.swerveDrive);
+
+        motionProfileConstraints = new TrapezoidProfile.Constraints(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND, Robot.swerveConfig.constants.MAX_ANGULAR_ACCEL_RADIANS_PER_SECOND_SQUARED);
+
+        motionProfile = new ProfiledPIDController(Constants.Mk5Constants.HUB_ALIGN_P, 0, 0, motionProfileConstraints);
+        motionProfile.enableContinuousInput(0, Math.PI * 2);
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        motionProfile.reset(Robot.swerveDrive.getPose().getRotation().getRadians());
+        isAligned = false;
+    }
 
     @Override
     public void execute() {
+        Pose2d robotPose = Robot.swerveDrive.getPose();
+
         double forwardSign;
         double strafeSign;
 
@@ -58,19 +74,28 @@ public class HubAutoAlign extends Command {
         forward = forwardLimiter.calculate(forward) * Robot.swerveDrive.getDrivePace().getValue();
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
-
         // Auto rotate to hub
         double rotError = ShotCalculator.angleToHubError().getRadians() + Units.degreesToRadians(rotOffset);
-        double rot = rotError * Constants.Mk5Constants.HUB_ALIGN_P / (2 * Math.PI); //Converts to -1 to 1 scale for limiter and speed calc
 
-         rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+        // Auto rotate to hub
+        targetState = new TrapezoidProfile.State(ShotCalculator.angleToHubOptimzed().getRadians(), 0);
+        double rot = motionProfile.calculate(robotPose.getRotation().getRadians(), targetState);
 
-         if(xStance && Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
-             Robot.swerveDrive.xStance();
-         } else {
-            // the robot starts facing the driver station so for this year negating y and x
+        if (Math.abs(rotError) < Rotation2d.fromDegrees(3).getRadians()) {
+            // first time bot is aligned and in tolerance, stop motors only
+            // once so it doesn't toggle between xStance and 0 position
+            if (!isAligned) {
+                Robot.swerveDrive.stopDrive();
+                isAligned = true;
+            }
+            if (xStance) {
+                // hold the bot in the xStance position
+                Robot.swerveDrive.xStance();
+            }
+        } else {
+            isAligned = false;
             Robot.swerveDrive.drive(forward, strafe, rot);
-         }
+        }
     }
 
     @Override

@@ -3,42 +3,46 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.850390015600623,
-        "y": 4.197722308892355
+        "x": 8.101797432239657,
+        "y": 0.75
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.87179538560344,
-        "y": 6.221470868834629
+        "x": 8.874777225839441,
+        "y": 4.707824347710236
       },
       "isLocked": false,
-      "linkedName": "HubEnd"
+      "linkedName": "Left-StealPass"
     },
     {
       "anchor": {
-        "x": 2.5,
-        "y": 5.685
+        "x": 8.101797432239657,
+        "y": 7.35
       },
       "prevControl": {
-        "x": 4.188368333897509,
-        "y": 5.565457110503131
+        "x": 8.349161068603292,
+        "y": 5.4329318181818165
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "ReverseEnd"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.17688959240205793,
-      "rotationDegrees": -45.0
+      "waypointRelativePos": 0.12226871222687075,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 0.7136215713621616,
+      "rotationDegrees": 90.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -47,13 +51,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -38.0
+    "rotation": 176.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -105.00000000000001
+    "rotation": -176.0
   },
   "useDefaultConstraints": false
 }

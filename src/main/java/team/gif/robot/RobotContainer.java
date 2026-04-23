@@ -15,10 +15,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import team.gif.robot.commands.agitator.AgitatorPercent;
 import team.gif.robot.commands.autos.AutonCenterShoot;
+import team.gif.robot.commands.autos.AutonEject;
+import team.gif.robot.commands.autos.AutonStealShoot;
 import team.gif.robot.commands.collector.CollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoPivotDown;
 import team.gif.robot.commands.autos.AutonShoot;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutonPivotDown;
+import team.gif.robot.commands.drivetrain.DetectBeach;
+import team.gif.robot.commands.drivetrain.StopModules;
 import team.gif.robot.commands.shooter.ShooterRPM;
 
 import java.util.ArrayList;
@@ -43,6 +47,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("OC-autonshoot-final", new AutonShoot(true));
         NamedCommands.registerCommand("AutonCollectorDown", new CollectorAutonPivotDown());
         NamedCommands.registerCommand("Center Shoot Sequence", new AutonCenterShoot());
+        NamedCommands.registerCommand("Steal Shoot Sequence", new AutonStealShoot());
+        NamedCommands.registerCommand("DetectBeach", new DetectBeach());
+        NamedCommands.registerCommand("Auton Eject", new AutonEject());
+        NamedCommands.registerCommand("StopSwerve", new StopModules());
 
 //        NamedCommands.registerCommand("CC-autonshoot", new AutonInitialShoot()); // no longer used since bot no longer shoots first. Would need additional testing
 
@@ -65,12 +73,16 @@ public class RobotContainer {
         names.add("Left-FuelSafeLong-NeutralMid");
         names.add("Right-FuelSafeLong-NeutralMid");
         names.add("Center");
+        names.add("Left-FuelSafeLong-FuelSweep");
+        names.add("Right-FuelSafeLong-FuelSweep");
         names.add("Left-FuelSafe-NeutralFar");
         names.add("Right-FuelSafe-NeutralFar");
         names.add("Left-FuelCross-HubNear");
         names.add("Right-FuelCross-HubNear");
         names.add("Right-NeutralMid-HubNear");
         names.add("Left-NeutralMid-HubNear");
+        names.add("Left-FuelSafeLong-DoubleTrench");
+        names.add("Left-Fuel-Steal");
 
         ArrayList<PathPlannerAuto> autoChoices = new ArrayList<>();
 

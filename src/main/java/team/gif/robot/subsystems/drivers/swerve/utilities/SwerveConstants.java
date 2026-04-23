@@ -331,6 +331,13 @@ public abstract class SwerveConstants {
      * @see SwerveDrivetrain#sysIdQuasistatic(String, SysIdRoutine.Direction)
      */
     public SimpleMotorFeedforward RR_DRIVE_FF;
+
+    /**
+     * The P gain for drive wheels
+     * <br><br>Default Value: 0 (Feedforward only)
+     */
+    public double DRIVE_P = 0;
+
     /**
      * This is the proportional gain passed to PathPlanner for path following.
      * <br><br>Default Value: 2.5

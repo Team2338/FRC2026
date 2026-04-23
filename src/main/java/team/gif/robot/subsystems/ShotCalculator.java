@@ -10,6 +10,7 @@ import team.gif.robot.Robot;
 
 public class ShotCalculator {
     private final static InterpolatingDoubleTreeMap distanceMap = new InterpolatingDoubleTreeMap();
+    private final static InterpolatingDoubleTreeMap passMap = new InterpolatingDoubleTreeMap();
 
     static {
 //        distanceMap.put(Units.feetToMeters(15.0 + 0.75), 3750.0);
@@ -57,6 +58,10 @@ public class ShotCalculator {
         distanceMap.put(Units.feetToMeters(9 + measurementOffset), 3475.0);
         distanceMap.put(Units.feetToMeters(9.75 + measurementOffset), 3550.0);
         distanceMap.put(Units.feetToMeters(11.27 + measurementOffset), 4050.0);
+
+        passMap.put(Units.feetToMeters(17.0) - Constants.Field.PASS_LOCATION_BLUE_X_METERS, 3200.0);
+        passMap.put(Units.feetToMeters(28.0) - Constants.Field.PASS_LOCATION_BLUE_X_METERS, 5000.0);
+
     }
 
     /**
@@ -73,6 +78,16 @@ public class ShotCalculator {
         }
     }
 
+    private static double distanceToPass(){
+         if (DriverStation.getAlliance().isPresent()) {
+             double passline = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue? Constants.Field.PASS_LOCATION_BLUE_X_METERS : Constants.Field.PASS_LOCATINO_RED_X_METERS;
+             double robot = Robot.swerveDrive.getPose().getX();
+             return Math.abs(passline - robot);
+         }else {
+            return -1;
+         }
+    }
+
     /**
      * This uses the pose estimate to the calculate the distance to the hub,
      * then it uses that distance to interpolate the ideal shooter speed from the
@@ -83,12 +98,16 @@ public class ShotCalculator {
         return distanceMap.get(distanceToHub());
     }
 
+    public static double getPassRPM(){
+        return passMap.get(distanceToPass());
+    }
+
     /**
      * This uses the robot pose to calculate the
      * heading the robot needs to have to point toward the hub
      * @return The ideal rotation of the robot as a `Rotation2d`
      */
-    private static Rotation2d angleToHub() {
+    public static Rotation2d angleToHub() {
         Translation2d robot = Robot.swerveDrive.getPose().getTranslation();
         Translation2d hub = Constants.Field.HUB_RED_TRANSLATION;
 
@@ -97,6 +116,15 @@ public class ShotCalculator {
         }
 
         return hub.minus(robot).getAngle();
+    }
+
+    /**
+     * Determines the shorest path to point at the hub (should always be less than 180)
+     * @return Angle to hub
+     */
+    public static Rotation2d angleToHubOptimzed() {
+        Rotation2d currentRotation = Robot.swerveDrive.getPose().getRotation();
+        return optimizeAngle(angleToHub(), currentRotation);
     }
 
     /**

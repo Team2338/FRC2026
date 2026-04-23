@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import team.gif.robot.Constants;
 import team.gif.robot.RobotMap;
 
-import static com.ctre.phoenix6.signals.InvertedValue.CounterClockwise_Positive;
+import static com.ctre.phoenix6.signals.InvertedValue.Clockwise_Positive;
 
 public class PivotMotor extends SubsystemBase {
 
@@ -31,7 +31,7 @@ public class PivotMotor extends SubsystemBase {
         pivotMotor.set(percent);
     }
 
-    public double getPivotOutput() {
+    public double getPivotOutputPercent() {
         return pivotMotor.getMotorVoltage().getValueAsDouble() / 12;
     }
 
@@ -62,7 +62,7 @@ public class PivotMotor extends SubsystemBase {
     private void setConfig(){
         TalonFXConfiguration config = new TalonFXConfiguration(); //Factory defaults are applied to new config object
 
-        config.MotorOutput.Inverted = CounterClockwise_Positive;
+        config.MotorOutput.Inverted = Clockwise_Positive;
         config.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         config.Feedback.FeedbackRemoteSensorID = RobotMap.Collector.PIVOT_ENCODER_ID;
