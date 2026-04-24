@@ -175,7 +175,7 @@ public final class Constants {
     }
 
     public static final class Indexer {
-        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.10; // 0.588; //Should change
+        public static final double BOTTOM_INDEXER_MOTOR_PERCENT = 0.588; // 0.588; //Should change
         public static final double TOP_INDEXER_MOTOR_PERCENT = 0.90; //Should change
 
         public static Command getForwardCommand() {
