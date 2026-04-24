@@ -15,6 +15,10 @@ import team.gif.robot.commands.collector.CollectorTeleopPivotDown;
 import team.gif.robot.commands.collector.ReverseCollectorPercent;
 import team.gif.robot.commands.collector.collectorautos.CollectorAgitateOnce;
 import team.gif.robot.commands.collector.collectorautos.CollectorAutoAgitate;
+import team.gif.robot.commands.drivetrain.collectalign.FenceCollectAlignLeft;
+import team.gif.robot.commands.drivetrain.collectalign.FenceCollectAlignRight;
+import team.gif.robot.commands.drivetrain.collectalign.HubCollectAlignLeft;
+import team.gif.robot.commands.drivetrain.collectalign.HubCollectAlignRight;
 import team.gif.robot.commands.shooter.IndexerEject;
 import team.gif.robot.commands.shooter.PassAuto;
 import team.gif.robot.commands.shooter.ShooterDashboard;
@@ -148,6 +152,11 @@ public class OI {
         // for driver only controls
         dX.and(dBack.negate()).whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect
         dB.and(dBack.negate()).onTrue(new CollectorAutoAgitate()); //Standard agitator sequence for shooting
+
+        dRBump.and(dDPadUp).whileTrue(new FenceCollectAlignLeft());
+        dRBump.and(dDPadDown).whileTrue(new FenceCollectAlignRight());
+        dRBump.and(dDPadRight).whileTrue(new HubCollectAlignRight());
+        dRBump.and(dDPadLeft).whileTrue(new HubCollectAlignLeft());
         // For shot calibration
         dA.whileTrue(new ShooterDashboard().alongWith(new AgitatorPercent()).alongWith( new CollectorPercent(0.8)).alongWith(Constants.Indexer.getFullCommand()));
 
