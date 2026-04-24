@@ -10,12 +10,10 @@ import team.gif.robot.Robot;
 public class FenceCollectAlignLeft extends Command {
     private final SlewRateLimiter forwardLimiter;
     private final SlewRateLimiter strafeLimiter;
-    private final SlewRateLimiter turnLimiter;
 
     public FenceCollectAlignLeft() {
         this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
         this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ANGULAR_ACCEL_RADIANS_PER_SECOND_SQUARED);
         addRequirements(Robot.swerveDrive);
     }
 
@@ -24,9 +22,7 @@ public class FenceCollectAlignLeft extends Command {
 
     @Override
     public void execute() {
-        double xPose = Robot.swerveDrive.getPose().getX();
-        double yPose = Robot.swerveDrive.getPose().getY();
-        
+
         if (Robot.diagnostics.anyMotorTempHot()) {
             if (Robot.isCompetition) {
                 // For competitions, just print to console that motors are hot, but allow full functionality
@@ -73,68 +69,11 @@ public class FenceCollectAlignLeft extends Command {
         forward = forwardLimiter.calculate(forward) * Robot.swerveDrive.getDrivePace().getValue();
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
-        if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red && DriverStation.getAlliance().isPresent()) {
-            double targetAngle = Constants.Collector.FENCE_COLLECT_ANGLE;
-        }
-        else if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-            targetAngle = -Constants.Collector.FENCE_COLLECT_ANGLE;
-        }
+        DriverStation.Alliance alliance = DriverStation.getAlliance().get();
+        double targetAngle = alliance == DriverStation.Alliance.Red ? Constants.Collector.FENCE_COLLECT_ANGLE : -Constants.Collector.FENCE_COLLECT_ANGLE;
 
-        double angleError = ((targetAngle - Robot.pigeon.get180Heading()) + 180) % 360 - 180;
-
-        //Align to fence while driving
-        if (yPose >= Constants.Field.TOP_FENCE_ZONE_Y || yPose <= Constants.Field.BOTTOM_FENCE_ZONE_Y) {
-            double targetAngle = Constants.Collector.FENCE_COLLECT_ANGLE;
-            targetAngle =  (yPose >= Constants.Field.TOP_FENCE_ZONE_Y) ? targetAngle : -targetAngle;
-
-            if (forward < 0.0) {
-                targetAngle = (yPose >= Constants.Field.TOP_FENCE_ZONE_Y) ? 180 - targetAngle : -180 - targetAngle;
-            }
-
-            double angleError = ((targetAngle - Robot.pigeon.get180Heading()) + 180) % 360 - 180;
-            rot = angleError * Constants.Mk5Constants.FENCE_ALIGN_P / 180;
-
-        }
-        else if(
-                (xPose >= Constants.Field.HUB_ZONE_BLUE_MIN.getX() && yPose >= Constants.Field.HUB_ZONE_BLUE_MIN.getY()) &&
-                (xPose <= Constants.Field.HUB_ZONE_BLUE_MAX.getX() && yPose <= Constants.Field.HUB_ZONE_BLUE_MAX.getY())){
-            double targetAngle = Constants.Collector.HUB_COLLECT_ANGLE;
-
-            if (strafe < 0.0) {
-                targetAngle = -targetAngle;
-            }
-            else if (strafe > 0.0) {
-                targetAngle = Math.abs(targetAngle);
-            }
-
-            double angleError = ((targetAngle - Robot.pigeon.get180Heading()) + 180) % 360 - 180;
-            rot = angleError * Constants.Mk5Constants.FENCE_ALIGN_P / 180;
-        }
-        else if(
-                (xPose >= Constants.Field.HUB_ZONE_RED_MIN.getX() && yPose >= Constants.Field.HUB_ZONE_RED_MIN.getY()) &&
-                (xPose <= Constants.Field.HUB_ZONE_RED_MAX.getX() && yPose <= Constants.Field.HUB_ZONE_RED_MAX.getY())){
-            double targetAngle = Constants.Collector.HUB_COLLECT_ANGLE;
-
-            if (strafe < 0.0) {
-                targetAngle = 180 - Math.abs(targetAngle);
-            }
-            else if (strafe > 0.0) {
-                targetAngle = -(180 - Math.abs(targetAngle));
-            }
-
-            double angleError = ((targetAngle - Robot.pigeon.get180Heading()) + 180) % 360 - 180;
-            rot = angleError * Constants.Mk5Constants.FENCE_ALIGN_P / 180;
-        }
-        else {
-            // slow down the rotation by converting the linear response to a curve
-            if (rot < 0 ) {
-                rot = rot * -rot;
-            } else {
-                rot = rot * rot;
-            }
-        }
-
-        rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+        double angleError = Math.IEEEremainder(targetAngle, 360.0);
+        rot = angleError * Constants.Mk5Constants.FENCE_COLLECT_ALIGN_P / 180;
 
         Robot.swerveDrive.drive(forward, strafe, rot);
     }

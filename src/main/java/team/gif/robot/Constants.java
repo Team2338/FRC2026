@@ -49,7 +49,8 @@ public final class Constants {
     //These constants should be referenced via Robot.swerveDrive.getConstants();
     public static final class Mk5Constants extends SwerveConstants {
         public static final double HUB_ALIGN_P = 3; //Used in HubAutoAlign to point toward the hub
-        public static final double FENCE_ALIGN_P = 1;
+        public static final double FENCE_COLLECT_ALIGN_P = 1;
+        public static final double HUB_COLLECT_ALIGN_P = 1;
 
         @Override
         protected void setConfiguration() {

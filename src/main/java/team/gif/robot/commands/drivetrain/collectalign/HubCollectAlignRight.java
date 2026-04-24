@@ -1,20 +1,19 @@
-package team.gif.robot.commands.drivetrain;
+package team.gif.robot.commands.drivetrain.collectalign;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import team.gif.robot.Constants;
 import team.gif.robot.Robot;
 
-public class DriveSwerve extends Command {
+public class HubCollectAlignRight extends Command {
     private final SlewRateLimiter forwardLimiter;
     private final SlewRateLimiter strafeLimiter;
-    private final SlewRateLimiter turnLimiter;
 
-    public DriveSwerve() {
+    public HubCollectAlignRight() {
         this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
         this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
-        this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ANGULAR_ACCEL_RADIANS_PER_SECOND_SQUARED);
         addRequirements(Robot.swerveDrive);
     }
 
@@ -23,9 +22,7 @@ public class DriveSwerve extends Command {
 
     @Override
     public void execute() {
-        double xPose = Robot.swerveDrive.getPose().getX();
-        double yPose = Robot.swerveDrive.getPose().getY();
-        
+
         if (Robot.diagnostics.anyMotorTempHot()) {
             if (Robot.isCompetition) {
                 // For competitions, just print to console that motors are hot, but allow full functionality
@@ -72,16 +69,11 @@ public class DriveSwerve extends Command {
         forward = forwardLimiter.calculate(forward) * Robot.swerveDrive.getDrivePace().getValue();
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
+        DriverStation.Alliance alliance = DriverStation.getAlliance().get();
+        double targetAngle = alliance == DriverStation.Alliance.Red ? -Constants.Collector.HUB_COLLECT_ANGLE : Constants.Collector.FENCE_COLLECT_ANGLE;
 
-        // slow down the rotation by converting the linear response to a curve
-        if (rot < 0 ) {
-            rot = rot * -rot;
-        } else {
-            rot = rot * rot;
-        }
-
-
-        rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+        double angleError = Math.IEEEremainder(targetAngle, 360.0);
+        rot = angleError * Constants.Mk5Constants.HUB_COLLECT_ALIGN_P;
 
         Robot.swerveDrive.drive(forward, strafe, rot);
     }
