@@ -3,58 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.900456490727533,
-        "y": 0.644
+        "x": 7.22949152542373,
+        "y": 4.217426810477658
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.210984308131241,
-        "y": 0.45264479315263906
+        "x": 6.639728958630526,
+        "y": 6.38336661911555
       },
       "isLocked": false,
-      "linkedName": "R-3"
+      "linkedName": "ForwrdHubFar"
     },
     {
       "anchor": {
-        "x": 3.6767760342368048,
-        "y": 0.45
+        "x": 5.252,
+        "y": 7.595
       },
       "prevControl": {
-        "x": 3.077681826582032,
-        "y": 0.4589861521117454
-      },
-      "nextControl": {
-        "x": 4.5007020547945205,
-        "y": 0.4376414686455736
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 5.53,
-        "y": 0.475
-      },
-      "prevControl": {
-        "x": 4.989383561643836,
-        "y": 0.46339897260274016
+        "x": 6.523281027104137,
+        "y": 7.2890727532097
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right-Trench-Entrance-Sideways"
+      "linkedName": "Left-Trench-Entrance-Rearfacing"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 88.3634229583834
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 1.25,
+      "maxWaypointRelativePos": 0.65,
       "constraints": {
         "maxVelocity": 3.0,
         "maxAcceleration": 3.0,
@@ -68,22 +47,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
-    "rotation": 90.0
+    "velocity": 5.0,
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 65.225
+    "velocity": 3.0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }

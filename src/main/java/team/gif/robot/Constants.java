@@ -83,6 +83,8 @@ public final class Constants {
             RL_DRIVE_FF = new SimpleMotorFeedforward(0.10265, 2.3955, 0.22997); //TODO: Tune
             RR_DRIVE_FF = new SimpleMotorFeedforward(0.13952, 2.4217, 0.137); //TODO: Tune
 
+            DRIVE_P = 2;
+
             AUTO_P_FORWARD = 10; //TODO: Tune
             AUTO_P_ROTATION = 2.5; //TODO: Tune
 
