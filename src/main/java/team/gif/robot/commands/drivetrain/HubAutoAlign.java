@@ -14,6 +14,7 @@ import team.gif.robot.subsystems.ShotCalculator;
 public class HubAutoAlign extends Command {
     private final SlewRateLimiter forwardLimiter;
     private final SlewRateLimiter strafeLimiter;
+    private final SlewRateLimiter turnLimiter;
     private double rotOffset = 0;
     private boolean xStance = false;
     private boolean isAligned = false;
@@ -25,6 +26,7 @@ public class HubAutoAlign extends Command {
     public HubAutoAlign() {
         this.forwardLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
         this.strafeLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.MAX_ACCEL_METERS_PER_SECOND_SQUARED);
+        this.turnLimiter = new SlewRateLimiter(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND);
         addRequirements(Robot.swerveDrive);
 
         motionProfileConstraints = new TrapezoidProfile.Constraints(Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND, Robot.swerveConfig.constants.MAX_ANGULAR_ACCEL_RADIANS_PER_SECOND_SQUARED);
@@ -77,6 +79,12 @@ public class HubAutoAlign extends Command {
         // Auto rotate to hub
         double rotError = ShotCalculator.angleToHubError().getRadians() + Units.degreesToRadians(rotOffset);
 
+        double rot = rotError * Constants.Mk5Constants.HUB_ALIGN_P / (2 * Math.PI); //Converts to -1 to 1 scale for limiter and speed calc
+
+        rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
+
+        Robot.swerveDrive.drive(forward, strafe, rot);
+/**
         // Auto rotate to hub
         targetState = new TrapezoidProfile.State(ShotCalculator.angleToHubOptimzed().getRadians(), 0);
         double rot = motionProfile.calculate(robotPose.getRotation().getRadians(), targetState);
@@ -96,6 +104,7 @@ public class HubAutoAlign extends Command {
             isAligned = false;
             Robot.swerveDrive.drive(forward, strafe, rot);
         }
+**/
     }
 
     @Override
