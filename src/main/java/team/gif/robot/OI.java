@@ -163,10 +163,10 @@ public class OI {
             AutonShoot.hubCommand.resetRotationOffset();
             AutonShoot.shootCommand.resetRPMOffset();
         }).ignoringDisable(true));
-        aRBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
+        aLBump.whileTrue(new ReverseCollectorPercent(0.25)); //Runs collector (only) in reverse to eject jammed fuel
 
-        aLBump.and(manualMode).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new ReverseCollectorPercent(1.0)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
-        aLBump.and(manualMode.negate()).whileTrue(new PassAuto());
+        aRBump.and(manualMode).whileTrue(new ShooterRPM(3500).alongWith(new AgitatorPercent()).alongWith( new ReverseCollectorPercent(1.0)).alongWith(Constants.Indexer.getFullCommand())); // Passing fuel from neutral zone to our alliance zone
+        aRBump.and(manualMode.negate()).whileTrue(new PassAuto());
 
         aLTrigger.whileTrue(new ReverseCollectorPercent(1.0).alongWith(new IndexerEject()).alongWith(new AgitatorEject())); //Standard fuel eject from collector
         aRTrigger.whileTrue(new CollectorPercent(1.0).alongWith(new AgitatorPercent())); //Standard Collect (Runs Collector and Agitator (into indexer))
