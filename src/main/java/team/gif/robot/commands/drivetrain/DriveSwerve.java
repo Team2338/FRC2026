@@ -23,6 +23,9 @@ public class DriveSwerve extends Command {
 
     @Override
     public void execute() {
+        double xPose = Robot.swerveDrive.getPose().getX();
+        double yPose = Robot.swerveDrive.getPose().getY();
+        
         if (Robot.diagnostics.anyMotorTempHot()) {
             if (Robot.isCompetition) {
                 // For competitions, just print to console that motors are hot, but allow full functionality
@@ -69,12 +72,14 @@ public class DriveSwerve extends Command {
         forward = forwardLimiter.calculate(forward) * Robot.swerveDrive.getDrivePace().getValue();
         strafe = strafeLimiter.calculate(strafe) * Robot.swerveDrive.getDrivePace().getValue();
 
-        // slow dpwn the rotation by converting the linear response to a curve
+
+        // slow down the rotation by converting the linear response to a curve
         if (rot < 0 ) {
             rot = rot * -rot;
         } else {
             rot = rot * rot;
         }
+
 
         rot = turnLimiter.calculate(rot) * Robot.swerveConfig.constants.PHYSICAL_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND;
 
