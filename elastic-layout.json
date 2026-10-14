@@ -8,20 +8,6 @@
         "layouts": [],
         "containers": [
           {
-            "title": "photonvision_Port_1181_Input_MJPEG_Server",
-            "x": 896.0,
-            "y": 384.0,
-            "width": 256.0,
-            "height": 256.0,
-            "type": "Camera Stream",
-            "properties": {
-              "topic": "/CameraPublisher/photonvision_Port_1181_Input_MJPEG_Server",
-              "period": 0.06,
-              "rotation_turns": 0,
-              "fps": 5
-            }
-          },
-          {
             "title": "photonvision_Port_1183_Input_MJPEG_Server",
             "x": 768.0,
             "y": 0.0,
@@ -39,7 +25,7 @@
             "title": "Auto Chooser",
             "x": 0.0,
             "y": 256.0,
-            "width": 384.0,
+            "width": 512.0,
             "height": 128.0,
             "type": "ComboBox Chooser",
             "properties": {
@@ -52,7 +38,7 @@
             "title": "Collect Pos",
             "x": 256.0,
             "y": 0.0,
-            "width": 128.0,
+            "width": 256.0,
             "height": 128.0,
             "type": "Text Display",
             "properties": {
@@ -90,7 +76,7 @@
           },
           {
             "title": "Motor Temp",
-            "x": 384.0,
+            "x": 512.0,
             "y": 0.0,
             "width": 128.0,
             "height": 128.0,
@@ -178,7 +164,7 @@
           },
           {
             "title": "Standard",
-            "x": 512.0,
+            "x": 640.0,
             "y": 0.0,
             "width": 128.0,
             "height": 128.0,
@@ -205,6 +191,19 @@
               "period": 0.06,
               "rotation_turns": 0,
               "fps": 5
+            }
+          },
+          {
+            "title": "photonvision_Port_1187_Input_MJPEG_Server",
+            "x": 896.0,
+            "y": 384.0,
+            "width": 512.0,
+            "height": 384.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/photonvision_Port_1187_Input_MJPEG_Server",
+              "period": 0.06,
+              "rotation_turns": 0
             }
           }
         ]
