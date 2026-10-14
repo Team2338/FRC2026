@@ -181,9 +181,9 @@
           },
           {
             "title": "photonvision_Port_1185_Input_MJPEG_Server",
-            "x": 1152.0,
-            "y": 0.0,
-            "width": 384.0,
+            "x": 896.0,
+            "y": 384.0,
+            "width": 512.0,
             "height": 384.0,
             "type": "Camera Stream",
             "properties": {
@@ -194,14 +194,14 @@
             }
           },
           {
-            "title": "photonvision_Port_1187_Input_MJPEG_Server",
-            "x": 896.0,
-            "y": 384.0,
-            "width": 512.0,
+            "title": "photonvision_Port_1181_Input_MJPEG_Server",
+            "x": 1152.0,
+            "y": 0.0,
+            "width": 384.0,
             "height": 384.0,
             "type": "Camera Stream",
             "properties": {
-              "topic": "/CameraPublisher/photonvision_Port_1187_Input_MJPEG_Server",
+              "topic": "/CameraPublisher/photonvision_Port_1181_Input_MJPEG_Server",
               "period": 0.06,
               "rotation_turns": 0
             }
@@ -278,19 +278,6 @@
             }
           },
           {
-            "title": "photonvision_Port_1182_Output_MJPEG_Server",
-            "x": 1152.0,
-            "y": 0.0,
-            "width": 384.0,
-            "height": 384.0,
-            "type": "Camera Stream",
-            "properties": {
-              "topic": "/CameraPublisher/photonvision_Port_1182_Output_MJPEG_Server",
-              "period": 0.06,
-              "rotation_turns": 0
-            }
-          },
-          {
             "title": "photonvision_Port_1184_Output_MJPEG_Server",
             "x": 768.0,
             "y": 0.0,
@@ -304,14 +291,27 @@
             }
           },
           {
-            "title": "photonvision_Port_1185_Input_MJPEG_Server",
+            "title": "photonvision_Port_1182_Output_MJPEG_Server",
+            "x": 1152.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 384.0,
+            "type": "Camera Stream",
+            "properties": {
+              "topic": "/CameraPublisher/photonvision_Port_1182_Output_MJPEG_Server",
+              "period": 0.06,
+              "rotation_turns": 0
+            }
+          },
+          {
+            "title": "photonvision_Port_1186_Output_MJPEG_Server",
             "x": 384.0,
             "y": 128.0,
             "width": 384.0,
             "height": 384.0,
             "type": "Camera Stream",
             "properties": {
-              "topic": "/CameraPublisher/photonvision_Port_1185_Input_MJPEG_Server",
+              "topic": "/CameraPublisher/photonvision_Port_1186_Output_MJPEG_Server",
               "period": 0.06,
               "rotation_turns": 0
             }
