@@ -75,7 +75,7 @@ public class UI {
         SmartDashboard.putBoolean("Diagnostics/Swerve Motor Hot", Robot.diagnostics.swerveMotorTempHot());
         SmartDashboard.putBoolean("Diagnostics/Mechanism Motor Hot", Robot.diagnostics.mechanismMotorTempHot());
         SmartDashboard.putBoolean("Competition", Robot.isCompetition);
-        SmartDashboard.putString("ShiftTime", String.format("%11.1f", Robot.shiftTime));
+        SmartDashboard.putString("ShiftTime", String.format("%11.0f", Robot.shiftTime));
         SmartDashboard.putString("Shift",Robot.matchShift);
         SmartDashboard.putString("Rot Offset", String.format("%11.0f", AutonShoot.hubCommand.getRotationOffset() * -1));
         SmartDashboard.putString("RPM Offset", String.format("%11.0f", AutonShoot.shootCommand.getRPMOffset()));
